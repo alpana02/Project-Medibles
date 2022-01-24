@@ -70,29 +70,14 @@ export default function Home(props) {
 
   return (
     <div>
-    <div className="col-12 mt-3">
-      <h2>Top Free Sessions By mentors</h2>
-            <div className="row my-3 py-3"  >
-            <Carousel responsive={responsive}>
-            {sessions.map((session) => {
-          return (
-            <SessionItemPatient
-              key={session._id}
-              session={session}
-              showAlert={props.showAlert}
-            />
-          );
-        })}
-</Carousel>;
-            
-        </div></div>
-      <div className="container mt-5">
-      <h1>Discover Top mentors</h1>
+    
+      <div className="container">
+      <h1>Discover Top Doctors</h1>
       <form onSubmit={handleSubmit}>
         <div className="conatiner mt-3">
           <div className="container">
             <div className="row">
-              <h5>Filter By class and Subjects</h5>
+              <h5>Filter By Location and Specialization</h5>
               <div className="col-3">
                 <select
                   className="form-select"
