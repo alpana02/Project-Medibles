@@ -13,7 +13,7 @@ export default function ViewProfile(props) {
   const { id } = useParams();
   let navigate = useNavigate();
   const [profile, setProfile] = useState([]);
-  const [newEvent, setNewEvent] = useState({ title: "", start: "", end: "" });
+  const [newEvent, setNewEvent] = useState({ title: "", start: ""});
   const [allEvents, setAllEvents] = useState([]);
   const [reviewmessage, setreviewmessage] = useState('');
   const [review, setreview] = useState([]);
@@ -70,7 +70,6 @@ export default function ViewProfile(props) {
     try {
       const title = newEvent.title;
       const start = newEvent.start;
-      const end = newEvent.end;
       const createdBy = localStorage.getItem("email");
       //call api for creating note
       const response = await fetch(
@@ -81,13 +80,14 @@ export default function ViewProfile(props) {
             "Content-Type": "application/json",
             "auth-token": localStorage.getItem("token"),
           },
-          body: JSON.stringify({ title, start, end, createdBy }),
+          body: JSON.stringify({ title, start, createdBy }),
         }
       );
-      await response.json({ title, start, end, createdBy });
-      setNewEvent({ title: "", start: "", end: "" });
+      await response.json({ title, start, createdBy });
+      console.log(start);
+      setNewEvent({ title: "", start: ""});
       props.showAlert(
-        "Event Request Has been Sent to the Mentor Succesfully",
+        "Event Request Has been Sent to the Doctor Succesfully",
         "success"
       );
     } catch (error) {
@@ -144,40 +144,40 @@ try{
               </div>
               <div className="w3-twothird">
                 <div className="w3-container w3-card w3-white w3-margin-bottom">
-                  <div className="w3-container">
-                    <br />
-                    <h2 className="w3-text-grey w3-padding-16">
-                      <i className="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-blue"></i>
-                      About {profile.name}
-                    </h2>
-                    <hr />
-                    <p>
-                      <i className="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-blue"></i>
-                      {profile.work} at {profile.company}
-                    </p>
-                    <p>
-                      <i className="fa fa-cogs fa-fw w3-margin-right w3-large w3-text-blue"></i>
-                      Years of experience - {profile.experience}
-                    </p>
-                    <p>
-                      <i className="fa fa-home fa-fw w3-margin-right w3-large w3-text-blue"></i>
-                      Bangaluru, India
-                    </p>
-                    <p>
-                      <i className="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-blue"></i>
-                      {profile.email}
-                    </p>
-                    <p>
-                      <i className="fa fa-chalkboard fa-fw w3-margin-right w3-large w3-text-blue"></i>
-                      Class Specialization - {profile.classsp}
-                    </p>
-                    <p>
-                      <i className="fa fa-book-open fa-fw w3-margin-right w3-large w3-text-blue"></i>
-                      Subject Specialization - {profile.subject}
-                    </p>
-                    <br />
-                    <br />
-                  </div>
+                <div className="w3-container">
+                  <br />
+                  <h2 className="w3-text-grey w3-padding-16">
+                    <i className="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-blue"></i>
+                    About {profile.name}
+                  </h2>
+                  <hr />
+                  <p>
+                    <i className="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-blue"></i>
+                    {profile.specialization} at {profile.hospital}
+                  </p>
+                  <p>
+                    <i className="fa fa-cogs fa-fw w3-margin-right w3-large w3-text-blue"></i>
+                    Years of experience - {profile.experience}
+                  </p>
+                  <p>
+                    <i className="fa fa-home fa-fw w3-margin-right w3-large w3-text-blue"></i>
+                    {profile.location}
+                  </p>
+                  <p>
+                    <i className="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-blue"></i>
+                    {profile.email}
+                  </p>
+                  <p>
+                    <i className="fa fa-phone fa-fw w3-margin-right w3-large w3-text-blue"></i>
+                    {profile.phone}
+                  </p>
+                  <p>
+                    <i className="fa fa-book-open fa-fw w3-margin-right w3-large w3-text-blue"></i>
+                    Specialization - {profile.specialization}
+                  </p>
+                  <br />
+                  <br />
+                </div>
                 </div>
               </div>
             </div>
@@ -190,7 +190,7 @@ try{
             </div>
             <div className="col-md-12 ">
               <div className="container mx-5">
-                <h5>Add Mentoring Request</h5>
+                <h5>Add Appointment Request</h5>
                 <input
                   className="mt-2"
                   type="text"
@@ -208,12 +208,6 @@ try{
                   selected={newEvent.start}
                   onChange={(start) => setNewEvent({ ...newEvent, start })}
                 />
-                <DatePicker
-                  className="mt-2"
-                  placeholderText="End Date"
-                  selected={newEvent.end}
-                  onChange={(end) => setNewEvent({ ...newEvent, end })}
-                />
                 <button
                   className="btn btn-primary mt-2"
                   stlye={{ marginTop: "10px" }}
@@ -226,7 +220,7 @@ try{
                 localizer={localizer}
                 events={allEvents}
                 startAccessor="start"
-                endAccessor="end"
+                endAccessor="start"
                 style={{ height: 500, margin: "50px" }}
               />
             </div>

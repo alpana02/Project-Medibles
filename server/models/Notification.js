@@ -14,10 +14,6 @@ const NotificationSchema = new Schema({
     type: Date,
     required: true,
   },
-  end: {
-    type: Date,
-    required: true,
-  },
   createdBy: {
     type: String,
     required: true,

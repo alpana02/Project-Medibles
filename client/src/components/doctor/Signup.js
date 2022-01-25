@@ -16,7 +16,7 @@ export const Signup = (props) => {
     img: "",
     specialization: "",
     location: "",
-    disease:""
+    disease: "",
   });
 
   const onChange = (e) => {
@@ -57,7 +57,7 @@ export const Signup = (props) => {
       img,
       specialization,
       location,
-      disease
+      disease,
     } = credentials;
 
     const response = await fetch(`http://localhost:5000/api/auth/signup`, {
@@ -76,7 +76,7 @@ export const Signup = (props) => {
         img,
         specialization,
         location,
-        disease
+        disease,
       }),
     });
     const json = await response.json();
@@ -85,7 +85,7 @@ export const Signup = (props) => {
       localStorage.setItem("token", json.authToken);
       localStorage.setItem("email", json.user.email);
       localStorage.setItem("role", json.user.role);
-      navigate("/");
+      navigate("/homedoctor");
       props.showAlert("Account Created Succesfully", "success");
     } else {
       props.showAlert("Invalid Details", "danger");
@@ -215,11 +215,11 @@ export const Signup = (props) => {
                             aria-label="Default select example"
                             required
                           >
-                            <option selected>Select specialization</option>
+                            <option defaultValue value="">
+                              Select specialization
+                            </option>
                             <option value="Orthopedics">Orthopedics</option>
-                            <option value="Dermatology">Dermatology</option>
                             <option value="Pediatrics">Pediatrics</option>
-                            <option value="Radiology">Radiology</option>
                             <option value="Ophthalmology">Ophthalmology</option>
                             <option value="Neurology">Neurology</option>
                           </select>

@@ -14,7 +14,7 @@ export default function Home(props) {
       navigate("/login");
     }
     if (localStorage.getItem("role") === "doctor") {
-      navigate("/about");
+      navigate("/homedoctor");
     }
     getAllUsers();
     // eslint-disable-next-line
@@ -37,7 +37,7 @@ export default function Home(props) {
       return (
         card.classsp === filterCard.class &&
         card.subject === filterCard.subject &&
-        card.role === "mentor"
+        card.role === "doctor"
       );
     });
     setusercards(res);
@@ -112,24 +112,18 @@ export default function Home(props) {
                       alt={usercards.name}
                     />
                     <div className="card-body">
-                      <h5 className="card-title">{usercards.name}</h5>
+                      <h4 >{usercards.name}</h4>
                       <p
                         className="card-text"
                         style={{ fontSize: "14px", marginBottom: "0.3rem" }}
                       >
-                        <b>{usercards.work}</b> at {usercards.company}
+                        <b>{usercards.specialization}</b> at {usercards.hospital}
                       </p>
                       <p
                         className="card-text"
                         style={{ fontSize: "14px", marginBottom: "0.3rem" }}
                       >
-                        <b>Class Specialization :</b> {usercards.classsp}
-                      </p>
-                      <p
-                        className="card-text"
-                        style={{ fontSize: "14px", marginBottom: "0.3rem" }}
-                      >
-                        <b>Subject Specialization : </b> {usercards.subject}
+                        <b>Location :</b> {usercards.location}
                       </p>
                       <p className="card-text" style={{ fontSize: "14px" }}>
                         <b>Years of experience : </b> {usercards.experience}

@@ -5,21 +5,33 @@ const Calendar = require("../models/Calendar");
 const User = require("../models/User");
 const Notification = require("../models/Notification");
 
-// ROUTE 1 : Add a new event when mentor accepts: Login required
+// ROUTE 1 : Add a new event when doctor accepts: Login required
 router.post("/addevent", fetchUser, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id)
-    const { title, start, end, createdBy, notiId } = req.body;
+    const user = await User.findById(req.user.id);
+    const { title, start, createdBy, notiId } = req.body;
     const event = new Calendar({
       title,
       start,
-      end,
       createdBy,
       user: req.user.id,
       notify: notiId,
-      mentor: user.name
+      doctor: user.name,
     });
     const savedEvent = await event.save();
+
+    //save enrolled
+    const patient = await User.find({ email: createdBy });
+    console.log(patient);
+    const enrolledPatientobject = {
+      patientName: patient[0].name,
+      patientEmail: patient[0].email,
+      patientImage: patient[0].img,
+      patientDate: start
+    };
+    console.log(enrolledPatientobject);
+    await user.enrolledPatient.push(enrolledPatientobject);
+    await user.save();
     res.json(savedEvent);
   } catch (error) {
     console.log(error.message);
@@ -37,14 +49,14 @@ router.get("/fetchallevents/:id", fetchUser, async (req, res) => {
     res.status(500).send("Oops internal server error occured");
   }
 });
-// ROUTE 3 : push to notification of mentor: Login required
+// ROUTE 3 : push to notification of doctor: Login required
 router.post("/addNotification/:id", fetchUser, async (req, res) => {
   try {
-    const { title, start, end, createdBy } = req.body;
+    const { title, start, createdBy } = req.body;
+    console.log(start);
     const event = new Notification({
       title,
       start,
-      end,
       createdBy,
       user: req.params.id,
     });
@@ -55,7 +67,7 @@ router.post("/addNotification/:id", fetchUser, async (req, res) => {
     res.status(500).json("Oops internal server error occured");
   }
 });
-// ROUTE 5 : get all event notification of a mentor: Login required
+// ROUTE 5 : get all event notification of a doctor: Login required
 router.get("/fetchallnoti", fetchUser, async (req, res) => {
   try {
     const notification = await Notification.find({ user: req.user.id });
@@ -78,13 +90,13 @@ router.delete("/deleteevent/:id", fetchUser, async (req, res) => {
       return res.status(401).send("Permission not granted");
     }
     notification = await Notification.findByIdAndDelete(req.params.id);
-    res.send('Success!! Notification deleted succesfully')
+    res.send("Success!! Notification deleted succesfully");
   } catch (error) {
     console.log(error.message);
     res.status(500).send("Oops internal server error occured");
   }
 });
-// ROUTE 7 : get all events of an exisitng mentor: Login required
+// ROUTE 7 : get all events of an exisitng doctor: Login required
 router.get("/fetchmyEvents", fetchUser, async (req, res) => {
   try {
     const events = await Calendar.find({ user: req.user.id });
@@ -97,7 +109,7 @@ router.get("/fetchmyEvents", fetchUser, async (req, res) => {
 // ROUTE 8 : get all events of an exisitng mentee: Login required
 router.get("/fetchmenteeBooking", fetchUser, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id)
+    const user = await User.findById(req.user.id);
     const events = await Calendar.find({ createdBy: user.email });
     res.json(events);
   } catch (error) {

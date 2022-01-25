@@ -6,6 +6,8 @@ import format from "date-fns/format";
 import getDay from "date-fns/getDay";
 import parse from "date-fns/parse";
 import startOfWeek from "date-fns/startOfWeek";
+// import stethescope from "./stethoscope-svgrepo-com.svg";
+
 
 export default function About(props) {
   let navigate = useNavigate();
@@ -83,6 +85,12 @@ export default function About(props) {
                     About {profile.name}
                   </h2>
                   <hr />
+                  {/* <img
+                    src={stethescope}
+                    height={150}
+                    alt="stethescope-img"
+                    style={{ marginLeft: "600px" }}
+                  /> */}
                   <p>
                     <i className="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-blue"></i>
                     {profile.specialization} at {profile.hospital}
@@ -122,9 +130,32 @@ export default function About(props) {
             localizer={localizer}
             events={allEvents}
             startAccessor="start"
-            endAccessor="end"
+            endAccessor="start"
             style={{ height: 500, margin: "50px" }}
           />
+                    <div className="row px-5">
+            {allEvents.map((booking, index) => (
+              <div className="col-4 mb-xl-5 mb-7 mb-sm-6 mb-md-6 mb-lg-6 d-flex">
+                <div className="card" style={{ width: "18rem" }}>
+                  <div className="card-body">
+                    <h4>Appointment for {booking.title}</h4>
+                    <p
+                      className="card-text"
+                      style={{ fontSize: "14px", marginBottom: "0.3rem" }}
+                    >
+                      <b>Date :</b> {booking.start.substring(0, 10)}
+                    </p>
+                    <p
+                      className="card-text"
+                      style={{ fontSize: "14px", marginBottom: "0.3rem" }}
+                    >
+                      <b>Patient :</b> {booking.createdBy}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
       <div className="card card-body  mt-n7">

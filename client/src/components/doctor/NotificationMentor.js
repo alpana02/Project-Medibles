@@ -29,7 +29,7 @@ export default function NotificationMentor(props) {
     setProfile(data);
   }
 
-  async function handleAddEvent(title, start, end, createdBy, notiId) {
+  async function handleAddEvent(title, start, createdBy, notiId) {
     try {
       //call api for creating calendarevent
       const response = await fetch(
@@ -40,12 +40,12 @@ export default function NotificationMentor(props) {
             "Content-Type": "application/json",
             "auth-token": localStorage.getItem("token"),
           },
-          body: JSON.stringify({ title, start, end, createdBy, notiId }),
+          body: JSON.stringify({ title, start, createdBy, notiId }),
         }
       );
-      await response.json({ title, start, end, createdBy });
+      await response.json({ title, start, createdBy });
       props.showAlert(
-        "Booking Request Has been Accepted Succesfully",
+        "Appointment Request Has been Accepted Succesfully",
         "success"
       );
       //call api for deleting event
@@ -86,7 +86,7 @@ export default function NotificationMentor(props) {
             return notify._id !== notiId;
           });
           props.showAlert(
-            "Booking Request Has been Rejected Succesfully",
+            "Appointment Request Has been Rejected Succesfully",
             "danger"
           );
           setProfile(newNoti);
@@ -100,31 +100,25 @@ export default function NotificationMentor(props) {
     <div className="container">
       {
         <div className="col-12 mt-5">
-        <h2>Booking Requests to you</h2>
+        <h2>Appointment Requests to you</h2>
           <div className="row">
-          <h5 className="mt-3">{profile.length === 0 && "No Booking Requests Yet"}</h5>  
+          <h5 className="mt-3">{profile.length === 0 && "No Appointment Requests Yet"}</h5>  
             {profile.map((profile, index) => (
               <div className="col-4 mb-xl-5 mb-7 mb-sm-6 mb-md-6 mb-lg-6 d-flex">
                 <div className="card" style={{ width: "18rem" }}>
                   <div className="card-body">
-                    <h4>{profile.title}</h4>
+                   <h4>Appointment for  {profile.title}</h4>
                     <p
                       className="card-text"
-                      style={{ fontSize: "14px", marginBottom: "0.3rem" }}
+                      style={{ fontSize: "14px", marginBottom: "0.2rem" }}
                     >
-                      <b>Start Date :</b> {profile.start.substring(0, 10)}
+                      <b>Date :</b> {profile.start.substring(0, 10)}
                     </p>
                     <p
                       className="card-text"
-                      style={{ fontSize: "14px", marginBottom: "0.3rem" }}
+                      style={{ fontSize: "14px", marginBottom: "1rem" }}
                     >
-                      <b>End Date :</b> {profile.end.substring(0, 10)}
-                    </p>
-                    <p
-                      className="card-text"
-                      style={{ fontSize: "14px", marginBottom: "0.3rem" }}
-                    >
-                      <b>Booking By :</b> {profile.createdBy}
+                      <b>Requested By :</b> {profile.createdBy}
                     </p>
                     <button
                       className="btn btn-success mx-2"
@@ -132,7 +126,6 @@ export default function NotificationMentor(props) {
                         handleAddEvent(
                           profile.title,
                           profile.start,
-                          profile.end,
                           profile.createdBy,
                           profile._id
                         );
