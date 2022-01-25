@@ -9,13 +9,13 @@ export const SignupPatient = (props) => {
     name: "",
     email: "",
     password: "",
-    classsp: "",
     role: "patient",
+    location: "",
     work: "",
-    company: "",
+    specialization: "",
     experience: "",
     img: "",
-    subject: "",
+    disease: "",
   });
 
   const onChange = (e) => {
@@ -49,13 +49,13 @@ export const SignupPatient = (props) => {
       name,
       email,
       password,
-      classsp,
       role,
+      location,
       work,
-      company,
+      specialization,
       experience,
       img,
-      subject,
+      disease,
     } = credentials;
 
     const response = await fetch(`http://localhost:5000/api/auth/signup`, {
@@ -67,13 +67,13 @@ export const SignupPatient = (props) => {
         name,
         email,
         password,
-        classsp,
         role,
+        location,
         work,
-        company,
+        specialization,
         experience,
         img,
-        subject,
+        disease,
       }),
     });
     const json = await response.json();
@@ -163,21 +163,39 @@ export const SignupPatient = (props) => {
                         </div>
                         <div className="mb-1">
                           <label
-                            htmlFor="classsp"
+                            htmlFor="location"
                             className="form-label"
                             style={{ fontSize: "14px" }}
                           >
-                            Class
+                            Location
                           </label>
                           <input
-                            type="number"
+                            type="location"
                             className="form-control"
-                            name="classsp"
-                            id="classsp"
-                            value={credentials.classsp}
+                            name="location"
+                            id="location"
+                            value={credentials.location}
                             onChange={onChange}
                           />
                         </div>
+                        <div className="mb-1">
+                          <label
+                            htmlFor="disease"
+                            className="form-label"
+                            style={{ fontSize: "14px" }}
+                          >
+                             Disease
+                          </label>
+                          <input
+                            type="disease"
+                            className="form-control"
+                            name="disease"
+                            id="disease"
+                            value={credentials.disease}
+                            onChange={onChange}
+                          />
+                        </div>
+
 
                         <div className="mb-1">
                           <label
@@ -185,7 +203,7 @@ export const SignupPatient = (props) => {
                             className="form-label"
                             style={{ fontSize: "14px" }}
                           >
-                            Upload image
+                            Upload Photo
                           </label>
                           <input
                             type="file"

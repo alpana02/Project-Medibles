@@ -18,13 +18,13 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  classsp: {
+  location: {
     type: String,
   },
   work: {
     type: String,
   },
-  company: {
+  specialization: {
     type: String,
   },
   experience: {
@@ -33,19 +33,9 @@ const UserSchema = new Schema({
   img: {
     type: String,
   },
-  subject: {
+  disease: {
     type: String,
   },
-  session: [
-    {
-      title: String,
-      description: String,
-      date: String,
-      time: String,
-      creator: String,
-      link: String,
-    },
-  ],
   reviews: [
     {
       fromName: String,

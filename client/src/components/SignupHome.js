@@ -29,7 +29,7 @@ export default function SignupHome() {
                   </Link>
                   <Link
                     className="btn btn-outline-danger mt-3"
-                    to="/signupmentee"
+                    to="/signuppatient"
                     role="button"
                   >
                     Patient

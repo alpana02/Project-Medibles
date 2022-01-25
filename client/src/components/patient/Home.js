@@ -1,8 +1,5 @@
-import React, { useEffect, useState, useContext } from "react";
-import SessionItemPatient from "./SessionItemPatient";
-import sessionContext from "../../context/notes/noteContext";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import "./Home.css";
 
@@ -16,7 +13,6 @@ export default function Home(props) {
     if (!localStorage.getItem("token")) {
       navigate("/login");
     }
-    getSessions();
     getAllUsers();
     // eslint-disable-next-line
   }, []);
@@ -31,29 +27,6 @@ export default function Home(props) {
     setusercards(data);
     settotalcards(data)
   }
-
-  const responsive = {
-    superLargeDesktop: {
-      // the naming can be any, depends on you.
-      breakpoint: { max: 4000, min: 3000 },
-      items: 5
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 4
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 2
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 1
-    }
-  };
-
-  const context = useContext(sessionContext);
-  const { sessions, getSessions } = context;
 
   async function handleSubmit(e) {
     e.preventDefault();
