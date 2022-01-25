@@ -85,7 +85,7 @@ export default function About(props) {
                   <hr />
                   <p>
                     <i className="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-blue"></i>
-                    {profile.work} at {profile.company}
+                    {profile.specialization} at {profile.hospital}
                   </p>
                   <p>
                     <i className="fa fa-cogs fa-fw w3-margin-right w3-large w3-text-blue"></i>
@@ -93,19 +93,19 @@ export default function About(props) {
                   </p>
                   <p>
                     <i className="fa fa-home fa-fw w3-margin-right w3-large w3-text-blue"></i>
-                    Bangaluru, India
+                    {profile.location}
                   </p>
                   <p>
                     <i className="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-blue"></i>
                     {profile.email}
                   </p>
                   <p>
-                    <i className="fa fa-chalkboard fa-fw w3-margin-right w3-large w3-text-blue"></i>
-                    Class Specialization - {profile.classsp}
+                    <i className="fa fa-phone fa-fw w3-margin-right w3-large w3-text-blue"></i>
+                    {profile.phone}
                   </p>
                   <p>
                     <i className="fa fa-book-open fa-fw w3-margin-right w3-large w3-text-blue"></i>
-                    Subject Specialization - {profile.subject}
+                    Specialization - {profile.specialization}
                   </p>
                   <br />
                   <br />

@@ -35,12 +35,13 @@ router.post("/signup", async (req, res) => {
       email: req.body.email,
       password: secPass,
       role: req.body.role,
-      classsp: req.body.classsp,
-      work: req.body.work,
-      company: req.body.company,
+      phone: req.body.phone,
+      hospital: req.body.hospital,
       experience: req.body.experience,
       img: req.body.img,
-      subject: req.body.subject,
+      specialization: req.body.specialization,
+      location: req.body.location,
+      disease:req.body.disease
     });
     const data = {
       session: {

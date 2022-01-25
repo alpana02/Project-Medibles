@@ -9,13 +9,14 @@ export const Signup = (props) => {
     name: "",
     email: "",
     password: "",
-    classsp: "",
     role: "doctor",
-    work: "",
-    company: "",
+    phone: "",
+    hospital: "",
     experience: "",
     img: "",
-    subject: "",
+    specialization: "",
+    location: "",
+    disease:""
   });
 
   const onChange = (e) => {
@@ -49,13 +50,14 @@ export const Signup = (props) => {
       name,
       email,
       password,
-      classsp,
       role,
-      work,
-      company,
+      phone,
+      hospital,
       experience,
       img,
-      subject,
+      specialization,
+      location,
+      disease
     } = credentials;
 
     const response = await fetch(`http://localhost:5000/api/auth/signup`, {
@@ -67,13 +69,14 @@ export const Signup = (props) => {
         name,
         email,
         password,
-        classsp,
         role,
-        work,
-        company,
+        phone,
+        hospital,
         experience,
         img,
-        subject,
+        specialization,
+        location,
+        disease
       }),
     });
     const json = await response.json();
@@ -163,54 +166,63 @@ export const Signup = (props) => {
                         </div>
                         <div className="mb-1">
                           <label
-                            htmlFor="classsp"
+                            htmlFor="phone"
                             className="form-label"
                             style={{ fontSize: "14px" }}
                           >
-                            Class Specialization
+                            Phone number
                           </label>
                           <input
                             type="number"
                             className="form-control"
-                            name="classsp"
-                            id="classsp"
-                            value={credentials.classsp}
+                            name="phone"
+                            id="phone"
+                            value={credentials.phone}
+                            onChange={onChange}
+                            minLength={10}
+                            required
+                          />
+                        </div>
+                        <div className="mb-1">
+                          <label
+                            htmlFor="hospital"
+                            className="form-label"
+                            style={{ fontSize: "14px" }}
+                          >
+                            Hospital/ Clinic
+                          </label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            name="hospital"
+                            id="hospital"
+                            value={credentials.hospital}
                             onChange={onChange}
                           />
                         </div>
                         <div className="mb-1">
                           <label
-                            htmlFor="work"
+                            htmlFor="experience"
                             className="form-label"
                             style={{ fontSize: "14px" }}
                           >
-                            Work
+                            Specialization
                           </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            name="work"
-                            id="work"
-                            value={credentials.work}
+                          <select
+                            className="form-select"
+                            name="specialization"
                             onChange={onChange}
-                          />
-                        </div>
-                        <div className="mb-1">
-                          <label
-                            htmlFor="company"
-                            className="form-label"
-                            style={{ fontSize: "14px" }}
+                            aria-label="Default select example"
+                            required
                           >
-                            Company
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            name="company"
-                            id="company"
-                            value={credentials.company}
-                            onChange={onChange}
-                          />
+                            <option selected>Select specialization</option>
+                            <option value="Orthopedics">Orthopedics</option>
+                            <option value="Dermatology">Dermatology</option>
+                            <option value="Pediatrics">Pediatrics</option>
+                            <option value="Radiology">Radiology</option>
+                            <option value="Ophthalmology">Ophthalmology</option>
+                            <option value="Neurology">Neurology</option>
+                          </select>
                         </div>
                         <div className="mb-1">
                           <label
@@ -232,24 +244,20 @@ export const Signup = (props) => {
                         </div>
                         <div className="mb-1">
                           <label
-                            htmlFor="experience"
+                            htmlFor="hospital"
                             className="form-label"
                             style={{ fontSize: "14px" }}
                           >
-                            Subject
+                            Location
                           </label>
-                          <select
-                            className="form-select"
-                            name="subject"
+                          <input
+                            type="text"
+                            className="form-control"
+                            name="location"
+                            id="location"
+                            value={credentials.location}
                             onChange={onChange}
-                            aria-label="Default select example"
-                            required
-                          >
-                            <option selected>Select Subject</option>
-                            <option value="math">Math</option>
-                            <option value="science">Science</option>
-                            <option value="english">English</option>
-                          </select>
+                          />
                         </div>
                         <div className="mb-1">
                           <label
@@ -306,7 +314,7 @@ export const Signup = (props) => {
                   </div>
                   <div className="col-lg-6 d-flex align-items-center gradient-custom-2">
                     <div className="text-white px-3 py-4 p-md-5 mx-md-4">
-                      <h4 className="mb-4">We are more than just a company</h4>
+                      <h4 className="mb-4">We are more than just a hospital</h4>
                       <p className="small mb-0">
                         Lorem ipsum dolor sit amet, consectetur adipisicing
                         elit, sed do eiusmod tempor incididunt ut labore et

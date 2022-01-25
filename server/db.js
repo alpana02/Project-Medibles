@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 //const uri = `mongodb+srv://pari:newpassword@cluster0.wiomu.mongodb.net/demodb?retryWrites=true&w=majority`;
-const uri = `mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false`;
+const uri = `mongodb://localhost:27017/medibles`;
 const connectToMongo = () => {
   mongoose.connect(
     uri,
