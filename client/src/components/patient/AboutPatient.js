@@ -73,9 +73,9 @@ export default function AboutPatient(props) {
             <div className="w3-twothird">
               <div className="w3-container w3-card w3-white w3-margin-bottom">
                 <div className="w3-container"><br /><h2 className="w3-text-grey w3-padding-16"><i className="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-blue"></i>About {profile.name}</h2><hr />
-                  <p><i className="fa fa-home fa-fw w3-margin-right w3-large w3-text-blue"></i>Bangaluru, India</p>
+                  <p><i className="fa fa-home fa-fw w3-margin-right w3-large w3-text-blue"></i>{profile.location}</p>
                   <p><i className="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-blue"></i>{profile.email}</p>
-                  <p><i className="fa fa-chalkboard fa-fw w3-margin-right w3-large w3-text-blue"></i>Class Specialization - {profile.classsp}</p>
+                  <p><i className="fa fa-chalkboard fa-fw w3-margin-right w3-large w3-text-blue"></i>Disease - {profile.disease}</p>
                 </div>
               </div>
             </div>

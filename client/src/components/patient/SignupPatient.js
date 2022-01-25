@@ -10,12 +10,13 @@ export const SignupPatient = (props) => {
     email: "",
     password: "",
     role: "patient",
-    location: "",
-    work: "",
-    specialization: "",
+    phone: "",
+    hospital: "",
     experience: "",
     img: "",
-    disease: "",
+    specialization: "",
+    location: "",
+    disease:""
   });
 
   const onChange = (e) => {
@@ -50,12 +51,13 @@ export const SignupPatient = (props) => {
       email,
       password,
       role,
-      location,
-      work,
-      specialization,
+      phone,
+      hospital,
       experience,
       img,
-      disease,
+      specialization,
+      location,
+      disease
     } = credentials;
 
     const response = await fetch(`http://localhost:5000/api/auth/signup`, {
@@ -68,12 +70,13 @@ export const SignupPatient = (props) => {
         email,
         password,
         role,
-        location,
-        work,
-        specialization,
+        phone,
+        hospital,
         experience,
         img,
-        disease,
+        specialization,
+        location,
+        disease
       }),
     });
     const json = await response.json();
@@ -144,6 +147,23 @@ export const SignupPatient = (props) => {
                         </div>
                         <div className="mb-1">
                           <label
+                            htmlFor="phone"
+                            className="form-label"
+                            style={{ fontSize: "14px" }}
+                          >
+                            Phone Number
+                          </label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            name="phone"
+                            id="phone"
+                            value={credentials.phone}
+                            onChange={onChange}
+                          />
+                        </div>
+                        <div className="mb-1">
+                          <label
                             htmlFor="password"
                             className="form-label"
                             style={{ fontSize: "14px" }}
@@ -170,7 +190,7 @@ export const SignupPatient = (props) => {
                             Location
                           </label>
                           <input
-                            type="location"
+                            type="text"
                             className="form-control"
                             name="location"
                             id="location"

@@ -102,9 +102,9 @@ export default function Navbar(props) {
                   <li className="nav-item">
                     <Link
                       className={`nav-link ${
-                        location.pathname === "/aboutmentee" ? "active" : ""
+                        location.pathname === "/aboutpatient" ? "active" : ""
                       }`}
-                      to="/aboutmentee"
+                      to="/aboutpatient"
                     >
                       About
                     </Link>
