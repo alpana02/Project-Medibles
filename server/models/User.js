@@ -51,6 +51,7 @@ const UserSchema = new Schema({
     {
       patientName: String,
       patientEmail: String,
+      patientId:String,
       patientImage: String,
       patientDate: Date,
     },

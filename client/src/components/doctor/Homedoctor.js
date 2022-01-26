@@ -89,7 +89,7 @@ export default function Homedoctor(props) {
         {
           <div className="col-12 mt-3">
           <div className="row">
-            {usercards.enrolledPatient.map((usercard, index) => (
+            {usercards.enrolledPatient && usercards.enrolledPatient.map((usercard, index) => (
               <div className="col-xl-3 col-md-6 mb-xl-5 mb-7 mb-sm-6 mb-md-6 mb-lg-6 d-flex">
                 <div className="card" style={{ width: "18rem" }}>
                   <img
@@ -114,7 +114,7 @@ export default function Homedoctor(props) {
                       <b>Enrolled Date :</b> {usercard.patientDate.substring(0,10)}
                     </p>
                     <Link
-                      to={`/viewProfilePatient/${usercard.patientEmail}`}
+                      to={`/viewProfilePatient/${usercard.patientId}`}
                       className="btn btn-primary"
                     >
                       View Profile

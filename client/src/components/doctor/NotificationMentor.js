@@ -29,7 +29,7 @@ export default function NotificationMentor(props) {
     setProfile(data);
   }
 
-  async function handleAddEvent(title, start, createdBy, notiId) {
+  async function handleAddEvent(title, start, createdBy, notiId,createdById) {
     try {
       //call api for creating calendarevent
       const response = await fetch(
@@ -40,7 +40,7 @@ export default function NotificationMentor(props) {
             "Content-Type": "application/json",
             "auth-token": localStorage.getItem("token"),
           },
-          body: JSON.stringify({ title, start, createdBy, notiId }),
+          body: JSON.stringify({ title, start, createdBy, notiId,createdById }),
         }
       );
       await response.json({ title, start, createdBy });
@@ -127,7 +127,8 @@ export default function NotificationMentor(props) {
                           profile.title,
                           profile.start,
                           profile.createdBy,
-                          profile._id
+                          profile._id,
+                          profile.createdById
                         );
                       }}
                     >

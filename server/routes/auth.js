@@ -140,8 +140,8 @@ router.get("/getDetails/:id", fetchUser, async (req, res) => {
 router.get("/getDetailsofPatient/:id", fetchUser, async (req, res) => {
   try {
     const id = req.params.id;
-    const user = await User.find({email:id});
-    res.send(user[0]);
+    const user = await User.findById(id);
+    res.send(user);
   } catch (error) {
     console.log(error.message);
     res.status(500).send("Oops internal server error occured");

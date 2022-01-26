@@ -9,11 +9,12 @@ const Notification = require("../models/Notification");
 router.post("/addevent", fetchUser, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    const { title, start, createdBy, notiId } = req.body;
+    const { title, start, createdBy, notiId,createdById } = req.body;
     const event = new Calendar({
       title,
       start,
       createdBy,
+      createdById,
       user: req.user.id,
       notify: notiId,
       doctor: user.name,
@@ -21,12 +22,13 @@ router.post("/addevent", fetchUser, async (req, res) => {
     const savedEvent = await event.save();
 
     //save enrolled
-    const patient = await User.find({ email: createdBy });
+    const patient = await User.findById(createdById)
     console.log(patient);
     const enrolledPatientobject = {
-      patientName: patient[0].name,
-      patientEmail: patient[0].email,
-      patientImage: patient[0].img,
+      patientName: patient.name,
+      patientEmail: patient.email,
+      patientImage: patient.img,
+      patientId:createdById,
       patientDate: start
     };
     console.log(enrolledPatientobject);
@@ -58,6 +60,7 @@ router.post("/addNotification/:id", fetchUser, async (req, res) => {
       title,
       start,
       createdBy,
+      createdById:req.user.id,
       user: req.params.id,
     });
     const savedNoti = await event.save();

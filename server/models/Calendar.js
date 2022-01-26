@@ -22,6 +22,10 @@ const CalendarSchema = new Schema({
     type: String,
     required: true,
   },
+  createdById: {
+    type: String,
+    required: true,
+  },
   doctor: {
     type: String,
     required: true,

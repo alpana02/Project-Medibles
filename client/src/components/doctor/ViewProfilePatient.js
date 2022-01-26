@@ -79,22 +79,86 @@ export default function ViewProfilePatient(props) {
                       Disease - {profile.disease}
                     </p>
                   </div>
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="w3-half">
+                <div className="w3-container w3-card w3-white w3-margin-bottom">
+                  <div className="w3-container">
+                    <br />
+                    <div className="mb-1">
+                      <label
+                        htmlFor="experience"
+                        className="form-label"
+                        style={{ fontSize: "14px" }}
+                      >
+                        Specialization
+                      </label>
+                      <select
+                        className="form-select"
+                        name="specialization"
+                        aria-label="Default select example"
+                        required
+                      >
+                        <option defaultValue value="">
+                          Select specialization
+                        </option>
+                        <option value="Orthopedics">Orthopedics</option>
+                        <option value="Pediatrics">Pediatrics</option>
+                        <option value="Ophthalmology">Ophthalmology</option>
+                        <option value="Neurology">Neurology</option>
+                      </select>
+                      <small id="emailHelp" class="form-text text-muted">
+                        We'll never share your email with anyone else.
+                      </small>
+                    </div>
+                  </div>
 
-                  <div className="w3-half px-5">
+                  <div className="w3-half px-5 ">
                     <button
                       type="button"
-                      className="btn btn-primary btn-lg float-end my-3 mb-4 px-4"
+                      className="btn btn-primary btn-lg my-3 mb-4 px-4"
                     >
                       Assign Exercise
                     </button>
                   </div>
-                  <div className="w3-half px-5">
-                    <button
-                      type="button"
-                      className="btn btn-dark btn-lg my-3 mb-4 px-4"
-                    >
-                      Add Prescription
-                    </button>
+                </div>
+              </div>
+              <div className="w3-half">
+                <div className="w3-container w3-card w3-white w3-margin-bottom">
+                  <div className="w3-container">
+                    <br />
+                    <form>
+                      <div className="mb-1">
+                        <label
+                          htmlFor="experience"
+                          className="form-label"
+                          style={{ fontSize: "14px" }}
+                        >
+                          Add prescription
+                        </label>
+
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Type Medicines in comma seperated way"
+                          name="medicinename"
+                          required
+                        />
+                        <small id="emailHelp" class="form-text text-muted">
+                         Eg. calpol,dolo,calvam-625
+                        </small>
+                      </div>
+                      <div className="w3-half px-5">
+                        <button
+                          type="button"
+                          className="btn btn-dark my-3 mb-4 px-4"
+                        >
+                          Add Prescription
+                        </button>
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>
