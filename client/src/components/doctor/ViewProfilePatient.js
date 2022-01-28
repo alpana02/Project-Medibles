@@ -6,6 +6,16 @@ export default function ViewProfilePatient(props) {
   const { id } = useParams();
   let navigate = useNavigate();
   const [profile, setProfile] = useState([]);
+  const [note, setnote] = useState("");
+  const [medicine, setmedicine] = useState([
+    {
+      name: "",
+      dosage: "",
+      duration: "",
+      time: "",
+      frequency: "",
+    },
+  ]);
 
   useEffect(() => {
     if (!localStorage.getItem("token")) {
@@ -27,11 +37,58 @@ export default function ViewProfilePatient(props) {
       }
     );
     const data = await response.json();
-    console.log(data);
     setProfile(data);
-    console.log(profile);
   }
 
+  const handleMedChange = (i, e) => {
+    let newMedicine = [...medicine];
+    newMedicine[i][e.target.name] = e.target.value;
+    setmedicine(newMedicine);
+  };
+  let addFormFields = () => {
+    setmedicine([
+      ...medicine,
+      {
+        name: "",
+        dosage: "",
+        duration: "",
+        time: "",
+        frequency: "",
+      },
+    ]);
+  };
+  let removeFormFields = (i) => {
+    let newMedicine = [...medicine];
+    newMedicine.splice(i, 1);
+    setmedicine(newMedicine);
+  };
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    props.showAlert("Prescription Added Succesfully", "success");
+    const meds = JSON.stringify(medicine);
+    console.log(meds);
+    const response = await fetch(
+      `http://localhost:5000/api/prescription/addPrescription/${id}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+        body: { meds, note },
+      }
+    );
+    const data = await response.json();
+    console.log(data);
+    setmedicine([
+      { name: "", dosage: "", duration: "", time: "", frequency: "" },
+    ]);
+    setnote("");
+  }
+  const handleNoteChange = (e) => {
+    setnote(e.target.value);
+  };
   return (
     <div>
       <div className="container rounded bg-white">
@@ -109,7 +166,7 @@ export default function ViewProfilePatient(props) {
                         <option value="Ophthalmology">Ophthalmology</option>
                         <option value="Neurology">Neurology</option>
                       </select>
-                      <small id="emailHelp" class="form-text text-muted">
+                      <small id="emailHelp" className="form-text text-muted">
                         We'll never share your email with anyone else.
                       </small>
                     </div>
@@ -127,35 +184,123 @@ export default function ViewProfilePatient(props) {
               </div>
               <div className="w3-half">
                 <div className="w3-container w3-card w3-white w3-margin-bottom">
+                  <h3>Medicine assign</h3>
                   <div className="w3-container">
-                    <br />
-                    <form>
-                      <div className="mb-1">
-                        <label
-                          htmlFor="experience"
-                          className="form-label"
-                          style={{ fontSize: "14px" }}
-                        >
-                          Add prescription
-                        </label>
+                    <form onSubmit={handleSubmit}>
+                      {medicine.map((element, index) => (
+                        <div key={index}>
+                          <div className="mb-1 ">
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Type Medicines names"
+                              name="name"
+                              value={medicine.name === "" ? "" : medicine.name}
+                              onChange={(e) => handleMedChange(index, e)}
+                              required
+                            />
+                          </div>
+                          <div className="w3-half mt-1">
+                            <div className="mb-1">
+                              <select
+                                className="form-select"
+                                name="dosage"
+                                value={medicine.dosage}
+                                onChange={(e) => handleMedChange(index, e)}
+                                aria-label="Default select example"
+                                required
+                              >
+                                <option defaultValue="">Select Dosage</option>
+                                <option value="morning">Morning</option>
+                                <option value="day">Day</option>
+                                <option value="night">Night</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div className="w3-half mt-1">
+                            <div className="mb-1 mx-2">
+                              <input
+                                type="number"
+                                className="form-control "
+                                placeholder="Type duration"
+                                name="duration"
+                                value={medicine.duration}
+                                onChange={(e) => handleMedChange(index, e)}
+                                required
+                              />
+                            </div>
+                          </div>
+                          <div className="w3-half mt-1">
+                            <div className="mb-1">
+                              <select
+                                className="form-select mb-3"
+                                name="time"
+                                value={medicine.time}
+                                onChange={(e) => handleMedChange(index, e)}
+                                aria-label="Default select example"
+                                required
+                              >
+                                <option defaultValue="">Select Timing</option>
+                                <option value="before">Before Food</option>
+                                <option value="after">After Food</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div className="w3-half mt-1">
+                            <div className="mb-1 mx-2">
+                              <select
+                                className="form-select mb-3"
+                                name="frequency"
+                                value={medicine.frequency}
+                                onChange={(e) => handleMedChange(index, e)}
+                                aria-label="Default select example"
+                                required
+                              >
+                                <option value="monday">Monday</option>
+                                <option value="tuesday">Tuesday</option>
+                                <option value="wednesday">Wednesday</option>
+                                <option value="thursday">Thursday</option>
+                                <option value="friday">Friday</option>
+                                <option value="saturday">Saturday</option>
+                                <option value="sunday">Sunday</option>
+                              </select>
+                            </div>
+                          </div>
+                          {index ? (
+                            <button
+                              type="button"
+                              className="btn btn-danger mb-3"
+                              onClick={() => removeFormFields(index)}
+                            >
+                              Remove
+                            </button>
+                          ) : null}
+                        </div>
+                      ))}
 
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Type Medicines in comma seperated way"
-                          name="medicinename"
-                          required
-                        />
-                        <small id="emailHelp" class="form-text text-muted">
-                         Eg. calpol,dolo,calvam-625
-                        </small>
-                      </div>
-                      <div className="w3-half px-5">
+                      <input
+                        type="text"
+                        className="form-control mb-2 py-3"
+                        placeholder="Type any specific instructions for the patient"
+                        name="note"
+                        value={note}
+                        onChange={(e) => handleNoteChange(e)}
+                      />
+                      <div className="w3-half align-items-end">
                         <button
                           type="button"
-                          className="btn btn-dark my-3 mb-4 px-4"
+                          className="btn btn-dark mb-3 px-4"
+                          onClick={addFormFields}
                         >
-                          Add Prescription
+                          Add More Fields
+                        </button>
+                      </div>
+                      <div className="w3-half ">
+                        <button
+                          type="submit"
+                          className="btn btn-success mb-3 px-4"
+                        >
+                          Submit
                         </button>
                       </div>
                     </form>
