@@ -10,6 +10,13 @@ const PrescriptionSchema = new Schema({
     type: String,
     required: true,
   },
+  note: {
+    type: String,
+  },
+  doctorName: {
+    type: String,
+    required: true,
+  },
   medicines: {
     type: [
       {
@@ -21,9 +28,6 @@ const PrescriptionSchema = new Schema({
       },
     ],
     required: true,
-  },
-  note: {
-    type: String,
   },
 });
 module.exports = mongoose.model("prescription", PrescriptionSchema);

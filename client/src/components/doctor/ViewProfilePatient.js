@@ -66,8 +66,6 @@ export default function ViewProfilePatient(props) {
   async function handleSubmit(event) {
     event.preventDefault();
     props.showAlert("Prescription Added Succesfully", "success");
-    const meds = JSON.stringify(medicine);
-    console.log(meds);
     const response = await fetch(
       `http://localhost:5000/api/prescription/addPrescription/${id}`,
       {
@@ -76,7 +74,7 @@ export default function ViewProfilePatient(props) {
           "Content-Type": "application/json",
           "auth-token": localStorage.getItem("token"),
         },
-        body: { meds, note },
+        body: JSON.stringify({medicine,note}),
       }
     );
     const data = await response.json();

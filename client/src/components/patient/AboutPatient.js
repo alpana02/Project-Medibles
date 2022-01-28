@@ -5,6 +5,7 @@ export default function AboutPatient(props) {
   let navigate = useNavigate();
   const [profile, setProfile] = useState([])
   const [bookings, setBooking] = useState([]);
+  const [prescription, setPrescription] = useState([]);
 
   useEffect(() => {
     if (!localStorage.getItem("token")) {
@@ -12,6 +13,7 @@ export default function AboutPatient(props) {
     }
     getUser();
     getBooking();
+    getPrescription();
     // eslint-disable-next-line
   }, []);
 
@@ -40,12 +42,43 @@ export default function AboutPatient(props) {
     );
     const data = await response.json();
     setBooking(data);
+
   }
 
-  return <div>
+  const deletePrescription = async (id) => {
+    //call api for deleting prescription
+    const response = await fetch(`http://localhost:5000/api/prescription/deleteprescription/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
+      },
+    });
+    console.log(response);
+    const newPrescriptions = prescription.filter((prescription) => {
+      return prescription._id !== id;
+    });
+    setPrescription(newPrescriptions);
+  };
+
+  async function getPrescription() {
+    const response = await fetch(
+      `http://localhost:5000/api/prescription/fetchprescriptionpatient`,
+      {
+        method: "GET",
+        headers: {
+          "auth-token": localStorage.getItem("token"),
+        },
+      }
+    );
+    const data = await response.json();
+    setPrescription(data);
+  }
+
+  return <div className="container">
     <div className="container rounded bg-white">
       <div className="row">
-      <div className="w3-content w3-margin-top" style={{ maxWidth: "1400px" }}>
+        <div className="w3-content w3-margin-top" style={{ maxWidth: "1400px" }}>
           <div className="w3-row-padding">
             <div className="w3-third">
 
@@ -73,7 +106,7 @@ export default function AboutPatient(props) {
     <div className="mx-3">
       {
         <div className="col-12">
-          <h2>Booked Appointments</h2>
+          <h2>Appointments</h2>
           <div className="row">
             <h4 className="mt-2">{bookings.length === 0 && "No Appointments Yet"}</h4>
             {bookings.map((booking, index) => (
@@ -101,6 +134,59 @@ export default function AboutPatient(props) {
         </div>
       }
     </div>
+    <div className="mx-3">
+      {
+        <div className="col-12">
+          <h2>Prescription</h2>
+          <div className="row">
+            <h4 className="mt-2">{prescription.length === 0 && "No Prescriptions Yet"}</h4>
+            {prescription.map((prescription, index) => (
+              <div key={index} className="card col-6 mb-xl-5 mb-7 mb-sm-6 mb-md-6 mb-lg-6 d-flex">
+                <div className="card-body">
+                <div className="row">
+                <div className="col-9"><h4>Prescription by {prescription.doctorName}</h4> </div>
+                  <div className="col-3 float-end"><button className="btn btn-success " onClick={()=>{deletePrescription(prescription._id)}}>Completed</button></div>
+                </div>
+                  
+                  <table className="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Medicine Name</th>
+                        <th scope="col">Dosage</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Frequency</th>
+                        <th scope="col">Duration</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {prescription.medicines.map((med, index) => (
+                        <tr>
+                          <th scope="row">{index + 1}</th>
+                          <td>{med.name}</td>
+                          <td>{med.dosage}</td>
+                          <td>{med.time}</td>
+                          <td>{med.frequency}</td>
+                          <td>{med.duration} days</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  <p>{prescription.note ? (<>
+                    <b className="d-block">Special Instruction</b>
+                    {prescription.note}
+                  </>
+                  ) : ""}</p>
+
+                </div>
+
+              </div>
+            ))}
+          </div>
+        </div>
+      }
+    </div>
+
   </div>;
 }
 

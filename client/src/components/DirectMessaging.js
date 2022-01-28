@@ -28,6 +28,7 @@ export default function DirectMessaging (props) {
     }, []);
 
     return (
+        <div className='container'>
         <ChatEngine
             height='85vh'
             userName={user}
@@ -36,5 +37,7 @@ export default function DirectMessaging (props) {
             projectID={'4c9a4123-7701-4745-ab48-5f6ebd77f695'}
         // displayNewChatInterface={(credentials) => displayChatInterface(credentials)}
         />
+        </div>
+        
     )
 }

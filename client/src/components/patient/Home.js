@@ -47,7 +47,7 @@ export default function Home(props) {
   };
 
   return (
-    <div>
+    <div className="container">
       <div className="container">
         <h1>Discover Top Doctors</h1>
         <form onSubmit={handleSubmit}>

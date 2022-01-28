@@ -21,6 +21,7 @@ import Books from "./components/patient/Books";
 import { Notfound } from "./components/Notfound";
 import Homedoctor from "./components/doctor/Homedoctor";
 import ViewProfilePatient from "./components/doctor/ViewProfilePatient";
+import Medicine from "./components/patient/Medicine";
 
 function App() {
   const [alert, setAlert] = useState(null);
@@ -56,6 +57,7 @@ function App() {
             <Route exact path="/viewProfilePatient/:id" element={<ViewProfilePatient showAlert={showAlert} />} />
             <Route exact path="/notify" element={<NotificationMentor showAlert={showAlert} />} />
             <Route exact path="/books" element={<Books showAlert={showAlert} />} />
+            <Route exact path="/medicine" element={<Medicine showAlert={showAlert} />} />
             <Route path="*" element={<Notfound />} />
             </Routes>
           </div>
