@@ -208,7 +208,15 @@ export default function AboutPatient(props) {
                             <td>{med.name}</td>
                             <td>{med.dosage}</td>
                             <td>{med.time}</td>
-                            <td>{med.frequency}</td>
+                            <td>
+                              {med.frequency.map((freq, index) => (
+                                <>
+                                  {index === med.frequency.length - 1
+                                    ? freq + " "
+                                    : freq + ", "}
+                                </>
+                              ))}
+                            </td>
                             <td>{med.duration} days</td>
                           </tr>
                         ))}

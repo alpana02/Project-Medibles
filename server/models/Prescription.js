@@ -17,7 +17,7 @@ const PrescriptionSchema = new Schema({
     type: String,
     required: true,
   },
-  startDate:{
+  startDate: {
     type: String,
     required: true,
   },
@@ -28,13 +28,12 @@ const PrescriptionSchema = new Schema({
         dosage: String,
         duration: String,
         time: String,
-        frequency: String,
+        frequency: [String],
+        state: String,
+        eatenTime: String,
       },
     ],
-    required: true,
   },
 });
-
-
 
 module.exports = mongoose.model("prescription", PrescriptionSchema);

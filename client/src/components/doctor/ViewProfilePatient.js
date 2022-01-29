@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "react-datepicker/dist/react-datepicker.css";
+import Select from "react-select";
 
 export default function ViewProfilePatient(props) {
   const { id } = useParams();
@@ -8,13 +9,46 @@ export default function ViewProfilePatient(props) {
   const [profile, setProfile] = useState([]);
   const [note, setnote] = useState("");
   const [noteExcercise, setnoteExcercise] = useState("");
+
+  let freqOptions = [
+    {
+      value: "mon",
+      label: "Monday",
+    },
+    {
+      value: "tue",
+      label: "Tuesday",
+    },
+    {
+      value: "wed",
+      label: "Wednesday",
+    },
+    {
+      value: "thurs",
+      label: "Thursday",
+    },
+    {
+      value: "fri",
+      label: "Friday",
+    },
+    {
+      value: "sat",
+      label: "Saturday",
+    },
+    {
+      value: "sun",
+      label: "Sunday",
+    },
+  ];
   const [medicine, setmedicine] = useState([
     {
       name: "",
       dosage: "",
       duration: "",
       time: "",
-      frequency: "",
+      frequency: [],
+      eatenTime: "",
+      state: "info",
     },
   ]);
   const [excercise, setexcercise] = useState([
@@ -54,7 +88,11 @@ export default function ViewProfilePatient(props) {
     newMedicine[i][e.target.name] = e.target.value;
     setmedicine(newMedicine);
   };
-
+  const handleFreqChange = (i, e) => {
+    let newMedicine = [...medicine];
+    newMedicine[i]["frequency"] = Array.isArray(e) ? e.map((x) => x.value) : [];
+    setmedicine(newMedicine);
+  };
   const handleExcerciseChange = (i, e) => {
     let newExcercise = [...excercise];
     newExcercise[i][e.target.name] = e.target.value;
@@ -69,7 +107,9 @@ export default function ViewProfilePatient(props) {
         dosage: "",
         duration: "",
         time: "",
-        frequency: "",
+        frequency: [],
+        eatenTime: "",
+        state: "info",
       },
     ]);
   };
@@ -78,13 +118,13 @@ export default function ViewProfilePatient(props) {
     setexcercise([
       ...excercise,
       {
-          name: "",
-          severity: "",
-          duration: "",
-          time: "",
+        name: "",
+        severity: "",
+        duration: "",
+        time: "",
       },
     ]);
-  }
+  };
 
   let removeFormFields = (i) => {
     let newMedicine = [...medicine];
@@ -109,13 +149,21 @@ export default function ViewProfilePatient(props) {
           "Content-Type": "application/json",
           "auth-token": localStorage.getItem("token"),
         },
-        body: JSON.stringify({medicine,note}),
+        body: JSON.stringify({ medicine, note }),
       }
     );
     const data = await response.json();
     console.log(data);
     setmedicine([
-      { name: "", dosage: "", duration: "", time: "", frequency: "" },
+      {
+        name: "",
+        dosage: "",
+        duration: "",
+        time: "",
+        frequency: [],
+        eatenTime: "",
+        state: "info",
+      },
     ]);
     setnote("");
   }
@@ -131,7 +179,7 @@ export default function ViewProfilePatient(props) {
           "Content-Type": "application/json",
           "auth-token": localStorage.getItem("token"),
         },
-        body: JSON.stringify({excercise,noteExcercise}),
+        body: JSON.stringify({ excercise, noteExcercise }),
       }
     );
     const data = await response.json();
@@ -142,7 +190,7 @@ export default function ViewProfilePatient(props) {
         severity: "",
         duration: "",
         time: "",
-    },
+      },
     ]);
     setnoteExcercise("");
   }
@@ -219,7 +267,9 @@ export default function ViewProfilePatient(props) {
                               className="form-control"
                               placeholder="Type Excercise names"
                               name="name"
-                              value={excercise.name === "" ? "" : excercise.name}
+                              value={
+                                excercise.name === "" ? "" : excercise.name
+                              }
                               onChange={(e) => handleExcerciseChange(index, e)}
                               required
                             />
@@ -230,7 +280,9 @@ export default function ViewProfilePatient(props) {
                                 className="form-select"
                                 name="severity"
                                 value={excercise.severity}
-                                onChange={(e) => handleExcerciseChange(index, e)}
+                                onChange={(e) =>
+                                  handleExcerciseChange(index, e)
+                                }
                                 aria-label="Default select example"
                                 required
                               >
@@ -248,7 +300,9 @@ export default function ViewProfilePatient(props) {
                                 placeholder="Type duration"
                                 name="duration"
                                 value={excercise.duration}
-                                onChange={(e) => handleExcerciseChange(index, e)}
+                                onChange={(e) =>
+                                  handleExcerciseChange(index, e)
+                                }
                                 required
                               />
                             </div>
@@ -259,7 +313,9 @@ export default function ViewProfilePatient(props) {
                                 className="form-select mb-3"
                                 name="time"
                                 value={excercise.time}
-                                onChange={(e) => handleExcerciseChange(index, e)}
+                                onChange={(e) =>
+                                  handleExcerciseChange(index, e)
+                                }
                                 aria-label="Default select example"
                                 required
                               >
@@ -325,6 +381,7 @@ export default function ViewProfilePatient(props) {
                               name="name"
                               value={medicine.name === "" ? "" : medicine.name}
                               onChange={(e) => handleMedChange(index, e)}
+                              minLength={3}
                               required
                             />
                           </div>
@@ -355,6 +412,7 @@ export default function ViewProfilePatient(props) {
                                 value={medicine.duration}
                                 onChange={(e) => handleMedChange(index, e)}
                                 required
+                                minLength={1}
                               />
                             </div>
                           </div>
@@ -376,22 +434,13 @@ export default function ViewProfilePatient(props) {
                           </div>
                           <div className="w3-half mt-1">
                             <div className="mb-1 mx-2">
-                              <select
-                                className="form-select mb-3"
-                                name="frequency"
-                                value={medicine.frequency}
-                                onChange={(e) => handleMedChange(index, e)}
-                                aria-label="Default select example"
+                              <Select
+                                isMulti
+                                options={freqOptions}
+                                placeholder="Select Frequency"
+                                onChange={(e) => handleFreqChange(index, e)}
                                 required
-                              >
-                                <option value="monday">Monday</option>
-                                <option value="tuesday">Tuesday</option>
-                                <option value="wednesday">Wednesday</option>
-                                <option value="thursday">Thursday</option>
-                                <option value="friday">Friday</option>
-                                <option value="saturday">Saturday</option>
-                                <option value="sunday">Sunday</option>
-                              </select>
+                              ></Select>
                             </div>
                           </div>
                           {index ? (

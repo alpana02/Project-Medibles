@@ -58,4 +58,25 @@ router.delete("/deleteprescription/:id", fetchUser, async (req, res) => {
   }
 });
 
+// ROUTE 4 : Fetch todays medicine for patient portal : Login required
+router.get("/fetchtodayMeds", fetchUser, async (req, res) => {
+  try {
+    const prescriptions = await Prescription.find({ patient: req.user.id });
+    prescriptions.map((prescription, index) =>
+      prescription.medicines.map((med, index) => {
+        if (med.eatenTime && med.eatenTime != new Date().toDateString()) {
+          med.eatenTime = "";
+          med.save();
+          med.state = "info";
+          med.save();
+        }
+      })
+    );
+    res.json(prescriptions);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send("Oops internal server error occured");
+  }
+});
+
 module.exports = router;
