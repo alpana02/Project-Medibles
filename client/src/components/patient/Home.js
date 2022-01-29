@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "react-multi-carousel/lib/styles.css";
+import ChatBot from 'react-simple-chatbot';
+
 import "./Home.css";
 
 export default function Home(props) {
@@ -8,6 +10,36 @@ export default function Home(props) {
   const [usercards, setusercards] = useState([]);
   const [totalcards, settotalcards] = useState([]);
   const [filterCard, setFilter] = useState({ class: "", subject: "" });
+
+
+
+  const steps = [
+    {
+      id: '1',
+      message: 'What is your Name',
+      trigger: '2',
+    },
+    {
+      id: '2',
+      options: [
+        { value: 1, label: 'Number 1', trigger: '4' },
+        { value: 2, label: 'Number 2', trigger: '3' },
+        { value: 3, label: 'Number 3', trigger: '3' },
+      ],
+    },
+    {
+      id: '3',
+      message: 'Wrong answer, try again.',
+      trigger: '2',
+    },
+    {
+      id: '4',
+      message: 'Awesome! You are a telepath!',
+      end: true,
+    },
+
+  ];
+
 
   useEffect(() => {
     if (!localStorage.getItem("token")) {
@@ -35,8 +67,8 @@ export default function Home(props) {
     e.preventDefault();
     const res = totalcards.filter((card) => {
       return (
-        card.classsp === filterCard.class &&
-        card.subject === filterCard.subject &&
+        card.specialization === filterCard.specialization &&
+        card.location === filterCard.location &&
         card.role === "doctor"
       );
     });
@@ -62,7 +94,7 @@ export default function Home(props) {
                     onChange={onChange}
                     aria-label="Default select example"
                   >
-                    <option defaultValue>Select Class</option>
+                    <option defaultValue>Select Specialization</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -82,7 +114,7 @@ export default function Home(props) {
                     onChange={onChange}
                     aria-label="Default select example"
                   >
-                    <option defaultValue>Select Subject</option>
+                    <option defaultValue>Select Location</option>
                     <option value="math">Math</option>
                     <option value="science">Science</option>
                     <option value="english">English</option>
@@ -142,6 +174,8 @@ export default function Home(props) {
           </div>
         }
       </div>
+        <ChatBot steps={steps} floating={true} />
+
     </div>
   );
 }

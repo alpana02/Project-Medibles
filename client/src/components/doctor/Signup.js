@@ -202,7 +202,7 @@ export const Signup = (props) => {
                         </div>
                         <div className="mb-1">
                           <label
-                            htmlFor="experience"
+                            htmlFor="specialization"
                             className="form-label"
                             style={{ fontSize: "14px" }}
                           >

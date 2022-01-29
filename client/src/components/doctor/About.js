@@ -57,7 +57,7 @@ export default function About(props) {
   }
 
   return (
-    <>
+    <div className="container">
       <div className="container rounded bg-white">
         <div
           className="w3-content w3-margin-top"
@@ -200,6 +200,6 @@ export default function About(props) {
           </section>
         </div>
       </div>
-    </>
+    </div>
   );
 }
