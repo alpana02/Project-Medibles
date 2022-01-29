@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function AboutPatient(props) {
   let navigate = useNavigate();
-  const [profile, setProfile] = useState([])
+  const [profile, setProfile] = useState([]);
   const [bookings, setBooking] = useState([]);
   const [prescription, setPrescription] = useState([]);
 
@@ -25,11 +25,10 @@ export default function AboutPatient(props) {
       headers: {
         "auth-token": localStorage.getItem("token"),
       },
-
-    })
+    });
     const data = await response.json();
     setProfile(data);
-  };
+  }
   async function getBooking() {
     const response = await fetch(
       `http://localhost:5000/api/calendar/fetchmenteeBooking`,
@@ -42,18 +41,20 @@ export default function AboutPatient(props) {
     );
     const data = await response.json();
     setBooking(data);
-
   }
 
   const deletePrescription = async (id) => {
     //call api for deleting prescription
-    const response = await fetch(`http://localhost:5000/api/prescription/deleteprescription/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"),
-      },
-    });
+    const response = await fetch(
+      `http://localhost:5000/api/prescription/deleteprescription/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+      }
+    );
     console.log(response);
     const newPrescriptions = prescription.filter((prescription) => {
       return prescription._id !== id;
@@ -75,119 +76,164 @@ export default function AboutPatient(props) {
     setPrescription(data);
   }
 
-  return <div className="container">
-    <div className="container rounded bg-white">
-      <div className="row">
-        <div className="w3-content w3-margin-top" style={{ maxWidth: "1400px" }}>
-          <div className="w3-row-padding">
-            <div className="w3-third">
-
-              <div className="w3-white w3-text-grey w3-card-4">
-                <div className="w3-display-container">
-                  <img src={profile.img} style={{ width: "100%" }} alt="Avatar" />
+  return (
+    <div className="container">
+      <div className="container rounded bg-white">
+        <div className="row">
+          <div
+            className="w3-content w3-margin-top"
+            style={{ maxWidth: "1400px" }}
+          >
+            <div className="w3-row-padding">
+              <div className="w3-third">
+                <div className="w3-white w3-text-grey w3-card-4">
+                  <div className="w3-display-container">
+                    <img
+                      src={profile.img}
+                      style={{ width: "100%" }}
+                      alt="Avatar"
+                    />
+                  </div>
                 </div>
-              </div><br />
-            </div>
-            <div className="w3-twothird">
-              <div className="w3-container w3-card w3-white w3-margin-bottom">
-                <div className="w3-container"><br /><h2 className="w3-text-grey w3-padding-16"><i className="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-blue"></i>About {profile.name}</h2><hr />
-                  <p><i className="fa fa-home fa-fw w3-margin-right w3-large w3-text-blue"></i>{profile.location}</p>
-                  <p><i className="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-blue"></i>{profile.email}</p>
-                  <p><i className="fa fa-phone fa-fw w3-margin-right w3-large w3-text-blue"></i>{profile.phone}</p>
-                  <p><i className="fa fa-chalkboard fa-fw w3-margin-right w3-large w3-text-blue"></i>Disease - {profile.disease}</p>
-                </div>
+                <br />
               </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-    <div className="mx-3">
-      {
-        <div className="col-12">
-          <h2>Appointments</h2>
-          <div className="row">
-            <h4 className="mt-2">{bookings.length === 0 && "No Appointments Yet"}</h4>
-            {bookings.map((booking, index) => (
-              <div className="col-3 mb-xl-5 mb-7 mb-sm-6 mb-md-6 mb-lg-6 d-flex">
-                <div className="card" style={{ width: "18rem" }}>
-                  <div className="card-body">
-                    <h4>Appointment for {booking.title}</h4>
-                    <p
-                      className="card-text"
-                      style={{ fontSize: "14px", marginBottom: "0.3rem" }}
-                    >
-                      <b>Start Date :</b> {booking.start.substring(0, 10)}
+              <div className="w3-twothird">
+                <div className="w3-container w3-card w3-white w3-margin-bottom">
+                  <div className="w3-container">
+                    <br />
+                    <h2 className="w3-text-grey w3-padding-16">
+                      <i className="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-blue"></i>
+                      About {profile.name}
+                    </h2>
+                    <hr />
+                    <p>
+                      <i className="fa fa-home fa-fw w3-margin-right w3-large w3-text-blue"></i>
+                      {profile.location}
                     </p>
-                    <p
-                      className="card-text"
-                      style={{ fontSize: "14px", marginBottom: "0.3rem" }}
-                    >
-                      <b>Doctor :</b> {booking.doctor}
+                    <p>
+                      <i className="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-blue"></i>
+                      {profile.email}
+                    </p>
+                    <p>
+                      <i className="fa fa-phone fa-fw w3-margin-right w3-large w3-text-blue"></i>
+                      {profile.phone}
+                    </p>
+                    <p>
+                      <i className="fa fa-chalkboard fa-fw w3-margin-right w3-large w3-text-blue"></i>
+                      Disease - {profile.disease}
                     </p>
                   </div>
                 </div>
               </div>
-            ))}
+            </div>
           </div>
         </div>
-      }
-    </div>
-    <div className="mx-3">
-      {
-        <div className="col-12">
-          <h2>Prescription</h2>
-          <div className="row">
-            <h4 className="mt-2">{prescription.length === 0 && "No Prescriptions Yet"}</h4>
-            {prescription.map((prescription, index) => (
-              <div key={index} className="card col-6 mb-xl-5 mb-7 mb-sm-6 mb-md-6 mb-lg-6 d-flex">
-                <div className="card-body">
-                <div className="row">
-                <div className="col-9"><h4>Prescription by {prescription.doctorName}</h4> </div>
-                  <div className="col-3 float-end"><button className="btn btn-success " onClick={()=>{deletePrescription(prescription._id)}}>Completed</button></div>
+      </div>
+      <div className="mx-0">
+        {
+          <div className="col-12">
+            <h2>Appointments</h2>
+            <div className="row">
+              <h4 className="mt-2">
+                {bookings.length === 0 && "No Appointments Yet"}
+              </h4>
+              {bookings.map((booking, index) => (
+                <div className="col-3 mb-xl-5 mb-7 mb-sm-6 mb-md-6 mb-lg-6 d-flex">
+                  <div className="card" style={{ width: "18rem" }}>
+                    <div className="card-body">
+                      <h4>Appointment for {booking.title}</h4>
+                      <p
+                        className="card-text"
+                        style={{ fontSize: "14px", marginBottom: "0.3rem" }}
+                      >
+                        <b>Start Date :</b> {booking.start.substring(0, 10)}
+                      </p>
+                      <p
+                        className="card-text"
+                        style={{ fontSize: "14px", marginBottom: "0.3rem" }}
+                      >
+                        <b>Doctor :</b> {booking.doctor}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                  
-                  <table className="table">
-                    <thead>
-                      <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Medicine Name</th>
-                        <th scope="col">Dosage</th>
-                        <th scope="col">Time</th>
-                        <th scope="col">Frequency</th>
-                        <th scope="col">Duration</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {prescription.medicines.map((med, index) => (
+              ))}
+            </div>
+          </div>
+        }
+      </div>
+      <div className="row">
+        <h2>Prescription</h2>
+
+        <h4 className="mt-2">
+          {prescription.length === 0 && "No Prescriptions Yet"}
+        </h4>
+        {prescription.map((prescription, index) => (
+          <div className="w3-half">
+            <div className="w3-container w3-card w3-white w3-margin-bottom">
+              <div className="row">
+                <div key={index} className="w3-container">
+                  <div className="card-body">
+                    <div className="row">
+                      <div className="col-9">
+                        <h4>Prescription by {prescription.doctorName}</h4>{" "}
+                      </div>
+                      <div className="col-3 float-end">
+                        <button
+                          className="btn btn-success "
+                          onClick={() => {
+                            deletePrescription(prescription._id);
+                          }}
+                        >
+                          Completed
+                        </button>
+                      </div>
+                    </div>
+
+                    <table className="table">
+                      <thead>
                         <tr>
-                          <th scope="row">{index + 1}</th>
-                          <td>{med.name}</td>
-                          <td>{med.dosage}</td>
-                          <td>{med.time}</td>
-                          <td>{med.frequency}</td>
-                          <td>{med.duration} days</td>
+                          <th scope="col">#</th>
+                          <th scope="col">Medicine Name</th>
+                          <th scope="col">Dosage</th>
+                          <th scope="col">Time</th>
+                          <th scope="col">Frequency</th>
+                          <th scope="col">Duration</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                  <p>{prescription.note ? (<>
-                    <b className="d-block">Special Instruction</b>
-                    {prescription.note}
-                  </>
-                  ) : ""}</p>
+                      </thead>
+                      <tbody>
+                        {prescription.medicines.map((med, index) => (
+                          <tr>
+                            <th scope="row">{index + 1}</th>
+                            <td>{med.name}</td>
+                            <td>{med.dosage}</td>
+                            <td>{med.time}</td>
+                            <td>{med.frequency}</td>
+                            <td>{med.duration} days</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                    <h6>
+                      <b>Starting Date: </b>
+                      {prescription.startDate}{" "}
+                    </h6>
 
+                    {prescription.note ? (
+                      <>
+                        <b className="d-block">Special Instruction</b>
+                        {prescription.note}
+                      </>
+                    ) : (
+                      ""
+                    )}
+                  </div>
                 </div>
-
               </div>
-            ))}
+            </div>
           </div>
-        </div>
-      }
+        ))}
+      </div>
     </div>
-
-  </div>;
+  );
 }
-
-

@@ -17,6 +17,10 @@ const PrescriptionSchema = new Schema({
     type: String,
     required: true,
   },
+  startDate:{
+    type: String,
+    required: true,
+  },
   medicines: {
     type: [
       {
