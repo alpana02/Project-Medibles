@@ -66,13 +66,42 @@ router.get("/fetchtodayMeds", fetchUser, async (req, res) => {
       prescription.medicines.map((med, index) => {
         if (med.eatenTime && med.eatenTime != new Date().toDateString()) {
           med.eatenTime = "";
-          med.save();
           med.state = "info";
-          med.save();
+          prescription.save();
         }
       })
     );
     res.json(prescriptions);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send("Oops internal server error occured");
+  }
+});
+
+// ROUTE 5 : update existing prescription state of a patient: Login required
+router.put("/updatePrescription/:id1/:id2", fetchUser, async (req, res) => {
+  try {
+    const { state, eatenTime } = req.body;
+    const prescriptionId = req.params.id1;
+    const medId = req.params.id2;
+    let prescription = await Prescription.findById(prescriptionId);
+    if (!prescription) {
+      return res.status(404).send("Such prescription not found");
+    }
+    if (prescription.patient.toString() !== req.user.id) {
+      return res.status(401).send("Permission not granted");
+    }
+    for (let index = 0; index < prescription.medicines.length; index++) {
+      const med = prescription.medicines[index];
+      if (med._id == medId) {
+        med.eatenTime = eatenTime;
+        med.state = state;
+        prescription.save()
+        break;
+      }
+    }
+    const retprescription = await Prescription.find({ patient: req.user.id });
+    res.json(retprescription );
   } catch (error) {
     console.log(error.message);
     res.status(500).send("Oops internal server error occured");

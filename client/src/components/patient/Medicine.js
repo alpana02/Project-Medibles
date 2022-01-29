@@ -3,24 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Medicine(props) {
   let navigate = useNavigate();
-  const [prescription, setPrescription] = useState([
-    {
-      doctor: "",
-      patient: "",
-      note: "",
-      doctorName: "",
-      startDate: "",
-      medicines: {
-        name: "",
-        dosage: "",
-        duration: "",
-        time: "",
-        frequency: [],
-        state: "",
-        eatenTime: "",
-      },
-    },
-  ]);
+  const [prescription, setPrescription] = useState([]);
   let days = ["mon", "tue", "wed", "thurs", "fri", "sat", "sun"];
   let dayCounter = 0;
 
@@ -43,18 +26,31 @@ export default function Medicine(props) {
       }
     );
     const prescriptions = await response.json();
-    const newpresc=prescriptions.filter((prescription, index) => (
-      prescription.medicines.filter((med, index) => (
-        med.frequency.filter((freq, index) => {
-          return freq === days[new Date().getDay() - 1]
-        })
-      ))
-    ))
-    setPrescription(newpresc)
-    //setPrescription(data);
+    setPrescription(prescriptions);
   }
-  async function handleEaten(prescriptionId, medId) {}
-  async function handleMissed(prescriptionId, medId) {}
+  async function handleEaten(prescriptionId, medId, state) {
+    let eatenTime = "";
+    if (state !== "info") {
+      eatenTime = new Date().toDateString();
+    }
+    const response = await fetch(
+      `http://localhost:5000/api/prescription/updatePrescription/${prescriptionId}/${medId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+        body: JSON.stringify({
+          state: state,
+          eatenTime: eatenTime,
+        }),
+      }
+    );
+    const prescriptions = await response.json();
+    console.log(prescriptions);
+    setPrescription(prescriptions);
+  }
 
   return (
     <div className="container">
@@ -78,43 +74,69 @@ export default function Medicine(props) {
                                   role="alert"
                                 >
                                   <div className="row">
-                                    <div className="col-9 justify-content-center align-self-center">
+                                    <div className="col-8 justify-content-center align-self-center">
                                       <b>Medicine Name: </b>
                                       {med.name} &nbsp; &nbsp;&nbsp;
                                       <b>Eat at:</b> {med.dosage}&nbsp;
                                       &nbsp;&nbsp; <b>Eat: </b>
                                       {med.time} food
                                     </div>
-                                    <div className="col-3">
-                                      <button
-                                        className="btn btn-success mx-3 "
-                                        onClick={() =>
-                                          handleEaten(prescription._id, med._id)
-                                        }
-                                      >
-                                        {" "}
-                                        <i
-                                          className="fa fa-check"
-                                          aria-hidden="true"
-                                        ></i>{" "}
-                                        Eaten
-                                      </button>
-                                      <button
-                                        className="btn btn-danger"
-                                        onClick={() =>
-                                          handleMissed(
-                                            prescription._id,
-                                            med._id
-                                          )
-                                        }
-                                      >
-                                        {" "}
-                                        <i
-                                          className="fa fa-close"
-                                          aria-hidden="true"
-                                        ></i>{" "}
-                                        Missed
-                                      </button>
+                                    <div className="col-4">
+                                      <form>
+                                        <button
+                                          className="btn btn-success"
+                                          type="submit"
+                                          onClick={() =>
+                                            handleEaten(
+                                              prescription._id,
+                                              med._id,
+                                              "success"
+                                            )
+                                          }
+                                        >
+                                          {" "}
+                                          <i
+                                            className="fa fa-check"
+                                            aria-hidden="true"
+                                          ></i>{" "}
+                                          Eaten
+                                        </button>
+
+                                        <button
+                                          className="btn btn-danger mx-2"
+                                          onClick={() =>
+                                            handleEaten(
+                                              prescription._id,
+                                              med._id,
+                                              "danger"
+                                            )
+                                          }
+                                        >
+                                          {" "}
+                                          <i
+                                            className="fa fa-close"
+                                            aria-hidden="true"
+                                          ></i>{" "}
+                                          Missed
+                                        </button>
+                                        <button
+                                          className="btn btn-primary"
+                                          onClick={() =>
+                                            handleEaten(
+                                              prescription._id,
+                                              med._id,
+                                              "info"
+                                            )
+                                          }
+                                        >
+                                          {" "}
+                                          <i
+                                            className="fa fa-refresh"
+                                            aria-hidden="true"
+                                          ></i>{" "}
+                                          Reset
+                                        </button>
+                                      </form>
                                     </div>
                                   </div>
                                 </div>
