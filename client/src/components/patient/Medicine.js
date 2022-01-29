@@ -94,12 +94,11 @@ export default function Medicine(props) {
                                             )
                                           }
                                         >
-                                          {" "}
                                           <i
                                             className="fa fa-check"
                                             aria-hidden="true"
-                                          ></i>{" "}
-                                          Eaten
+                                          ></i>
+                                          &nbsp;Eaten
                                         </button>
 
                                         <button
@@ -112,12 +111,11 @@ export default function Medicine(props) {
                                             )
                                           }
                                         >
-                                          {" "}
                                           <i
                                             className="fa fa-close"
                                             aria-hidden="true"
-                                          ></i>{" "}
-                                          Missed
+                                          ></i>
+                                         &nbsp; Missed
                                         </button>
                                         <button
                                           className="btn btn-primary"
@@ -129,12 +127,11 @@ export default function Medicine(props) {
                                             )
                                           }
                                         >
-                                          {" "}
                                           <i
                                             className="fa fa-refresh"
                                             aria-hidden="true"
-                                          ></i>{" "}
-                                          Reset
+                                          ></i>
+                                          &nbsp; Reset
                                         </button>
                                       </form>
                                     </div>
