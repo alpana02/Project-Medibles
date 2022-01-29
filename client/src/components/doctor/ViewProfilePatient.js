@@ -7,6 +7,7 @@ export default function ViewProfilePatient(props) {
   let navigate = useNavigate();
   const [profile, setProfile] = useState([]);
   const [note, setnote] = useState("");
+  const [noteExcercise, setnoteExcercise] = useState("");
   const [medicine, setmedicine] = useState([
     {
       name: "",
@@ -14,6 +15,14 @@ export default function ViewProfilePatient(props) {
       duration: "",
       time: "",
       frequency: "",
+    },
+  ]);
+  const [excercise, setexcercise] = useState([
+    {
+      name: "",
+      severity: "",
+      duration: "",
+      time: "",
     },
   ]);
 
@@ -45,6 +54,13 @@ export default function ViewProfilePatient(props) {
     newMedicine[i][e.target.name] = e.target.value;
     setmedicine(newMedicine);
   };
+
+  const handleExcerciseChange = (i, e) => {
+    let newExcercise = [...excercise];
+    newExcercise[i][e.target.name] = e.target.value;
+    setmedicine(newExcercise);
+  };
+
   let addFormFields = () => {
     setmedicine([
       ...medicine,
@@ -57,10 +73,29 @@ export default function ViewProfilePatient(props) {
       },
     ]);
   };
+
+  let addExcerciseFormFields = () => {
+    setexcercise([
+      ...excercise,
+      {
+          name: "",
+          severity: "",
+          duration: "",
+          time: "",
+      },
+    ]);
+  }
+
   let removeFormFields = (i) => {
     let newMedicine = [...medicine];
     newMedicine.splice(i, 1);
     setmedicine(newMedicine);
+  };
+
+  let removeExcerciseFormFields = (i) => {
+    let newExcercise = [...excercise];
+    newExcercise.splice(i, 1);
+    setexcercise(newExcercise);
   };
 
   async function handleSubmit(event) {
@@ -84,9 +119,42 @@ export default function ViewProfilePatient(props) {
     ]);
     setnote("");
   }
+
+  async function handleExcerciseSubmit(event) {
+    event.preventDefault();
+    props.showAlert("Excercise Added Succesfully", "success");
+    const response = await fetch(
+      `http://localhost:5000/api/excercise/addExcercise/${id}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+        body: JSON.stringify({excercise,noteExcercise}),
+      }
+    );
+    const data = await response.json();
+    console.log(data);
+    setexcercise([
+      {
+        name: "",
+        severity: "",
+        duration: "",
+        time: "",
+    },
+    ]);
+    setnoteExcercise("");
+  }
+
   const handleNoteChange = (e) => {
     setnote(e.target.value);
   };
+
+  const handleNoteExcerciseChange = (e) => {
+    setnoteExcercise(e.target.value);
+  };
+
   return (
     <div>
       <div className="container rounded bg-white">
@@ -140,43 +208,105 @@ export default function ViewProfilePatient(props) {
             <div className="row">
               <div className="w3-half">
                 <div className="w3-container w3-card w3-white w3-margin-bottom">
+                  <h3>Excercise assign</h3>
                   <div className="w3-container">
-                    <br />
-                    <div className="mb-1">
-                      <label
-                        htmlFor="experience"
-                        className="form-label"
-                        style={{ fontSize: "14px" }}
-                      >
-                        Specialization
-                      </label>
-                      <select
-                        className="form-select"
-                        name="specialization"
-                        aria-label="Default select example"
-                        required
-                      >
-                        <option defaultValue value="">
-                          Select specialization
-                        </option>
-                        <option value="Orthopedics">Orthopedics</option>
-                        <option value="Pediatrics">Pediatrics</option>
-                        <option value="Ophthalmology">Ophthalmology</option>
-                        <option value="Neurology">Neurology</option>
-                      </select>
-                      <small id="emailHelp" className="form-text text-muted">
-                        We'll never share your email with anyone else.
-                      </small>
-                    </div>
-                  </div>
+                    <form onSubmit={handleExcerciseSubmit}>
+                      {excercise.map((element, index) => (
+                        <div key={index}>
+                          <div className="mb-1 ">
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Type Excercise names"
+                              name="name"
+                              value={excercise.name === "" ? "" : excercise.name}
+                              onChange={(e) => handleExcerciseChange(index, e)}
+                              required
+                            />
+                          </div>
+                          <div className="w3-half mt-1">
+                            <div className="mb-1">
+                              <select
+                                className="form-select"
+                                name="severity"
+                                value={excercise.severity}
+                                onChange={(e) => handleExcerciseChange(index, e)}
+                                aria-label="Default select example"
+                                required
+                              >
+                                <option defaultValue="">Select Severity</option>
+                                <option value="low">Low impact</option>
+                                <option value="high">High impact</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div className="w3-half mt-1">
+                            <div className="mb-1 mx-2">
+                              <input
+                                type="number"
+                                className="form-control "
+                                placeholder="Type duration"
+                                name="duration"
+                                value={excercise.duration}
+                                onChange={(e) => handleExcerciseChange(index, e)}
+                                required
+                              />
+                            </div>
+                          </div>
+                          <div className="w3-half mt-1">
+                            <div className="mb-1">
+                              <select
+                                className="form-select mb-3"
+                                name="time"
+                                value={excercise.time}
+                                onChange={(e) => handleExcerciseChange(index, e)}
+                                aria-label="Default select example"
+                                required
+                              >
+                                <option defaultValue="">Select Timing</option>
+                                <option value="before">Before Food</option>
+                                <option value="after">After Food</option>
+                              </select>
+                            </div>
+                          </div>
+                          {index ? (
+                            <button
+                              type="button"
+                              className="btn btn-danger mb-3 mx-4 mt-1"
+                              onClick={() => removeExcerciseFormFields(index)}
+                            >
+                              Remove
+                            </button>
+                          ) : null}
+                        </div>
+                      ))}
 
-                  <div className="w3-half px-5 ">
-                    <button
-                      type="button"
-                      className="btn btn-primary btn-lg my-3 mb-4 px-4"
-                    >
-                      Assign Exercise
-                    </button>
+                      <input
+                        type="text"
+                        className="form-control mb-2 py-3"
+                        placeholder="Type any specific instructions for the patient"
+                        name="noteExcercise"
+                        value={noteExcercise}
+                        onChange={(e) => handleNoteExcerciseChange(e)}
+                      />
+                      <div className="w3-half align-items-end">
+                        <button
+                          type="button"
+                          className="btn btn-dark mb-3 px-4"
+                          onClick={addExcerciseFormFields}
+                        >
+                          Add More Fields
+                        </button>
+                      </div>
+                      <div className="w3-half ">
+                        <button
+                          type="submit"
+                          className="btn btn-success mb-3 px-4"
+                        >
+                          Submit
+                        </button>
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>
