@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const PrescriptionSchema = new Schema({
+const ExcerciseSchema = new Schema({
   doctor: {
     type: Schema.Types.ObjectId,
     ref: "user",
@@ -17,14 +17,13 @@ const PrescriptionSchema = new Schema({
     type: String,
     required: true,
   },
-  medicines: {
+  excercises: {
     type: [
       {
         name: String,
-        dosage: String,
+        severity: String,
         duration: String,
         time: String,
-        frequency: String,
       },
     ],
     required: true,
@@ -33,4 +32,4 @@ const PrescriptionSchema = new Schema({
 
 
 
-module.exports = mongoose.model("prescription", PrescriptionSchema);
+module.exports = mongoose.model("excercise", ExcerciseSchema);
