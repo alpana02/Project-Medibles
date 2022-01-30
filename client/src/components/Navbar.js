@@ -72,9 +72,9 @@ export default function Navbar(props) {
                   <li className="nav-item">
                     <Link
                       className={`nav-link ${
-                        location.pathname === "/books" ? "active" : ""
+                        location.pathname === "/shopmedicine" ? "active" : ""
                       }`}
-                      to="/books"
+                      to="/shopmedicine"
                     >
                       Symptoms Checker
                     </Link>

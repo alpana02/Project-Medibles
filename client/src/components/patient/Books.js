@@ -5,13 +5,13 @@ import axios from 'axios';
 import BookCard from './BookCard';
 import { useNavigate } from "react-router-dom";
 
+
 export default function Books(props) {
     const [maxResults, setMaxResults] = useState(10);
-    const [startIndex, setStartIndex] = useState(1);
     const [query, setQuery] = useState('');
     const [loading, setLoading] = useState(false);
     const [cards, setCards] = useState([]);
-    
+
     let navigate = useNavigate();
 
     useEffect(() => {
@@ -28,19 +28,15 @@ export default function Books(props) {
         } else {
             axios
                 .get(
-                    `https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=${maxResults}&startIndex=${startIndex}`
+                    `https://serpapi.com/search.json?q=${query}&tbm=shop&location=India&hl=en&gl=us&api_key=2643c59d908561f9a329099b6663dcc1c19adec112c6c76d61c106387651b15c`
                 )
                 .then(res => {
-                    if (startIndex >= res.data.totalItems || startIndex < 1) {
-                        toast.error(
-                            `max reults must be between 1 and ${res.data.totalItems}`
-                        );
-                    } else {
-                        if (res.data.items.length > 0) {
-                            setCards(res.data.items);
-                            setLoading(false);
-                        }
+                    console.log(res);
+                    if (res.shopping_results.length > 0) {
+                        setCards(res.shopping_results);
+                        setLoading(false);
                     }
+            
                 })
                 .catch(err => {
                     setLoading(true);
@@ -55,9 +51,8 @@ export default function Books(props) {
                 <div className='bg-image d-flex justify-content-center align-items-center flex-column' style={{ backgroundImage: "url(https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1453&q=80)" }} height="150px" >
                     <h1
                         className='display-2 text-center text-white mb-3 my-5'
-
                     >
-                        <b>Online Books</b>
+                        <b>Online Medicine</b>
                     </h1>
                     <div>
                         <div className="input-group mb-3">
@@ -83,16 +78,6 @@ export default function Books(props) {
                                         placeholder='Max Results'
                                         value={maxResults}
                                         onChange={e => setMaxResults(e.target.value)}
-                                    />
-                                </div>
-                                <div className="form-group mb-5 pb-5 mx-2">
-                                    <label className="mx-2" htmlFor='startIndex' style={{ color: "white" }}>Start Index</label>
-                                    <input
-                                        type='number'
-                                        id='startIndex'
-                                        placeholder='Start Index'
-                                        value={startIndex}
-                                        onChange={e => setStartIndex(e.target.value)}
                                     />
                                 </div>
                             </form>
@@ -121,15 +106,10 @@ export default function Books(props) {
                 return (
                     <div className='col-lg-4 mb-3' key={item.id}>
                         <BookCard
+                            title={item.shopping_results.title}
+                            product_link={item.shopping_results.product_link}
+                            extracted_price={item.shopping_results.extracted_price}
                             thumbnail={thumbnail}
-                            title={item.volumeInfo.title}
-                            pageCount={item.volumeInfo.pageCount}
-                            language={item.volumeInfo.language}
-                            authors={item.volumeInfo.authors}
-                            publisher={item.volumeInfo.publisher}
-                            description={item.volumeInfo.description}
-                            previewLink={item.volumeInfo.previewLink}
-                            infoLink={item.volumeInfo.infoLink}
                         />
                     </div>
                 );
