@@ -47,10 +47,7 @@ export default function AboutPatient(props) {
   }
 
   const refillPrescription = async (id, e) => {
-    props.showAlert(
-      "Refill Request Sent Succesfully",
-      "success"
-    );
+    props.showAlert("Refill Request Sent Succesfully", "success");
     //call api for deleting prescription
     const response = await fetch(
       `http://localhost:5000/api/prescription/refillPrescription/${id}`,
@@ -242,15 +239,23 @@ export default function AboutPatient(props) {
                       <b>Starting Date: </b>
                       {prescription.startDate}{" "}
                     </h6>
-
-                    {prescription.note ? (
-                      <>
-                        <b className="d-block">Special Instruction</b>
-                        {prescription.note}
-                      </>
-                    ) : (
-                      ""
-                    )}
+                    <div className="row">
+                      <div className="col-8">
+                        {prescription.note ? (
+                          <>
+                            <b className="d-block">Special Instruction</b>
+                            {prescription.note}
+                          </>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                      <div className="col-4">
+                        <a type="button" href="https://calendar.google.com/calendar" target="_blank" rel="noreferrer" className="btn btn-primary">
+                          Set Reminder
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -100,7 +100,8 @@ export default function ViewProfilePatient(props) {
 
   const handleMedChange = (i, e) => {
     let newMedicine = [...medicine];
-    newMedicine[i][e.target.name] = e.target.value;
+    console.log(newMedicine);
+    newMedicine[i][e.target.name]  = e.target.value;
     setmedicine(newMedicine);
   };
   const handleFreqChange = (i, e) => {
@@ -154,7 +155,7 @@ export default function ViewProfilePatient(props) {
   };
 
   async function handleSubmit(event) {
-    event.preventDefault();
+    //event.preventDefault();
     props.showAlert("Prescription Added Succesfully", "success");
     const response = await fetch(
       `http://localhost:5000/api/prescription/addPrescription/${id}`,
@@ -424,7 +425,7 @@ export default function ViewProfilePatient(props) {
                               className="form-control"
                               placeholder="Type Medicines names"
                               name="name"
-                              value={medicine.name === "" ? "" : medicine.name}
+                              value={medicine.name}
                               onChange={(e) => handleMedChange(index, e)}
                               minLength={3}
                               required
@@ -536,7 +537,7 @@ export default function ViewProfilePatient(props) {
       <div className="col-12 mt-5 card card-body">
         <div className="row">
           <h2>Prescription given by you</h2>
-          
+
           <h4 className="mt-2">
             {prescription.length === 0 && "No Prescriptions Yet"}
           </h4>

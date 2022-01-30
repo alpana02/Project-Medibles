@@ -66,7 +66,7 @@ export default function Navbar(props) {
                       }`}
                       to="/discussion"
                     >
-                      Discussion Forum
+                      Patient-Community
                     </Link>
                   </li>
                   <li className="nav-item">
@@ -76,7 +76,7 @@ export default function Navbar(props) {
                       }`}
                       to="/shopmedicine"
                     >
-                      Symptoms Checker
+                      Shop-Medicine
                     </Link>
                   </li>
                   <li className="nav-item">

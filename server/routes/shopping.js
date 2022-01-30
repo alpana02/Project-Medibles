@@ -5,7 +5,7 @@ const SerpApi = require('google-search-results-nodejs');
 const search = new SerpApi.GoogleSearch("2643c59d908561f9a329099b6663dcc1c19adec112c6c76d61c106387651b15c");
 
 //
-router.get("/shopmedicine", fetchUser, async (req, res) => {
+router.post("/shopmedicine", fetchUser, async (req, res) => {
     try {
         const { query } = req.body;
         const params = {
