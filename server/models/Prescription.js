@@ -34,6 +34,9 @@ const PrescriptionSchema = new Schema({
       },
     ],
   },
+  refill: {
+    type: Boolean,
+  },
 });
 
 module.exports = mongoose.model("prescription", PrescriptionSchema);

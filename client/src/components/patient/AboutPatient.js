@@ -11,6 +11,9 @@ export default function AboutPatient(props) {
     if (!localStorage.getItem("token")) {
       navigate("/login");
     }
+    if (localStorage.getItem("role") === "doctor") {
+      navigate("*");
+    }
     getUser();
     getBooking();
     getPrescription();
@@ -43,23 +46,32 @@ export default function AboutPatient(props) {
     setBooking(data);
   }
 
-  const deletePrescription = async (id) => {
+  const refillPrescription = async (id, e) => {
+    props.showAlert(
+      "Refill Request Sent Succesfully",
+      "success"
+    );
     //call api for deleting prescription
     const response = await fetch(
-      `http://localhost:5000/api/prescription/deleteprescription/${id}`,
+      `http://localhost:5000/api/prescription/refillPrescription/${id}`,
       {
-        method: "DELETE",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
           "auth-token": localStorage.getItem("token"),
         },
+        body: JSON.stringify({
+          refill: true,
+        }),
       }
     );
-    console.log(response);
-    const newPrescriptions = prescription.filter((prescription) => {
-      return prescription._id !== id;
-    });
-    setPrescription(newPrescriptions);
+    const data = await response.json();
+    e.target.className = e.target.className + "disabled";
+    setPrescription(data);
+    // const newPrescriptions = prescription.filter((prescription) => {
+    //   return prescription._id !== id;
+    // });
+    // setPrescription(newPrescriptions);
   };
 
   async function getPrescription() {
@@ -175,17 +187,21 @@ export default function AboutPatient(props) {
                 <div key={index} className="w3-container">
                   <div className="card-body">
                     <div className="row">
-                      <div className="col-9">
+                      <div className="col-8">
                         <h4>Prescription by {prescription.doctorName}</h4>{" "}
                       </div>
-                      <div className="col-3 float-end">
+                      <div className="col-4 float-end">
                         <button
-                          className="btn btn-success "
-                          onClick={() => {
-                            deletePrescription(prescription._id);
+                          className={
+                            prescription.refill
+                              ? "btn btn-success disabled"
+                              : "btn btn-success "
+                          }
+                          onClick={(e) => {
+                            refillPrescription(prescription._id, e);
                           }}
                         >
-                          Completed
+                          Refill Request
                         </button>
                       </div>
                     </div>

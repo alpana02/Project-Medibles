@@ -44,8 +44,8 @@ function App() {
             <Routes>
             <Route exact path="/" element={<Home showAlert={showAlert} />} />
             <Route exact path="/homedoctor" element={<Homedoctor showAlert={showAlert} />} />
-            <Route exact path="/about" element={<About />} />
-            <Route exact path="/aboutpatient" element={<AboutPatient />} />
+            <Route exact path="/about" element={<About showAlert={showAlert}/>} />
+            <Route exact path="/aboutpatient" element={<AboutPatient showAlert={showAlert} />} />
             <Route exact path="/chat" element={<DirectMessaging />} />
             <Route exact path="/discussion" element={<Discussion />} />
             <Route exact path="/patient_notes" element={<PatientNotes showAlert={showAlert} />} />

@@ -6,8 +6,8 @@ import "../patient/Home.css";
 export default function Homedoctor(props) {
   let navigate = useNavigate();
   const [usercards, setusercards] = useState([]);
-  const [totalcards, settotalcards] = useState([]);
-  const [filterCard, setFilter] = useState({ class: "", subject: "" });
+  // const [totalcards, settotalcards] = useState([]);
+  // const [filterCard, setFilter] = useState({ class: "", subject: "" });
 
   useEffect(() => {
     if (!localStorage.getItem("token")) {
@@ -29,29 +29,29 @@ export default function Homedoctor(props) {
     const data = await response.json();
     console.log(data);
     setusercards(data);
-    settotalcards(data);
+    // settotalcards(data);
   }
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    const res = totalcards.filter((card) => {
-      return (
-        card.classsp === filterCard.class &&
-        card.subject === filterCard.subject &&
-        card.role === "patient"
-      );
-    });
-    setusercards(res);
-  }
-  const onChange = (e) => {
-    setFilter({ ...filterCard, [e.target.name]: e.target.value });
-  };
+  // async function handleSubmit(e) {
+  //   e.preventDefault();
+  //   const res = totalcards.filter((card) => {
+  //     return (
+  //       card.classsp === filterCard.class &&
+  //       card.subject === filterCard.subject &&
+  //       card.role === "patient"
+  //     );
+  //   });
+  //   setusercards(res);
+  // }
+  // const onChange = (e) => {
+  //   setFilter({ ...filterCard, [e.target.name]: e.target.value });
+  // };
 
   return (
     <div>
       <div className="container">
         <h1>Discover Your Enrolled Patients</h1>
-        <form onSubmit={handleSubmit}>
+        {/* <form onSubmit={handleSubmit}>
           <div className="conatiner mt-3">
             <div className="container">
               <div className="row">
@@ -84,7 +84,7 @@ export default function Homedoctor(props) {
               </div>
             </div>
           </div>
-        </form>
+        </form> */}
 
         {
           <div className="col-12 mt-3">

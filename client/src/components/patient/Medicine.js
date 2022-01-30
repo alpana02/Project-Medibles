@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 export default function Medicine(props) {
   let navigate = useNavigate();
   const [prescription, setPrescription] = useState([]);
-  let days = ["mon", "tue", "wed", "thurs", "fri", "sat", "sun"];
+  const [eatenColor, seteatenColor] = useState('');
+  let days = [ "sun","mon", "tue", "wed", "thurs", "fri", "sat",];
   let dayCounter = 0;
 
   useEffect(() => {
@@ -29,6 +30,7 @@ export default function Medicine(props) {
     setPrescription(prescriptions);
   }
   async function handleEaten(prescriptionId, medId, state) {
+    seteatenColor(state)
     let eatenTime = "";
     if (state !== "info") {
       eatenTime = new Date().toDateString();
@@ -65,12 +67,12 @@ export default function Medicine(props) {
                     <>
                       {med.frequency.map((freq, index) => (
                         <>
-                          {freq === days[new Date().getDay() - 1] ? (
+                          {freq === days[new Date().getDay()] ? (
                             <>
                               <b className="d-none">{dayCounter++}</b>
                               <div className="card-body">
                                 <div
-                                  className={"alert mx-4 alert-" + med.state}
+                                  className={`alert mx-4 alert-${eatenColor || med.state}`}
                                   role="alert"
                                 >
                                   <div className="row">
@@ -82,11 +84,10 @@ export default function Medicine(props) {
                                       {med.time} food
                                     </div>
                                     <div className="col-4">
-                                      <form>
+                                     
                                         <button
                                           className="btn btn-success"
-                                          type="submit"
-                                          onClick={() =>
+                                          onClick={(e) =>
                                             handleEaten(
                                               prescription._id,
                                               med._id,
@@ -103,7 +104,7 @@ export default function Medicine(props) {
 
                                         <button
                                           className="btn btn-danger mx-2"
-                                          onClick={() =>
+                                          onClick={(e) =>
                                             handleEaten(
                                               prescription._id,
                                               med._id,
@@ -119,7 +120,7 @@ export default function Medicine(props) {
                                         </button>
                                         <button
                                           className="btn btn-primary"
-                                          onClick={() =>
+                                          onClick={(e) =>
                                             handleEaten(
                                               prescription._id,
                                               med._id,
@@ -133,7 +134,7 @@ export default function Medicine(props) {
                                           ></i>
                                           &nbsp; Reset
                                         </button>
-                                      </form>
+                                     
                                     </div>
                                   </div>
                                 </div>
@@ -149,7 +150,9 @@ export default function Medicine(props) {
                 </>
               ))}
               {dayCounter === 0 ? (
-                <h4 className="px-4 mx-3">No medicines to take today</h4>
+                <h4 className="px-4 mx-3">
+                  {console.log(days[new Date().getDay()])}
+                  No medicines to take today</h4>
               ) : (
                 <></>
               )}

@@ -9,6 +9,7 @@ export default function ViewProfilePatient(props) {
   const [profile, setProfile] = useState([]);
   const [note, setnote] = useState("");
   const [noteExcercise, setnoteExcercise] = useState("");
+  const [prescription, setPrescription] = useState([]);
 
   let freqOptions = [
     {
@@ -65,6 +66,7 @@ export default function ViewProfilePatient(props) {
       navigate("/login");
     }
     getUser();
+    getPrescription();
     // eslint-disable-next-line
   }, []);
 
@@ -81,6 +83,19 @@ export default function ViewProfilePatient(props) {
     );
     const data = await response.json();
     setProfile(data);
+  }
+  async function getPrescription() {
+    const response = await fetch(
+      `http://localhost:5000/api/prescription/fetchprescriptiondoctor/${id}`,
+      {
+        method: "GET",
+        headers: {
+          "auth-token": localStorage.getItem("token"),
+        },
+      }
+    );
+    const data = await response.json();
+    setPrescription(data);
   }
 
   const handleMedChange = (i, e) => {
@@ -153,7 +168,7 @@ export default function ViewProfilePatient(props) {
       }
     );
     const data = await response.json();
-    console.log(data);
+    setPrescription(data)
     setmedicine([
       {
         name: "",
@@ -202,9 +217,35 @@ export default function ViewProfilePatient(props) {
   const handleNoteExcerciseChange = (e) => {
     setnoteExcercise(e.target.value);
   };
+  const deletePrescription = async (Prescid) => {
+    console.log('in delete');
+    props.showAlert(
+      "Deleted Succesfully",
+      "success"
+    );
+    //call api for deleting prescription
+    const response = await fetch(
+      `http://localhost:5000/api/prescription/deleteprescription/${Prescid}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        }
+      }
+    );
+    console.log(response);
+    // e.target.className = e.target.className + "disabled";
+    // setPrescription(data);
+    const newPrescriptions = prescription.filter((prescription) => {
+      return prescription._id !== Prescid;
+    });
+    setPrescription(newPrescriptions);
+  };
+
 
   return (
-    <div>
+    <div className="container">
       <div className="container rounded bg-white">
         <div className="row">
           <div
@@ -368,9 +409,13 @@ export default function ViewProfilePatient(props) {
               </div>
               <div className="w3-half">
                 <div className="w3-container w3-card w3-white w3-margin-bottom">
-                  <h3>Medicine assign</h3>
                   <div className="w3-container">
                     <form onSubmit={handleSubmit}>
+                      <div className="row">
+                        <div className="col-7 mb-3">
+                          <h3>Medicine assign</h3>
+                        </div>
+                      </div>
                       {medicine.map((element, index) => (
                         <div key={index}>
                           <div className="mb-1 ">
@@ -486,6 +531,99 @@ export default function ViewProfilePatient(props) {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div className="col-12 mt-5 card card-body">
+        <div className="row">
+          <h2>Prescription given by you</h2>
+          
+          <h4 className="mt-2">
+            {prescription.length === 0 && "No Prescriptions Yet"}
+          </h4>
+          {prescription.map((prescription, index) => (
+            <div className="w3-half">
+              <div className="w3-container w3-card w3-white w3-margin-bottom">
+                <div
+                  className="row"
+                  style={
+                    prescription.refill
+                      ? { backgroundColor: "rgb(255 248 248)" }
+                      : { backgroundColor: "white" }
+                  }
+                >
+                  <div key={index} className="w3-container ">
+                    <div className="card-body">
+                      <div className="row">
+                        <div className="col-10">
+                          <h4>Prescription {prescription.refill ? " - Refill Request" : ""}</h4>
+                        </div>
+                        <div className="col-2 float-end">
+                          <button
+                            className={
+                              prescription.refill === false
+                                ? "btn btn-danger disabled"
+                                : "btn btn-danger "
+                            }
+                            onClick={() => {
+                              deletePrescription(prescription._id);
+                            }}
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+
+                      <table className="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Medicine Name</th>
+                            <th scope="col">Dosage</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">Frequency</th>
+                            <th scope="col">Duration</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {prescription.medicines.map((med, index) => (
+                            <tr>
+                              <th scope="row">{index + 1}</th>
+                              <td>{med.name}</td>
+                              <td>{med.dosage}</td>
+                              <td>{med.time}</td>
+                              <td>
+                                {med.frequency.map((freq, index) => (
+                                  <>
+                                    {index === med.frequency.length - 1
+                                      ? freq + " "
+                                      : freq + ", "}
+                                  </>
+                                ))}
+                              </td>
+                              <td>{med.duration} days</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                      <h6>
+                        <b>Starting Date: </b>
+                        {prescription.startDate}{" "}
+                      </h6>
+
+                      {prescription.note ? (
+                        <>
+                          <b className="d-block">Special Instruction</b>
+                          {prescription.note}
+                        </>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

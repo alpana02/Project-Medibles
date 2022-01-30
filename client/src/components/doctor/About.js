@@ -28,6 +28,9 @@ export default function About(props) {
     if (!localStorage.getItem("token")) {
       navigate("/login");
     }
+    if (localStorage.getItem("role") === "patient") {
+      navigate("*");
+    }
     getUser();
     // eslint-disable-next-line
   }, []);
