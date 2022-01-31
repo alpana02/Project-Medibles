@@ -1,0 +1,11 @@
+{% extends "base.html" %} {% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 offset-lg-2">
+      <h3 class="mt-5">Your total count was {{res[0]}}</h3>
+      <h3 class="mt-5">Your total time was {{res[1]}} seconds</h3>
+      <h3 class="mt-5">Your total error was {{res[2]}}</h3>
+    </div>
+  </div>
+</div>
+{% endblock content %}

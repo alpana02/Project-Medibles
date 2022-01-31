@@ -90,6 +90,7 @@ export default function Home(props) {
   };
   return (
     <div className="container">
+      <a href="http://127.0.0.1:8000/elbowflexsion" type="button" className="btn btn-primary " target='_blank' rel="noreferrer"> Start </a>
       <div className="container">
         <h1>Discover Top Doctors</h1>
         <form onSubmit={handleSubmit}>

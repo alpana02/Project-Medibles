@@ -7,8 +7,8 @@ const User = require("../models/User");
 // ROUTE 1 : Add a new excercise : Login required 
 router.post("/addExcercise/:id", fetchUser, async (req, res) => {
   try {
-    const user =  await User.findById(req.user.id);
-    const { excercise ,noteExcercise } = req.body;
+    const user = await User.findById(req.user.id);
+    const { excercise, noteExcercise } = req.body;
     const event = new Excercise({
       doctor: req.user.id,
       patient: req.params.id,
@@ -52,6 +52,28 @@ router.delete("/deleteexcercise/:id", fetchUser, async (req, res) => {
   } catch (error) {
     console.log(error.message);
     res.status(500).send("Oops internal server error occured");
+  }
+});
+
+
+router.post("/report", async (req, res) => {
+  try {
+    // const user =  await User.findById(req.user.id);
+    // const { data } = req.body;
+    console.log(req.body);
+    // const event = new Excercise({
+    //   doctor: req.user.id,
+    //   patient: req.params.id,
+    //   note: noteExcercise,
+    //   excercises: excercise,
+    //   doctorName: user.name,
+    // });
+    // const savedEvent = await event.save();
+    // res.json(savedEvent);
+    res.send('Hello Pari')
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json("Oops internal server error occured");
   }
 });
 
