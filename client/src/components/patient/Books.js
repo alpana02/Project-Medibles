@@ -2,7 +2,7 @@ import React, { useState, useEffect, } from 'react';
 import './Books.css';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
-import BookCard from './BookCard';
+import MedicineCard from './MedicineCard';
 import { useNavigate } from "react-router-dom";
 
 
@@ -105,7 +105,7 @@ export default function Books(props) {
 
                 return (
                     <div className='col-lg-4 mb-3' key={item.id}>
-                        <BookCard
+                        <MedicineCard
                             title={item.shopping_results.title}
                             product_link={item.shopping_results.product_link}
                             extracted_price={item.shopping_results.extracted_price}

@@ -1,5 +1,5 @@
 import React from "react";
-const BookCard = ({ title, product_link, extracted_price, thumbnail }) => {
+const MedicineCard = ({ title, product_link, extracted_price, thumbnail }) => {
   // States
 
   return (
@@ -31,4 +31,4 @@ const BookCard = ({ title, product_link, extracted_price, thumbnail }) => {
   );
 };
 
-export default BookCard;
+export default MedicineCard;

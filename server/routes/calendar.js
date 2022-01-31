@@ -9,7 +9,8 @@ const Notification = require("../models/Notification");
 router.post("/addevent", fetchUser, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    const { title, start, createdBy, notiId,createdById } = req.body;
+    const { title, start, createdBy, notiId, createdById } = req.body;
+    //console.log(start);
     const event = new Calendar({
       title,
       start,
@@ -22,18 +23,29 @@ router.post("/addevent", fetchUser, async (req, res) => {
     const savedEvent = await event.save();
 
     //save enrolled
-    const patient = await User.findById(createdById)
-    console.log(patient);
-    const enrolledPatientobject = {
-      patientName: patient.name,
-      patientEmail: patient.email,
-      patientImage: patient.img,
-      patientId:createdById,
-      patientDate: start
-    };
+    let find = false;
+    for (let index = 0; index < user.enrolledPatient.length; index++) {
+      const element = user.enrolledPatient[index];
+      if (element.patientId === createdById) {
+        find = true;
+        break;
+      }
+    }
+    if (!find) {
+      const patient = await User.findById(createdById);
+      //console.log(patient);
+      const enrolledPatientobject = {
+        patientName: patient.name,
+        patientEmail: patient.email,
+        patientImage: patient.img,
+        patientId: createdById,
+        patientDate: start,
+      };
     console.log(enrolledPatientobject);
-    await user.enrolledPatient.push(enrolledPatientobject);
-    await user.save();
+      await user.enrolledPatient.push(enrolledPatientobject);
+      await user.save();
+    }
+
     res.json(savedEvent);
   } catch (error) {
     console.log(error.message);
@@ -55,12 +67,12 @@ router.get("/fetchallevents/:id", fetchUser, async (req, res) => {
 router.post("/addNotification/:id", fetchUser, async (req, res) => {
   try {
     const { title, start, createdBy } = req.body;
-    console.log(start);
+    //console.log(start);
     const event = new Notification({
       title,
       start,
       createdBy,
-      createdById:req.user.id,
+      createdById: req.user.id,
       user: req.params.id,
     });
     const savedNoti = await event.save();

@@ -6,16 +6,18 @@ import parse from "date-fns/parse";
 import startOfWeek from "date-fns/startOfWeek";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 export default function ViewProfile(props) {
   const { id } = useParams();
   let navigate = useNavigate();
   const [profile, setProfile] = useState([]);
-  const [newEvent, setNewEvent] = useState({ title: "", start: ""});
+  const [newEvent, setNewEvent] = useState({
+    title: "",
+    start: "",
+  });
   const [allEvents, setAllEvents] = useState([]);
-  const [reviewmessage, setreviewmessage] = useState('');
+  const [reviewmessage, setreviewmessage] = useState("");
   const [review, setreview] = useState([]);
 
   const locales = {
@@ -32,6 +34,9 @@ export default function ViewProfile(props) {
   useEffect(() => {
     if (!localStorage.getItem("token")) {
       navigate("/login");
+    }
+    if (localStorage.getItem("role") === "doctor") {
+      navigate("*");
     }
     getUser();
     // eslint-disable-next-line
@@ -50,8 +55,7 @@ export default function ViewProfile(props) {
     );
     const data = await response.json();
     setProfile(data);
-    setreview(data.reviews)
-
+    setreview(data.reviews);
 
     const response2 = await fetch(
       `http://localhost:5000/api/calendar/fetchallevents/${id}`,
@@ -84,8 +88,7 @@ export default function ViewProfile(props) {
         }
       );
       await response.json({ title, start, createdBy });
-      console.log(start);
-      setNewEvent({ title: "", start: ""});
+      setNewEvent({ title: "", start: "" });
       props.showAlert(
         "Event Request Has been Sent to the Doctor Succesfully",
         "success"
@@ -94,41 +97,44 @@ export default function ViewProfile(props) {
       return error;
     }
   }
-  async function handleSubmit(e){
+  async function handleSubmit(e) {
     e.preventDefault();
-try{
-  const response = await fetch(
-    `http://localhost:5000/api/reviews/addreview/${id}`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("token"),
-      },
-      body: JSON.stringify({ reviewmessage }),
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/reviews/addreview/${id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("token"),
+          },
+          body: JSON.stringify({ reviewmessage }),
+        }
+      );
+      const res = await response.json();
+      console.log(res.reviews);
+      setreview(res.reviews);
+      setreviewmessage("");
+      props.showAlert(
+        "Event Request Has been Sent to the Mentor Succesfully",
+        "success"
+      );
+    } catch (error) {
+      return error;
     }
-  );
-  const res=await response.json();
-  console.log(res.reviews);
-  setreview(res.reviews)
-  setreviewmessage('');
-  props.showAlert(
-    "Event Request Has been Sent to the Mentor Succesfully",
-    "success"
-  );
-} catch (error) {
-  return error;
-}
   }
-  async function onChange(e){
-    setreviewmessage(e.target.value)
+  async function onChange(e) {
+    setreviewmessage(e.target.value);
   }
 
   return (
-    <div>
+    <div className="container">
       <div className="container rounded bg-white">
         <div className="row">
-          <div className="w3-content w3-margin-top" style={{ maxWidth: "1400px" }}>
+          <div
+            className="w3-content w3-margin-top"
+            style={{ maxWidth: "1400px" }}
+          >
             <div className="w3-row-padding">
               <div className="w3-third">
                 <div className="w3-white w3-text-grey w3-card-4">
@@ -144,40 +150,40 @@ try{
               </div>
               <div className="w3-twothird">
                 <div className="w3-container w3-card w3-white w3-margin-bottom">
-                <div className="w3-container">
-                  <br />
-                  <h2 className="w3-text-grey w3-padding-16">
-                    <i className="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-blue"></i>
-                    About {profile.name}
-                  </h2>
-                  <hr />
-                  <p>
-                    <i className="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-blue"></i>
-                    {profile.specialization} at {profile.hospital}
-                  </p>
-                  <p>
-                    <i className="fa fa-cogs fa-fw w3-margin-right w3-large w3-text-blue"></i>
-                    Years of experience - {profile.experience}
-                  </p>
-                  <p>
-                    <i className="fa fa-home fa-fw w3-margin-right w3-large w3-text-blue"></i>
-                    {profile.location}
-                  </p>
-                  <p>
-                    <i className="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-blue"></i>
-                    {profile.email}
-                  </p>
-                  <p>
-                    <i className="fa fa-phone fa-fw w3-margin-right w3-large w3-text-blue"></i>
-                    {profile.phone}
-                  </p>
-                  <p>
-                    <i className="fa fa-book-open fa-fw w3-margin-right w3-large w3-text-blue"></i>
-                    Specialization - {profile.specialization}
-                  </p>
-                  <br />
-                  <br />
-                </div>
+                  <div className="w3-container">
+                    <br />
+                    <h2 className="w3-text-grey w3-padding-16">
+                      <i className="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-blue"></i>
+                      About {profile.name}
+                    </h2>
+                    <hr />
+                    <p>
+                      <i className="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-blue"></i>
+                      {profile.specialization} at {profile.hospital}
+                    </p>
+                    <p>
+                      <i className="fa fa-cogs fa-fw w3-margin-right w3-large w3-text-blue"></i>
+                      Years of experience - {profile.experience}
+                    </p>
+                    <p>
+                      <i className="fa fa-home fa-fw w3-margin-right w3-large w3-text-blue"></i>
+                      {profile.location}
+                    </p>
+                    <p>
+                      <i className="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-blue"></i>
+                      {profile.email}
+                    </p>
+                    <p>
+                      <i className="fa fa-phone fa-fw w3-margin-right w3-large w3-text-blue"></i>
+                      {profile.phone}
+                    </p>
+                    <p>
+                      <i className="fa fa-book-open fa-fw w3-margin-right w3-large w3-text-blue"></i>
+                      Specialization - {profile.specialization}
+                    </p>
+                    <br />
+                    <br />
+                  </div>
                 </div>
               </div>
             </div>
@@ -201,15 +207,18 @@ try{
                     setNewEvent({ ...newEvent, title: e.target.value })
                   }
                 />
-                <DatePicker
+
+                <input
                   className="mt-2"
-                  placeholderText="Start Date"
                   style={{ marginRight: "10px" }}
+                  type="date"
                   selected={newEvent.start}
-                  onChange={(start) => setNewEvent({ ...newEvent, start })}
+                  onChange={(e) => {
+                    setNewEvent({ ...newEvent, start: e.target.value });
+                  }}
                 />
                 <button
-                  className="btn btn-primary mt-2"
+                  className="btn btn-primary "
                   stlye={{ marginTop: "10px" }}
                   onClick={handleAddEvent}
                 >
@@ -227,51 +236,74 @@ try{
           </div>
         </div>
       </div>
-        <div className="card card-body  mt-n7 mb-5" >
-          <div className="row gx-4 mb-2">
-            <h3 className="mb-0 text-2xl">
-              Testimonial Section
-            </h3>
-            <section style={{paddingTop: "10px"}}>
-              <div className="container my-3">
-                <div className="row">
-                  {review.map((rev)=>(
-                    <div className="col-lg-3 col-md-8 pt-3">
-                    <div className="card  text-white bg-gradient-primary" style={{backgroundColor:'#231f38' }}>
-                      <div className="card-body" style={{backgroundColor:'#28223f'}}>
+      <div className="card card-body  mt-n7 mb-5">
+        <div className="row gx-4 mb-2">
+          <h3 className="mb-0 text-2xl">Testimonial Section</h3>
+          <section style={{ paddingTop: "10px" }}>
+            <div className="container my-3">
+              <div className="row">
+                {review.map((rev) => (
+                  <div className="col-lg-3 col-md-8 pt-3">
+                    <div
+                      className="card  text-white bg-gradient-primary"
+                      style={{ backgroundColor: "#231f38" }}
+                    >
+                      <div
+                        className="card-body"
+                        style={{ backgroundColor: "#28223f" }}
+                      >
                         <h4 className="mt-0 text-white">{rev.review}</h4>
                         <div className="author align-items-center mt-2">
                           <div className="name">
-                            <p style={{marginBottom: "0" ,color: "rgb(206, 205, 205)"}}> {rev.fromName}</p>
+                            <p
+                              style={{
+                                marginBottom: "0",
+                                color: "rgb(206, 205, 205)",
+                              }}
+                            >
+                              {" "}
+                              {rev.fromName}
+                            </p>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  ))}
-                  <div className="col-lg-3 mb-lg-0 mb-4 me-auto my-3">
-                <div className="card h-100">
-                  <div className="card-body d-flex flex-column justify-content-center text-center">
-                   
+                ))}
+                <div className="col-lg-3 mb-lg-0 mb-4 me-auto my-3">
+                  <div className="card h-100">
+                    <div className="card-body d-flex flex-column justify-content-center text-center">
                       <i className="fa fa-plus text-secondary mb-3"></i>
                       <h5 className="text-secondary"> Add Testimonial </h5>
-                      <form  onSubmit={handleSubmit}>
+                      <form onSubmit={handleSubmit}>
                         <div className="input-group input-group-outline my-3">
-                          <input type="text" className="form-control" placeholder="Type a review" name="reviewmessage" value={reviewmessage} onChange={onChange} required />
+                          <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Type a review"
+                            name="reviewmessage"
+                            value={reviewmessage}
+                            onChange={onChange}
+                            required
+                          />
                         </div>
-                        <div className="d-flex align-items-center justify-content-between mt-1" >
-                          <button type="submit" className="btn btn-primary btn-sm mb-0" >Add Review</button>
+                        <div className="d-flex align-items-center justify-content-between mt-1">
+                          <button
+                            type="submit"
+                            className="btn btn-primary btn-sm mb-0"
+                          >
+                            Add Review
+                          </button>
                         </div>
                       </form>
-                   
+                    </div>
                   </div>
                 </div>
               </div>
-                </div>
-              </div>
-            </section>
-          </div>
+            </div>
+          </section>
         </div>
+      </div>
     </div>
   );
 }

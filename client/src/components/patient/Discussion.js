@@ -27,7 +27,7 @@ export default function Discussion() {
     if (!localStorage.getItem("token")) {
       navigate("/homepage");
     }
-    if (localStorage.getItem("role") === "mentor") {
+    if (localStorage.getItem("role") === "doctor") {
       navigate("*");
     }
     getUser();

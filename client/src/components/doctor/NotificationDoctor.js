@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function NotificationMentor(props) {
+export default function NotificationDoctor(props) {
   let navigate = useNavigate();
   const [profile, setProfile] = useState([]);
   const [prescription, setPrescription] = useState([]);
@@ -118,7 +118,7 @@ export default function NotificationMentor(props) {
       <div className="col-12 mt-5 ">
         <h2>Appointment Requests to you</h2>
         <div className="row">
-          <h5 className="mt-3">
+          <h5 >
             {profile.length === 0 && "No Appointment Requests Yet"}
           </h5>
           {profile.map((profile, index) => (
@@ -138,6 +138,7 @@ export default function NotificationMentor(props) {
                   >
                     <b>Requested By :</b> {profile.createdBy}
                   </p>
+
                   <button
                     className="btn btn-success mx-2"
                     onClick={() => {

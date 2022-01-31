@@ -65,6 +65,9 @@ export default function ViewProfilePatient(props) {
     if (!localStorage.getItem("token")) {
       navigate("/login");
     }
+    if (localStorage.getItem("role") === "patient") {
+      navigate("*");
+    }
     getUser();
     getPrescription();
     // eslint-disable-next-line

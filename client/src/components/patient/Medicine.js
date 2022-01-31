@@ -12,6 +12,9 @@ export default function Medicine(props) {
     if (!localStorage.getItem("token")) {
       navigate("/login");
     }
+    if (localStorage.getItem("role") === "doctor") {
+      navigate("*");
+    }
     getPrescription();
     // eslint-disable-next-line
   }, []);

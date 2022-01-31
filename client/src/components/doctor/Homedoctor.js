@@ -6,8 +6,6 @@ import "../patient/Home.css";
 export default function Homedoctor(props) {
   let navigate = useNavigate();
   const [usercards, setusercards] = useState([]);
-  // const [totalcards, settotalcards] = useState([]);
-  // const [filterCard, setFilter] = useState({ class: "", subject: "" });
 
   useEffect(() => {
     if (!localStorage.getItem("token")) {
@@ -29,104 +27,54 @@ export default function Homedoctor(props) {
     const data = await response.json();
     console.log(data);
     setusercards(data);
-    // settotalcards(data);
   }
-
-  // async function handleSubmit(e) {
-  //   e.preventDefault();
-  //   const res = totalcards.filter((card) => {
-  //     return (
-  //       card.classsp === filterCard.class &&
-  //       card.subject === filterCard.subject &&
-  //       card.role === "patient"
-  //     );
-  //   });
-  //   setusercards(res);
-  // }
-  // const onChange = (e) => {
-  //   setFilter({ ...filterCard, [e.target.name]: e.target.value });
-  // };
 
   return (
     <div>
       <div className="container">
         <h1>Discover Your Enrolled Patients</h1>
-        {/* <form onSubmit={handleSubmit}>
-          <div className="conatiner mt-3">
-            <div className="container">
-              <div className="row">
-                <h5>Filter By Diseases</h5>
-                <div className="col-3">
-                  <select
-                    className="form-select"
-                    name="class"
-                    onChange={onChange}
-                    aria-label="Default select example"
-                  >
-                    <option defaultValue="">Select Diseases</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                  </select>
-                </div>
-                <div className="col-3">
-                  <button type="submit" className="btn btn-primary">
-                    Submit
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </form> */}
-
         {
           <div className="col-12 mt-3">
-          <div className="row">
-            {usercards.enrolledPatient && usercards.enrolledPatient.map((usercard, index) => (
-              <div className="col-xl-3 col-md-6 mb-xl-5 mb-7 mb-sm-6 mb-md-6 mb-lg-6 d-flex">
-                <div className="card" style={{ width: "18rem" }}>
-                  <img
-                    width="500"
-                    height="250"
-                    src={usercard.patientImage}
-                    className="card-img-top"
-                    alt={usercard.patientName}
-                  />
-                  <div className="card-body">
-                    <h4 >{usercard.patientName}</h4>
-                    <p
-                      className="card-text"
-                      style={{ fontSize: "14px", marginBottom: "0.3rem" }}
-                    >
-                      <b>Email :</b> {usercard.patientEmail}
-                    </p>
-                    <p
-                      className="card-text"
-                      style={{ fontSize: "14px", marginBottom: "1rem" }}
-                    >
-                      <b>Enrolled Date :</b> {usercard.patientDate.substring(0,10)}
-                    </p>
-                    <Link
-                      to={`/viewProfilePatient/${usercard.patientId}`}
-                      className="btn btn-primary"
-                    >
-                      View Profile
-                    </Link>
+            <div className="row">
+              {usercards.enrolledPatient &&
+                usercards.enrolledPatient.map((usercard, index) => (
+                  <div className="col-xl-3 col-md-6 mb-xl-5 mb-7 mb-sm-6 mb-md-6 mb-lg-6 d-flex">
+                    <div className="card" style={{ width: "18rem" }}>
+                      <img
+                        width="500"
+                        height="250"
+                        src={usercard.patientImage}
+                        className="card-img-top"
+                        alt={usercard.patientName}
+                      />
+                      <div className="card-body">
+                        <h4>{usercard.patientName}</h4>
+                        <p
+                          className="card-text"
+                          style={{ fontSize: "14px", marginBottom: "0.3rem" }}
+                        >
+                          <b>Email :</b> {usercard.patientEmail}
+                        </p>
+                        <p
+                          className="card-text"
+                          style={{ fontSize: "14px", marginBottom: "1rem" }}
+                        >
+                          <b>Enrolled Date :</b>{" "}
+                          {usercard.patientDate.substring(0, 10)}
+                        </p>
+                        <Link
+                          to={`/viewProfilePatient/${usercard.patientId}`}
+                          className="btn btn-primary"
+                        >
+                          View Profile
+                        </Link>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            ))}
+                ))}
+            </div>
           </div>
-        </div>
         }
-        
       </div>
     </div>
   );

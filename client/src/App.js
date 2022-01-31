@@ -16,7 +16,7 @@ import SignupHome from "./components/SignupHome";
 import { SignupPatient } from "./components/patient/SignupPatient";
 import DirectMessaging from "./components/DirectMessaging";
 import ViewProfile from "./components/patient/ViewProfile";
-import NotificationMentor from "./components/doctor/NotificationMentor";
+import NotificationDoctor from "./components/doctor/NotificationDoctor";
 import Books from "./components/patient/Books";
 import { Notfound } from "./components/Notfound";
 import Homedoctor from "./components/doctor/Homedoctor";
@@ -56,7 +56,7 @@ function App() {
             <Route exact path="/signuppatient" element={<SignupPatient showAlert={showAlert} />} />
             <Route exact path="/viewProfile/:id" element={<ViewProfile showAlert={showAlert} />} />
             <Route exact path="/viewProfilePatient/:id" element={<ViewProfilePatient showAlert={showAlert} />} />
-            <Route exact path="/notify" element={<NotificationMentor showAlert={showAlert} />} />
+            <Route exact path="/notify" element={<NotificationDoctor showAlert={showAlert} />} />
             <Route exact path="/books" element={<Books showAlert={showAlert} />} />
             <Route exact path="/shopmedicine" element={<ShopMedicine showAlert={showAlert} />} />
             <Route exact path="/medicine" element={<Medicine showAlert={showAlert} />} />

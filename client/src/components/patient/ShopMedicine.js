@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import BookCard from "./BookCard";
+import MedicineCard from "./MedicineCard";
 import Spinner from "react-bootstrap/Spinner";
 
 export const ShopMedicine = () => {
@@ -97,7 +97,7 @@ export const ShopMedicine = () => {
               className="col-4 mb-xl-5 mb-7 mb-sm-6 mb-md-6 mb-lg-6 d-flex mt-5"
               key={index}
             >
-              <BookCard
+              <MedicineCard
                 title={med.title}
                 product_link={med.link}
                 extracted_price={med.extracted_price}
