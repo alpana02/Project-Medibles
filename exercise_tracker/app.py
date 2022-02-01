@@ -61,7 +61,7 @@ def video3():
     )
 
 
-@app.route("/elbowflexsion")
+@app.route("/elbowflexsion/<hand>/<id>")
 def exercise1():
     counter = 0
     error = 0
@@ -104,7 +104,7 @@ def score():
             data=dictToSend,
             headers=headers,
         )
-        return render_template("index.html", res=arr)
+        return render_template("results.html", res=arr)
         # return request("post", "http://localhost:5000/api/exercise/report", data=arr)
 
     return render_template("index.html", res=counter)

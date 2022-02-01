@@ -125,7 +125,7 @@ router.get("/fetchmyEvents", fetchUser, async (req, res) => {
 router.get("/fetchmenteeBooking", fetchUser, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    const events = await Calendar.find({ createdBy: user.email });
+    const events = await Calendar.find({ createdBy: user.email }).sort({start:1});
     res.json(events);
   } catch (error) {
     console.log(error.message);

@@ -8,6 +8,8 @@ export default function Navbar(props) {
   let navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    localStorage.removeItem("email");
     navigate("/login");
     props.showAlert("Logged Out!!", "primary");
   };

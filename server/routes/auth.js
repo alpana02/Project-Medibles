@@ -147,5 +147,24 @@ router.get("/getDetailsofPatient/:id", fetchUser, async (req, res) => {
     res.status(500).send("Oops internal server error occured");
   }
 });
+// ROUTE 7 : update existing diesease of a patient: Login required
+router.put("/updateDisease", fetchUser, async (req, res) => {
+  try {
+    const { disease } = req.body;
+    //create new profile object
+    let newProfile = {};
+    newProfile.disease=disease;
+    //find the user to be updated and then update it
+    let user = await User.findByIdAndUpdate(
+      req.user.id,
+      { $set: newProfile },
+      { new: true }
+    );
+    res.json({ user });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send("Oops internal server error occured");
+  }
+});
 
 module.exports = router;

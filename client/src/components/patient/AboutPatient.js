@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function AboutPatient(props) {
   let navigate = useNavigate();
   const [profile, setProfile] = useState([]);
   const [bookings, setBooking] = useState([]);
   const [prescription, setPrescription] = useState([]);
+  const [disease, setDisease] = useState("");
+  const [saveDisplay, setsaveDisplay] = useState("");
 
   useEffect(() => {
     if (!localStorage.getItem("token")) {
@@ -31,6 +33,7 @@ export default function AboutPatient(props) {
     });
     const data = await response.json();
     setProfile(data);
+    setDisease(data.disease);
   }
   async function getBooking() {
     const response = await fetch(
@@ -85,8 +88,31 @@ export default function AboutPatient(props) {
     setPrescription(data);
   }
 
+  const updateDisease = async () => {
+    props.showAlert("Disease updated succesfully", "success");
+    const response = await fetch(
+      `http://localhost:5000/api/auth/updateDisease`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+        body: JSON.stringify({ disease }),
+      }
+    );
+    await response.json();
+    setsaveDisplay("");
+  };
+  let exercisename='elbowflexsion';
   return (
     <div className="container">
+     {exercisename==='elbowflexsion'||exercisename==='elbowextension'?(
+      <>
+      <a href={`http://127.0.0.1:8000/${exercisename}/${profile._id}`} type="button" className="btn btn-primary mx-2" target='_blank' rel="noreferrer"> Left  Start </a>
+      <a href={`http://127.0.0.1:8000/${exercisename}/${profile._id}`} type="button" className="btn btn-primary " target='_blank' rel="noreferrer"> Right  Start </a>
+      </>
+     ): <a href={`http://127.0.0.1:8000/${exercisename}/${profile._id}`} type="button" className="btn btn-primary " target='_blank' rel="noreferrer"> Start </a>}
       <div className="container rounded bg-white">
         <div className="row">
           <div
@@ -128,8 +154,40 @@ export default function AboutPatient(props) {
                       {profile.phone}
                     </p>
                     <p>
-                      <i className="fa fa-chalkboard fa-fw w3-margin-right w3-large w3-text-blue"></i>
-                      Disease - {profile.disease}
+                      <i className="fa fa-disease fa-fw w3-margin-right w3-large w3-text-blue"></i>
+                      Symptoms -
+                      <input
+                        type="text"
+                        className="d-inline px-2"
+                        id="disease"
+                        name="disease"
+                        value={disease}
+                        style={{
+                          borderTop: "hidden",
+                          borderRight: "hidden",
+                          borderLeft: "hidden",
+                          borderColor: "rgb(240, 240, 240)",
+                        }}
+                        onChange={(e) => {
+                          setDisease(e.target.value);
+                          setsaveDisplay("dsplay");
+                        }}
+                        minLength={3}
+                        required
+                      />
+                      <button
+                        className={
+                          saveDisplay === ""
+                            ? " mx-2 py-1 btn btn-primary btn-sm d-none"
+                            : " mx-2 py-1 btn btn-primary btn-sm"
+                        }
+                        onClick={() => {
+                          updateDisease();
+                        }}
+                        type="button"
+                      >
+                        Save
+                      </button>
                     </p>
                   </div>
                 </div>
@@ -163,6 +221,14 @@ export default function AboutPatient(props) {
                       >
                         <b>Doctor :</b> {booking.doctor}
                       </p>
+                      <Link
+                        type="button"
+                        className="btn btn-primary btn-sm mx-2 mt-2"
+                        to={`/viewProfile/${booking.user}`}
+                      >
+                        View Doctor &nbsp;
+                        <i className="fas fa-greater-than"></i>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -251,7 +317,13 @@ export default function AboutPatient(props) {
                         )}
                       </div>
                       <div className="col-4">
-                        <a type="button" href="https://calendar.google.com/calendar" target="_blank" rel="noreferrer" className="btn btn-primary">
+                        <a
+                          type="button"
+                          href="https://calendar.google.com/calendar"
+                          target="_blank"
+                          rel="noreferrer"
+                          className="btn btn-primary"
+                        >
                           Set Reminder
                         </a>
                       </div>
