@@ -23,11 +23,11 @@ mp_drawing.DrawingSpec(color=(0, 0, 255), thickness=1, circle_radius=1)
 
 app = Flask(__name__)
 
-global capture, switch, counter, error, timer
+global counter, error, timer
 global hand
 global userid
 global exercisename
-capture = 0
+
 counter = 0
 error = 0
 timer = 0
@@ -37,14 +37,12 @@ cap = cv2.VideoCapture(0)
 
 
 @app.route("/")
-def index():
-    return render_template("index.html")
+def index11():
+    return render_template("index11.html")
 
 
 @app.route("/video1/")
 def video1():
-    global capture
-    capture = 1
     return Response(
         generate_frames1(hand), mimetype="multipart/x-mixed-replace; boundary=frame"
     )
@@ -53,14 +51,14 @@ def video1():
 @app.route("/video2")
 def video2():
     return Response(
-        generate_frames2(), mimetype="multipart/x-mixed-replace; boundary=frame"
+        generate_frames2(hand), mimetype="multipart/x-mixed-replace; boundary=frame"
     )
 
 
 @app.route("/video3")
 def video3():
     return Response(
-        generate_frames3(), mimetype="multipart/x-mixed-replace; boundary=frame"
+        generate_frames3(hand), mimetype="multipart/x-mixed-replace; boundary=frame"
     )
 
 
@@ -75,12 +73,21 @@ def exercise1(url):
     userid = arr[1]
     print(userid)
     exercisename = "elbowflexsion"
-    return render_template("elbowflexsion.html", hand=hand)
+    return render_template("elbowflexsion.html", hand=hand, url=url)
 
 
-@app.route("/elboweccentric")
-def exercise2():
-    return render_template("elboweccentric.html")
+@app.route("/elboweccentric/<url>")
+def exercise2(url):
+    arr = url.split(",", 2)
+    global hand
+    global userid
+    global exercisename
+
+    hand = arr[0]
+    userid = arr[1]
+    print(userid)
+    exercisename = "elboweccentric"
+    return render_template("elboweccentric.html", hand=hand, url=url)
 
 
 @app.route("/exercise3")
@@ -115,7 +122,20 @@ def score():
         )
         # return request("post", "http://localhost:5000/api/exercise/report", data=arr)
 
-    return render_template("index.html", res=counter)
+    return render_template("index11.html", res=counter)
+
+
+#  For reloading the pages
+
+
+@app.route("/reload1")
+def reload1():
+    return render_template("elbowflexsion.html")
+
+
+@app.route("/reload2")
+def reload2():
+    return render_template("elboweccentric.html")
 
 
 if __name__ == "__main__":

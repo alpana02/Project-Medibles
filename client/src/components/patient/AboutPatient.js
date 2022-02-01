@@ -104,7 +104,7 @@ export default function AboutPatient(props) {
     await response.json();
     setsaveDisplay("");
   };
-  let exercisename = 'elbowflexsion';
+  let exercisename = 'elboweccentric';
   let hand = 'RIGHT';
   let id = profile._id
   let url = hand + ',' + id
