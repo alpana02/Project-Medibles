@@ -104,15 +104,15 @@ export default function AboutPatient(props) {
     await response.json();
     setsaveDisplay("");
   };
-  let exercisename='elbowflexsion';
+  let exercisename = 'elbowflexsion';
   return (
     <div className="container">
-     {exercisename==='elbowflexsion'||exercisename==='elbowextension'?(
+      {exercisename === 'elbowflexsion' || exercisename === 'elbowextension' ? (
       <>
       <a href={`http://127.0.0.1:8000/${exercisename}/${profile._id}`} type="button" className="btn btn-primary mx-2" target='_blank' rel="noreferrer"> Left  Start </a>
       <a href={`http://127.0.0.1:8000/${exercisename}/${profile._id}`} type="button" className="btn btn-primary " target='_blank' rel="noreferrer"> Right  Start </a>
       </>
-     ): <a href={`http://127.0.0.1:8000/${exercisename}/${profile._id}`} type="button" className="btn btn-primary " target='_blank' rel="noreferrer"> Start </a>}
+      ) : <a href={`http://127.0.0.1:8000/${exercisename}/${profile._id}`} type="button" className="btn btn-primary " target='_blank' rel="noreferrer"> Start </a>}
       <div className="container rounded bg-white">
         <div className="row">
           <div
