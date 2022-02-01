@@ -9,7 +9,7 @@ export default function Homedoctor(props) {
 
   useEffect(() => {
     if (!localStorage.getItem("token")) {
-      navigate("/login");
+      navigate("/homepage");
     }
     if (localStorage.getItem("role") === "patient") {
       navigate("*");

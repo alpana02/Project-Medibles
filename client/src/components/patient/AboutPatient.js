@@ -11,7 +11,7 @@ export default function AboutPatient(props) {
 
   useEffect(() => {
     if (!localStorage.getItem("token")) {
-      navigate("/login");
+      navigate("/homepage");
     }
     if (localStorage.getItem("role") === "doctor") {
       navigate("*");

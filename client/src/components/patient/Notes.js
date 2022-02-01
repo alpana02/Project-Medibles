@@ -28,7 +28,7 @@ export default function Notes(props) {
     if (localStorage.getItem("token")) {
       getNotes();
     } else {
-      navigate("/login");
+      navigate("/homepage");
     }
     // eslint-disable-next-line
   }, []);

@@ -16,7 +16,7 @@ export default function Books(props) {
 
     useEffect(() => {
         if (!localStorage.getItem("token")) {
-            navigate("/login");
+            navigate("/homepage");
         }
         // eslint-disable-next-line
     }, []);

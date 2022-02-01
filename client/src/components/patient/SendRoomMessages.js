@@ -41,7 +41,7 @@ function SendRoomMessages({ scroll }) {
 
     useEffect(() => {
         if (!localStorage.getItem("token")) {
-            navigate("/login");
+            navigate("/homepage");
         }
         getUser()
         // eslint-disable-next-line
