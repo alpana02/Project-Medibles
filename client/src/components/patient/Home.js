@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "react-multi-carousel/lib/styles.css";
 import ChatBot from "react-simple-chatbot";
+import PropTypes from 'prop-types';
 
 import "./Home.css";
 
@@ -14,31 +15,37 @@ export default function Home(props) {
     specialization: "",
   });
 
-  const steps = [
-    {
-      id: "1",
-      message: "What is your Name",
-      trigger: "2",
-    },
-    {
-      id: "2",
-      options: [
-        { value: 1, label: "Number 1", trigger: "4" },
-        { value: 2, label: "Number 2", trigger: "3" },
-        { value: 3, label: "Number 3", trigger: "3" },
-      ],
-    },
-    {
-      id: "3",
-      message: "Wrong answer, try again.",
-      trigger: "2",
-    },
-    {
-      id: "4",
-      message: "Awesome! You are a telepath!",
-      end: true,
-    },
-  ];
+  const BMI = (props) => {
+    const { steps } = props;
+    const height = steps.height.value;
+    const weight = steps.weight.value;
+    const bmi = Number(((weight / (height * height)) * 10000).toFixed(1));
+    let result = 'Underweight';
+
+    if (bmi >= 18.5 && bmi < 25) {
+      result = 'Normal weight';
+    } else if (bmi >= 25 && bmi < 30) {
+      result = 'Overweight';
+    } else if (bmi >= 30) {
+      result = 'Obesity';
+    }
+
+    return (
+      <div className="test">
+        Your BMI is {bmi} ({result})
+      </div>
+    );
+  };
+
+  BMI.propTypes = {
+    steps: PropTypes.object,
+  };
+
+  BMI.defaultProps = {
+    steps: undefined,
+  };
+
+
 
   useEffect(() => {
     if (!localStorage.getItem("token")) {
@@ -184,7 +191,83 @@ export default function Home(props) {
           </div>
         }
       </div>
-      <ChatBot steps={steps} floating={true} />
+      <ChatBot steps={[
+        {
+          id: '1',
+          message: 'Hi! Do you need some help?',
+          trigger: '7',
+        },
+        {
+          id: '2',
+          message: 'Let\'s calculate your BMI (Body Mass Index)',
+          trigger: '3',
+        },
+        {
+          id: '3',
+          message: 'Please type your height (cm)',
+          trigger: 'height',
+        },
+        {
+          id: 'height',
+          user: true,
+          trigger: '4',
+        },
+        {
+          id: '4',
+          message: 'Please type your weight (kg)',
+          trigger: 'weight',
+        },
+        {
+          id: 'weight',
+          user: true,
+          trigger: '5',
+        },
+        {
+          id: '5',
+          message: 'Thanks! Check out your BMI',
+          trigger: '6',
+        },
+        {
+          id: '6',
+          component: <BMI />,
+          end: true,
+        },
+        {
+          id: '7',
+          options: [
+            { value: 1, label: 'Yes', trigger: '9' },
+            { value: 2, label: 'No', trigger: '8' },
+          ],
+        },
+        {
+          id: '8',
+          message: 'Awesome! Hope you are enjoying Project-Maestro',
+          end: true,
+        },
+        {
+          id: '9',
+          message: 'Great!',
+          trigger: '10'
+        },
+        {
+          id: '10',
+          message: "Say Hello to India's top doctors via Project MEDIBLES",
+          trigger: '12'
+        },
+        {
+          id: '12',
+          message: 'What do you want to know',
+          trigger: '13'
+        },
+        {
+          id: '13',
+          options: [
+            { value: 1, label: 'BMI', trigger: '2' },
+            { value: 2, label: 'Medibles Features', trigger: '8' },
+          ],
+        },
+      ]}
+        floating={true} />
     </div>
   );
 }
