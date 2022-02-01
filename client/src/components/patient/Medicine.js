@@ -4,8 +4,7 @@ import { useNavigate } from "react-router-dom";
 export default function Medicine(props) {
   let navigate = useNavigate();
   const [prescription, setPrescription] = useState([]);
-  const [eatenColor, seteatenColor] = useState('');
-  let days = [ "sun","mon", "tue", "wed", "thurs", "fri", "sat",];
+  let days = ["sun", "mon", "tue", "wed", "thurs", "fri", "sat",];
   let dayCounter = 0;
 
   useEffect(() => {
@@ -33,7 +32,6 @@ export default function Medicine(props) {
     setPrescription(prescriptions);
   }
   async function handleEaten(prescriptionId, medId, state) {
-    seteatenColor(state)
     let eatenTime = "";
     if (state !== "info") {
       eatenTime = new Date().toDateString();
@@ -75,7 +73,7 @@ export default function Medicine(props) {
                               <b className="d-none">{dayCounter++}</b>
                               <div className="card-body">
                                 <div
-                                  className={`alert mx-4 alert-${eatenColor || med.state}`}
+                                  className={`alert mx-4 alert-${med.state}`}
                                   role="alert"
                                 >
                                   <div className="row">
@@ -86,8 +84,9 @@ export default function Medicine(props) {
                                       &nbsp;&nbsp; <b>Eat: </b>
                                       {med.time} food
                                     </div>
-                                    <div className="col-4">
 
+                                    <div className="col-4">
+                                      <form>
                                         <button
                                           className="btn btn-success"
                                           onClick={(e) =>
@@ -119,7 +118,7 @@ export default function Medicine(props) {
                                             className="fa fa-close"
                                             aria-hidden="true"
                                           ></i>
-                                         &nbsp; Missed
+                                          &nbsp; Missed
                                         </button>
                                         <button
                                           className="btn btn-primary"
@@ -137,8 +136,10 @@ export default function Medicine(props) {
                                           ></i>
                                           &nbsp; Reset
                                         </button>
-
+                                      </form>
                                     </div>
+
+
                                   </div>
                                 </div>
                               </div>
