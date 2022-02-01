@@ -4,7 +4,7 @@ const fetchUser = require("../middleware/fetchUser");
 const Excercise = require("../models/Excercise");
 const User = require("../models/User");
 
-// ROUTE 1 : Add a new excercise : Login required 
+// ROUTE 1 : Add a new excercise : Login required
 router.post("/addExcercise/:id", fetchUser, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
@@ -12,9 +12,11 @@ router.post("/addExcercise/:id", fetchUser, async (req, res) => {
     const event = new Excercise({
       doctor: req.user.id,
       patient: req.params.id,
+      startDate: new Date().toDateString(),
       note: noteExcercise,
       excercises: excercise,
       doctorName: user.name,
+      completed: false,
     });
     const savedEvent = await event.save();
     res.json(savedEvent);
@@ -48,13 +50,12 @@ router.delete("/deleteexcercise/:id", fetchUser, async (req, res) => {
       return res.status(401).send("Permission not granted");
     }
     excercise = await Excercise.findByIdAndDelete(req.params.id);
-    res.send('Success!! Excercise deleted succesfully')
+    res.send("Success!! Excercise deleted succesfully");
   } catch (error) {
     console.log(error.message);
     res.status(500).send("Oops internal server error occured");
   }
 });
-
 
 router.post("/report", async (req, res) => {
   try {
@@ -70,10 +71,42 @@ router.post("/report", async (req, res) => {
     // });
     // const savedEvent = await event.save();
     // res.json(savedEvent);
-    res.send('Hello Pari')
+    res.send("Hello Pari");
   } catch (error) {
     console.log(error.message);
     res.status(500).json("Oops internal server error occured");
+  }
+});
+// ROUTE 5 : Fetch patient excercises from doctor site : Login required
+router.get("/fetchexercisedoctor/:id", fetchUser, async (req, res) => {
+  try {
+    //console.log(mongoose.Types.ObjectId(req.user.id) );
+    const events = await Excercise.find({$and:[{ patient: req.params.id },{ doctor: req.user.id }]}).sort({
+      startDate: -1,
+    });
+    res.json(events);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send("Oops internal server error occured");
+  }
+});
+// ROUTE 3 : Delete exercise from doctor site : Login required
+router.delete("/deleteexercise/:id", fetchUser, async (req, res) => {
+  try {
+    //find the exercise to be deleted and then delete it
+    let exercise = await Excercise.findById(req.params.id);
+    if (!exercise) {
+      return res.status(404).send("Such exercise not found");
+    }
+    //if selected exercise is the login users prescription
+    if (exercise.doctor.toString() !== req.user.id) {
+      return res.status(401).send("Permission not granted");
+    }
+    exercise = await Excercise.findByIdAndDelete(req.params.id);
+    res.send("Success!! exercise deleted succesfully");
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send("Oops internal server error occured");
   }
 });
 

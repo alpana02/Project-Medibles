@@ -44,7 +44,7 @@ router.get("/fetchprescriptionpatient", fetchUser, async (req, res) => {
   }
 });
 
-// ROUTE 3 : Delete prescription from patient site : Login required
+// ROUTE 3 : Delete prescription from doctor site : Login required
 router.delete("/deleteprescription/:id", fetchUser, async (req, res) => {
   try {
     //find the prescription to be deleted and then delete it
@@ -141,7 +141,7 @@ router.put("/refillPrescription/:id", fetchUser, async (req, res) => {
 router.get("/fetchprescriptiondoctor/:id", fetchUser, async (req, res) => {
   try {
     //console.log(mongoose.Types.ObjectId(req.user.id) );
-    const events = await Prescription.find({$and:[{ patient: req.params.id },{ doctor: mongoose.Types.ObjectId(req.user.id) }]}).sort({
+    const events = await Prescription.find({$and:[{ patient: req.params.id },{ doctor: req.user.id}]}).sort({
       startDate: -1,
     });
     res.json(events);

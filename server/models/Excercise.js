@@ -17,16 +17,23 @@ const ExcerciseSchema = new Schema({
     type: String,
     required: true,
   },
+  startDate: {
+    type: String,
+    required: true,
+  },
   excercises: {
     type: [
       {
         name: String,
         severity: String,
-        duration: String,
-        time: String,
+        perActivityTime: String,
+        total: String
       },
     ],
     required: true,
+  },
+  completed: {
+    type: Boolean,
   },
 });
 

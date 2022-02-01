@@ -110,12 +110,12 @@ export default function AboutPatient(props) {
   let url = hand + ',' + id
   return (
     <div className="container">
-      {/* {exercisename === 'elbowflexsion' || exercisename === 'elbowextension' ? (
-        <>
-          <a href={`http://127.0.0.1:8000/${exercisename}`} type="button" className="btn btn-primary mx-2" target='_blank' rel="noreferrer"> Left  Start </a>
-          <a href={`http://127.0.0.1:8000/${exercisename}/${profile._id}`} type="button" className="btn btn-primary " target='_blank' rel="noreferrer"> Right  Start </a>
-        </>
-      ) : <a href={`http://127.0.0.1:8000/${exercisename}/${profile._id}`} type="button" className="btn btn-primary " target='_blank' rel="noreferrer"> Start </a>} */}
+     {/* {exercisename==='elbowflexsion'||exercisename==='elbowextension'?(
+      <>
+      <a href={`http://127.0.0.1:8000/${exercisename}/left/${profile._id}`} type="button" className="btn btn-primary mx-2" target='_blank' rel="noreferrer"> Left  Start </a>
+      <a href={`http://127.0.0.1:8000/${exercisename}/right/${profile._id}`} type="button" className="btn btn-primary " target='_blank' rel="noreferrer"> Right  Start </a>
+      </>
+     ): <a href={`http://127.0.0.1:8000/${exercisename}/${profile._id}`} type="button" className="btn btn-primary " target='_blank' rel="noreferrer"> Start </a>} */}
       <div className="container rounded bg-white">
         <a href={`http://127.0.0.1:8000/${exercisename}/${url}`} type="button" className="btn btn-primary mx-2" target='_blank' rel="noreferrer"> Left  Start </a>
         <div className="row">

@@ -10,6 +10,7 @@ export default function ViewProfilePatient(props) {
   const [note, setnote] = useState("");
   const [noteExcercise, setnoteExcercise] = useState("");
   const [prescription, setPrescription] = useState([]);
+  const [activity, setActivity] = useState([]);
 
   let freqOptions = [
     {
@@ -56,8 +57,8 @@ export default function ViewProfilePatient(props) {
     {
       name: "",
       severity: "",
-      duration: "",
-      time: "",
+      perActivityTime: "",
+      total: "",
     },
   ]);
 
@@ -70,6 +71,7 @@ export default function ViewProfilePatient(props) {
     }
     getUser();
     getPrescription();
+    getExercise();
     // eslint-disable-next-line
   }, []);
 
@@ -99,6 +101,19 @@ export default function ViewProfilePatient(props) {
     );
     const data = await response.json();
     setPrescription(data);
+  }
+  async function getExercise() {
+    const response = await fetch(
+      `http://localhost:5000/api/excercise/fetchexercisedoctor/${id}`,
+      {
+        method: "GET",
+        headers: {
+          "auth-token": localStorage.getItem("token"),
+        },
+      }
+    );
+    const data = await response.json();
+    setActivity(data);
   }
 
   const handleMedChange = (i, e) => {
@@ -139,8 +154,8 @@ export default function ViewProfilePatient(props) {
       {
         name: "",
         severity: "",
-        duration: "",
-        time: "",
+        perActivityTime: "",
+        total: "",
       },
     ]);
   };
@@ -188,7 +203,7 @@ export default function ViewProfilePatient(props) {
   }
 
   async function handleExcerciseSubmit(event) {
-    event.preventDefault();
+    //event.preventDefault();
     props.showAlert("Excercise Added Succesfully", "success");
     const response = await fetch(
       `http://localhost:5000/api/excercise/addExcercise/${id}`,
@@ -207,11 +222,12 @@ export default function ViewProfilePatient(props) {
       {
         name: "",
         severity: "",
-        duration: "",
-        time: "",
+        perActivityTime: "",
+        total: "",
       },
     ]);
     setnoteExcercise("");
+    setActivity(data)
   }
 
   const handleNoteChange = (e) => {
@@ -224,7 +240,7 @@ export default function ViewProfilePatient(props) {
   const deletePrescription = async (Prescid) => {
     console.log('in delete');
     props.showAlert(
-      "Deleted Succesfully",
+      "Prescription Deleted Succesfully",
       "success"
     );
     //call api for deleting prescription
@@ -246,7 +262,31 @@ export default function ViewProfilePatient(props) {
     });
     setPrescription(newPrescriptions);
   };
-
+  const deleteExcercise = async (ExcId) => {
+    console.log('in delete');
+    props.showAlert(
+      "Excercise Deleted Succesfully",
+      "success"
+    );
+    //call api for deleting excercise
+    const response = await fetch(
+      `http://localhost:5000/api/excercise/deleteexercise/${ExcId}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        }
+      }
+    );
+    console.log(response);
+    // e.target.className = e.target.className + "disabled";
+    // setPrescription(data);
+    const newActivity = activity.filter((activity) => {
+      return activity._id !== ExcId;
+    });
+    setActivity(newActivity);
+  };
 
   return (
     <div className="container">
@@ -306,19 +346,25 @@ export default function ViewProfilePatient(props) {
                     <form onSubmit={handleExcerciseSubmit}>
                       {excercise.map((element, index) => (
                         <div key={index}>
-                          <div className="mb-1 ">
-                            <input
-                              type="text"
-                              className="form-control"
-                              placeholder="Type Excercise names"
-                              name="name"
-                              value={
-                                excercise.name === "" ? "" : excercise.name
-                              }
-                              onChange={(e) => handleExcerciseChange(index, e)}
-                              required
-                            />
-                          </div>
+                          <div className="mb-1">
+                              <select
+                                className="form-select mt-3"
+                                name="name"
+                                value={excercise.name}
+                                onChange={(e) =>
+                                  handleExcerciseChange(index, e)
+                                }
+                                aria-label="Default select example"
+                                required
+                              >
+                                <option defaultValue="">Select Exercise To Assign</option>
+                                <option value="elbow flexsion">Elbow Flexsion</option>
+                                <option value="elbow busitis">Elbow Busitis</option>
+                                <option value="tennis elbow">Tennis Elbow</option>
+                                <option value="butt bridge">Butt Bridge</option>
+                                <option value="Stretches for lower back">Stretches for lower back</option>
+                              </select>
+                            </div>
                           <div className="w3-half mt-1">
                             <div className="mb-1">
                               <select
@@ -332,19 +378,20 @@ export default function ViewProfilePatient(props) {
                                 required
                               >
                                 <option defaultValue="">Select Severity</option>
-                                <option value="low">Low impact</option>
-                                <option value="high">High impact</option>
+                                <option value="low">Severe patient</option>
+                                <option value="high">Mild patient</option>
                               </select>
                             </div>
                           </div>
+                          
                           <div className="w3-half mt-1">
                             <div className="mb-1 mx-2">
-                              <input
+                            <input
                                 type="number"
                                 className="form-control "
-                                placeholder="Type duration"
-                                name="duration"
-                                value={excercise.duration}
+                                placeholder="Per activity time in secs"
+                                name="total"
+                                value={excercise.total}
                                 onChange={(e) =>
                                   handleExcerciseChange(index, e)
                                 }
@@ -352,28 +399,25 @@ export default function ViewProfilePatient(props) {
                               />
                             </div>
                           </div>
-                          <div className="w3-half mt-1">
-                            <div className="mb-1">
-                              <select
-                                className="form-select mb-3"
-                                name="time"
-                                value={excercise.time}
+                          <div className="mt-1">
+                            <div className="mb-1 ">
+                              <input
+                                type="number"
+                                className="form-control "
+                                placeholder="Total Number of times to be done"
+                                name="perActivityTime"
+                                value={excercise.perActivityTime}
                                 onChange={(e) =>
                                   handleExcerciseChange(index, e)
                                 }
-                                aria-label="Default select example"
                                 required
-                              >
-                                <option defaultValue="">Select Timing</option>
-                                <option value="before">Before Food</option>
-                                <option value="after">After Food</option>
-                              </select>
+                              />
                             </div>
                           </div>
                           {index ? (
                             <button
                               type="button"
-                              className="btn btn-danger mb-3 mx-4 mt-1"
+                              className="btn btn-danger mx-4 mt-1"
                               onClick={() => removeExcerciseFormFields(index)}
                             >
                               Remove
@@ -384,7 +428,7 @@ export default function ViewProfilePatient(props) {
 
                       <input
                         type="text"
-                        className="form-control mb-2 py-3"
+                        className="form-control mb-2 py-3 mt-3"
                         placeholder="Type any specific instructions for the patient"
                         name="noteExcercise"
                         value={noteExcercise}
@@ -618,6 +662,85 @@ export default function ViewProfilePatient(props) {
                         <>
                           <b className="d-block">Special Instruction</b>
                           {prescription.note}
+                        </>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="col-12 mt-5 card card-body">
+        <div className="row">
+          <h2>Activity assigned by you</h2>
+
+          <h4 className="mt-2">
+            {activity.length === 0 && "No Acitvities Assigned Yet"}
+          </h4>
+          {activity.map((activity, index) => (
+            <div className="w3-half">
+              <div className="w3-container w3-card w3-white w3-margin-bottom">
+                <div
+                  className="row"
+                  style={
+                    activity.completed
+                      ? { backgroundColor: "rgb(255 248 248)" }
+                      : { backgroundColor: "white" }
+                  }
+                >
+                  <div key={index} className="w3-container ">
+                    <div className="card-body">
+                      <div className="row">
+                        <div className="col-10">
+                          <h4>Course Assigned {activity.completed ? " - completed" : ""}</h4>
+                        </div>
+                        <div className="col-2 float-end">
+                          <button
+                            className="btn btn-danger "
+                            onClick={() => {
+                              deleteExcercise(activity._id);
+                            }}
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+
+                      <table className="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Exercise Name</th>
+                            <th scope="col">Severity</th>
+                            <th scope="col">Per Activity Time</th>
+                            <th scope="col">Total Times</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {activity.excercises.map((activity, index) => (
+                            <tr>
+                              <th scope="row">{index + 1}</th>
+                              <td>{activity.name}</td>
+                              <td>{activity.severity}</td>
+                              <td>{activity.perActivityTime} seconds</td>
+                              <td>{activity.total} days</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                      <h6>
+                        <b>Starting Date: </b>
+                        {activity.startDate}
+                      </h6>
+
+                      {activity.note ? (
+                        <>
+                          <b className="d-block">Special Instruction</b>
+                          {activity.note}
                         </>
                       ) : (
                         ""
