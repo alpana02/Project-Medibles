@@ -8,7 +8,6 @@ import AboutPatient from "./components/patient/AboutPatient";
 import Discussion from "./components/patient/Discussion";
 import NoteState from "./context/notes/NoteState";
 import Alert from "./components/Alert";
-import PatientNotes from "./components/patient/PatientNotes";
 import { Login } from "./components/Login";
 import { Signup } from "./components/doctor/Signup";
 import { useState } from "react";
@@ -24,6 +23,8 @@ import ViewProfilePatient from "./components/doctor/ViewProfilePatient";
 import Medicine from "./components/patient/Medicine";
 import { ShopMedicine } from "./components/patient/ShopMedicine";
 import { HomePage } from "./components/HomePage";
+import { Excercise } from "./components/patient/Excercise";
+import { Report } from "./components/patient/Report";
 
 function App() {
   const [alert, setAlert] = useState(null);
@@ -50,7 +51,7 @@ function App() {
             <Route exact path="/aboutpatient" element={<AboutPatient showAlert={showAlert} />} />
             <Route exact path="/chat" element={<DirectMessaging />} />
             <Route exact path="/discussion" element={<Discussion />} />
-            <Route exact path="/patient_notes" element={<PatientNotes showAlert={showAlert} />} />
+            <Route exact path="/excercise" element={<Excercise showAlert={showAlert} />} />
             <Route exact path="/login" element={<Login showAlert={showAlert} />} />
             <Route exact path="/signuphome" element={<SignupHome showAlert={showAlert} />} />
             <Route exact path="/signup" element={<Signup showAlert={showAlert} />} />
@@ -62,6 +63,7 @@ function App() {
             <Route exact path="/shopmedicine" element={<ShopMedicine showAlert={showAlert} />} />
             <Route exact path="/medicine" element={<Medicine showAlert={showAlert} />} />
             <Route exact path="/homepage" element={<HomePage />} />
+            <Route exact path="/report" element={<Report showAlert={showAlert} />} />
             <Route path="*" element={<Notfound />} />
             </Routes>
           </div>

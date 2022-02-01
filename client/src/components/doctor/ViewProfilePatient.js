@@ -130,7 +130,7 @@ export default function ViewProfilePatient(props) {
   const handleExcerciseChange = (i, e) => {
     let newExcercise = [...excercise];
     newExcercise[i][e.target.name] = e.target.value;
-    setmedicine(newExcercise);
+    setexcercise(newExcercise);
   };
 
   let addFormFields = () => {

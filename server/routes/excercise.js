@@ -109,5 +109,24 @@ router.delete("/deleteexercise/:id", fetchUser, async (req, res) => {
     res.status(500).send("Oops internal server error occured");
   }
 });
+// ROUTE 4 : Fetch exercise for patient portal : Login required
+router.get("/fetchtExcercise", fetchUser, async (req, res) => {
+  try {
+    const activity = await Excercise.find({ patient: req.user.id });
+    // prescriptions.map((prescription, index) =>
+    //   prescription.medicines.map((med, index) => {
+    //     if (med.eatenTime && med.eatenTime != new Date().toDateString()) {
+    //       med.eatenTime = "";
+    //       med.state = "info";
+    //       prescription.save();
+    //     }
+    //   })
+    // );
+    res.json(activity);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send("Oops internal server error occured");
+  }
+});
 
 module.exports = router;
