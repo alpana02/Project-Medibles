@@ -87,7 +87,7 @@ export default function Medicine(props) {
                                       {med.time} food
                                     </div>
                                     <div className="col-4">
-                                     
+
                                         <button
                                           className="btn btn-success"
                                           onClick={(e) =>
@@ -137,7 +137,7 @@ export default function Medicine(props) {
                                           ></i>
                                           &nbsp; Reset
                                         </button>
-                                     
+
                                     </div>
                                   </div>
                                 </div>
