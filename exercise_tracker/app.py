@@ -24,6 +24,9 @@ mp_drawing.DrawingSpec(color=(0, 0, 255), thickness=1, circle_radius=1)
 app = Flask(__name__)
 
 global capture, switch, counter, error, timer
+global hand
+global userid
+global exercisename
 capture = 0
 counter = 0
 error = 0
@@ -38,12 +41,12 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/video1")
+@app.route("/video1/")
 def video1():
     global capture
     capture = 1
     return Response(
-        generate_frames1(), mimetype="multipart/x-mixed-replace; boundary=frame"
+        generate_frames1(hand), mimetype="multipart/x-mixed-replace; boundary=frame"
     )
 
 
@@ -61,27 +64,27 @@ def video3():
     )
 
 
-@app.route("/elbowflexsion/<hand>/<id>")
-def exercise1():
-    counter = 0
-    error = 0
-    timer = 0
-    return render_template("elbowflexsion.html")
+@app.route("/elbowflexsion/<url>")
+def exercise1(url):
+    arr = url.split(",", 2)
+    global hand
+    global userid
+    global exercisename
+
+    hand = arr[0]
+    userid = arr[1]
+    print(userid)
+    exercisename = "elbowflexsion"
+    return render_template("elbowflexsion.html", hand=hand)
 
 
 @app.route("/elboweccentric")
 def exercise2():
-    counter = 0
-    error = 0
-    timer = 0
     return render_template("elboweccentric.html")
 
 
 @app.route("/exercise3")
 def exercise3():
-    counter = 0
-    error = 0
-    timer = 0
     return render_template("exercise3.html")
 
 
@@ -90,6 +93,9 @@ def score():
     global counter
     global timer
     global error
+    global hand
+    global userid
+    global exercisename
     if request.method == "GET":
         counter = request.args.get("counter")
         timer = request.args.get("timer")
@@ -104,11 +110,13 @@ def score():
             data=dictToSend,
             headers=headers,
         )
-        return render_template("results.html", res=arr)
+        return render_template(
+            "results.html", res=arr, hand=hand, userid=userid, exercisename=exercisename
+        )
         # return request("post", "http://localhost:5000/api/exercise/report", data=arr)
 
     return render_template("index.html", res=counter)
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(port=8000, debug=True)

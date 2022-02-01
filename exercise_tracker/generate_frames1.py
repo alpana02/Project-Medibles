@@ -15,7 +15,7 @@ mp_holistic = mp.solutions.holistic
 mp_drawing.DrawingSpec(color=(0, 0, 255), thickness=1, circle_radius=1)
 
 
-global cap, frame, switch, counter, capture, timer, error
+global cap, frame, switch, counter, capture, timer, error, userid, exercisename
 switch = 1
 cap = cv2.VideoCapture(0)
 capture = 0
@@ -25,7 +25,7 @@ error = 0
 params = {"counter": counter, "timer": timer, "error": error}
 
 
-def generate_frames1():
+def generate_frames1(hand):
     tol_angle = get_tolerance("mild")
     stage = None
     starttime = time.time()
@@ -34,6 +34,8 @@ def generate_frames1():
     counter = 0
     timer = 0
     error = 0
+    hand = hand.upper()
+    print(hand)
 
     cap = cv2.VideoCapture(0)
     with mp_holistic.Holistic(
@@ -59,16 +61,16 @@ def generate_frames1():
                     landmarks = results.pose_landmarks.landmark
 
                     shoulder = [
-                        landmarks[mp_holistic.PoseLandmark.LEFT_SHOULDER.value].x,
-                        landmarks[mp_holistic.PoseLandmark.LEFT_SHOULDER.value].y,
+                        landmarks[mp_holistic.PoseLandmark[f"{hand}_SHOULDER"].value].x,
+                        landmarks[mp_holistic.PoseLandmark[f"{hand}_SHOULDER"].value].y,
                     ]
                     elbow = [
-                        landmarks[mp_holistic.PoseLandmark.LEFT_ELBOW.value].x,
-                        landmarks[mp_holistic.PoseLandmark.LEFT_ELBOW.value].y,
+                        landmarks[mp_holistic.PoseLandmark[f"{hand}_ELBOW"].value].x,
+                        landmarks[mp_holistic.PoseLandmark[f"{hand}_ELBOW"].value].y,
                     ]
                     wrist = [
-                        landmarks[mp_holistic.PoseLandmark.LEFT_WRIST.value].x,
-                        landmarks[mp_holistic.PoseLandmark.LEFT_WRIST.value].y,
+                        landmarks[mp_holistic.PoseLandmark[f"{hand}_WRIST"].value].x,
+                        landmarks[mp_holistic.PoseLandmark[f"{hand}_WRIST"].value].y,
                     ]
 
                     # Calculate angle
