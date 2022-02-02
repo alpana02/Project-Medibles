@@ -75,7 +75,7 @@ export const Excercise = (props) => {
                                 className="btn btn-success mx-2"
                                 href={`http://127.0.0.1:8000/${excercise.name
                                   .split(" ")
-                                  .join("")}/left,${profile._id}`}
+                                  .join("")}/left,${excercise.severity},${excercise.perActivityTime},${profile._id}`}
                                 target="_blank"
                                 rel="noreferrer"
                               >
@@ -90,7 +90,7 @@ export const Excercise = (props) => {
                                 className="btn btn-primary"
                                 href={`http://127.0.0.1:8000/${excercise.name
                                   .split(" ")
-                                  .join("")}/right,${profile._id}`}
+                                  .join("")}/right,${excercise.severity},${excercise.perActivityTime},${profile._id}`}
                                 target="_blank"
                                 rel="noreferrer"
                               >
@@ -109,7 +109,7 @@ export const Excercise = (props) => {
                                 className="btn btn-success"
                                 href={`http://127.0.0.1:8000/${excercise.name
                                   .split(" ")
-                                  .join("")}/${profile._id}`}
+                                  .join("")}/${excercise.severity},${excercise.perActivityTime},${profile._id}`}
                                 target="_blank"
                                 rel="noreferrer"
                               >
