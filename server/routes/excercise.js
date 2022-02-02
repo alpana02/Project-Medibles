@@ -63,10 +63,10 @@ router.post("/report", async (req, res) => {
   try {
     // const user =  await User.findById(req.user.id);
     let find = false;
-    const { counter, timer, error, hand, userid, exercisename, exerciseid } =
-      req.body;
+    const { counter, timer, error, hand, userid, exercisename, activityid, exerciseid } =req.body;
     console.log(req.body);
-    const patient = await Excercise.find({ patient: userid });
+    const patient = await Excercise.findById(activityid );
+    console.log(patient);
     if (!patient) {
       return res.status(404).send("Permission not granted");
     }
