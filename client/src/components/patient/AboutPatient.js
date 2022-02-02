@@ -67,16 +67,19 @@ export default function AboutPatient(props) {
         }),
       }
     );
-    const data = await response.json();
+    await response.json();
     e.target.className = e.target.className + "disabled";
-    setPrescription(data);
+    // setPrescription(data);
     // const newPrescriptions = prescription.filter((prescription) => {
     //   return prescription._id !== id;
     // });
     // setPrescription(newPrescriptions);
   };
   const completeExcercise = async (id, e) => {
-    props.showAlert("YAYY! We have notfied the doctor of your excercise status", "success");
+    props.showAlert(
+      "YAYY! We have notfied the doctor of your excercise status",
+      "success"
+    );
     //call api for deleting prescription
     const response = await fetch(
       `http://localhost:5000/api/excercise/completeExcercise/${id}`,
@@ -91,9 +94,9 @@ export default function AboutPatient(props) {
         }),
       }
     );
-    const data = await response.json();
+    await response.json();
     e.target.className = e.target.className + "disabled";
-    setExcercise(data);
+    // setExcercise(data);
     // const newPrescriptions = prescription.filter((prescription) => {
     //   return prescription._id !== id;
     // });
@@ -301,43 +304,44 @@ export default function AboutPatient(props) {
                         </button>
                       </div>
                     </div>
-
-                    <table className="table">
-                      <thead>
-                        <tr>
-                          <th scope="col">#</th>
-                          <th scope="col">Medicine Name</th>
-                          <th scope="col">Dosage</th>
-                          <th scope="col">Time</th>
-                          <th scope="col">Frequency</th>
-                          <th scope="col">Duration</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {prescription.medicines.map((med, index) => (
+                    <div class="table-responsive">
+                      <table className="table">
+                        <thead>
                           <tr>
-                            <th scope="row">{index + 1}</th>
-                            <td>{med.name}</td>
-                            <td>{med.dosage}</td>
-                            <td>{med.time}</td>
-                            <td>
-                              {med.frequency.map((freq, index) => (
-                                <>
-                                  {index === med.frequency.length - 1
-                                    ? freq + " "
-                                    : freq + ", "}
-                                </>
-                              ))}
-                            </td>
-                            <td>{med.duration} days</td>
+                            <th scope="col">#</th>
+                            <th scope="col">Medicine Name</th>
+                            <th scope="col">Dosage</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">Frequency</th>
+                            <th scope="col">Duration</th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                    <h6>
-                      <b>Starting Date: </b>
-                      {prescription.startDate}{" "}
-                    </h6>
+                        </thead>
+                        <tbody>
+                          {prescription.medicines.map((med, index) => (
+                            <tr>
+                              <th scope="row">{index + 1}</th>
+                              <td>{med.name}</td>
+                              <td>{med.dosage}</td>
+                              <td>{med.time}</td>
+                              <td>
+                                {med.frequency.map((freq, index) => (
+                                  <>
+                                    {index === med.frequency.length - 1
+                                      ? freq + " "
+                                      : freq + ", "}
+                                  </>
+                                ))}
+                              </td>
+                              <td>{med.duration} days</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                      <h6>
+                        <b>Starting Date: </b>
+                        {prescription.startDate}
+                      </h6>
+                    </div>
                     <div className="row">
                       <div className="col-8">
                         {prescription.note ? (
@@ -399,33 +403,34 @@ export default function AboutPatient(props) {
                         </button>
                       </div>
                     </div>
-
-                    <table className="table">
-                      <thead>
-                        <tr>
-                          <th scope="col">#</th>
-                          <th scope="col">Exercise Name</th>
-                          <th scope="col">Severity</th>
-                          <th scope="col">Per Activity Time</th>
-                          <th scope="col">Total Times</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {activity.excercises.map((activity, index) => (
+                    <div class="table-responsive">
+                      <table className="table">
+                        <thead>
                           <tr>
-                            <th scope="row">{index + 1}</th>
-                            <td>{activity.name}</td>
-                            <td>{activity.severity}</td>
-                            <td>{activity.perActivityTime} seconds</td>
-                            <td>{activity.total} days</td>
+                            <th scope="col">#</th>
+                            <th scope="col">Exercise Name</th>
+                            <th scope="col">Severity</th>
+                            <th scope="col">Per Activity Time</th>
+                            <th scope="col">Total Times</th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                    <h6>
-                      <b>Starting Date: </b>
-                      {activity.startDate}
-                    </h6>
+                        </thead>
+                        <tbody>
+                          {activity.excercises.map((activity, index) => (
+                            <tr>
+                              <th scope="row">{index + 1}</th>
+                              <td>{activity.name}</td>
+                              <td>{activity.severity}</td>
+                              <td>{activity.perActivityTime} seconds</td>
+                              <td>{activity.total}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                      <h6>
+                        <b>Starting Date: </b>
+                        {activity.startDate}
+                      </h6>
+                    </div>
                     <div className="row">
                       <div className="col-8">
                         {activity.note ? (
@@ -436,17 +441,6 @@ export default function AboutPatient(props) {
                         ) : (
                           <></>
                         )}
-                      </div>
-                      <div className="col-4">
-                        <a
-                          type="button"
-                          href="https://calendar.google.com/calendar"
-                          target="_blank"
-                          rel="noreferrer"
-                          className="btn btn-primary"
-                        >
-                          Set Reminder
-                        </a>
                       </div>
                     </div>
                   </div>

@@ -187,7 +187,7 @@ export default function ViewProfilePatient(props) {
       }
     );
     const data = await response.json();
-    setPrescription(data)
+    setPrescription(data);
     setmedicine([
       {
         name: "",
@@ -227,7 +227,7 @@ export default function ViewProfilePatient(props) {
       },
     ]);
     setnoteExcercise("");
-    setActivity(data)
+    setActivity(data);
   }
 
   const handleNoteChange = (e) => {
@@ -238,11 +238,8 @@ export default function ViewProfilePatient(props) {
     setnoteExcercise(e.target.value);
   };
   const deletePrescription = async (Prescid) => {
-    console.log('in delete');
-    props.showAlert(
-      "Prescription Deleted Succesfully",
-      "success"
-    );
+    console.log("in delete");
+    props.showAlert("Prescription Deleted Succesfully", "success");
     //call api for deleting prescription
     const response = await fetch(
       `http://localhost:5000/api/prescription/deleteprescription/${Prescid}`,
@@ -251,7 +248,7 @@ export default function ViewProfilePatient(props) {
         headers: {
           "Content-Type": "application/json",
           "auth-token": localStorage.getItem("token"),
-        }
+        },
       }
     );
     console.log(response);
@@ -263,11 +260,8 @@ export default function ViewProfilePatient(props) {
     setPrescription(newPrescriptions);
   };
   const deleteExcercise = async (ExcId) => {
-    console.log('in delete');
-    props.showAlert(
-      "Excercise Deleted Succesfully",
-      "success"
-    );
+    console.log("in delete");
+    props.showAlert("Excercise Deleted Succesfully", "success");
     //call api for deleting excercise
     const response = await fetch(
       `http://localhost:5000/api/excercise/deleteexercise/${ExcId}`,
@@ -276,7 +270,7 @@ export default function ViewProfilePatient(props) {
         headers: {
           "Content-Type": "application/json",
           "auth-token": localStorage.getItem("token"),
-        }
+        },
       }
     );
     console.log(response);
@@ -351,18 +345,24 @@ export default function ViewProfilePatient(props) {
                               className="form-select mt-3"
                               name="name"
                               value={excercise.name}
-                              onChange={(e) =>
-                                handleExcerciseChange(index, e)
-                              }
+                              onChange={(e) => handleExcerciseChange(index, e)}
                               aria-label="Default select example"
                               required
                             >
-                              <option defaultValue="">Select Exercise To Assign</option>
-                              <option value="elbow flexsion">Elbow Flexsion</option>
-                              <option value="elbow busitis">Elbow Busitis</option>
+                              <option defaultValue="">
+                                Select Exercise To Assign
+                              </option>
+                              <option value="elbow flexsion">
+                                Elbow Flexsion
+                              </option>
+                              <option value="elbow busitis">
+                                Elbow Busitis
+                              </option>
                               <option value="tennis elbow">Tennis Elbow</option>
                               <option value="butt bridge">Butt Bridge</option>
-                              <option value="Stretches for lower back">Stretches for lower back</option>
+                              <option value="Stretches for lower back">
+                                Stretches for lower back
+                              </option>
                             </select>
                           </div>
                           <div className="w3-half mt-1">
@@ -603,7 +603,10 @@ export default function ViewProfilePatient(props) {
                     <div className="card-body">
                       <div className="row">
                         <div className="col-10">
-                          <h4>Prescription {prescription.refill ? " - Refill Request" : ""}</h4>
+                          <h4>
+                            Prescription{" "}
+                            {prescription.refill ? " - Refill Request" : ""}
+                          </h4>
                         </div>
                         <div className="col-2 float-end">
                           <button
@@ -620,44 +623,44 @@ export default function ViewProfilePatient(props) {
                           </button>
                         </div>
                       </div>
-
-                      <table className="table">
-                        <thead>
-                          <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Medicine Name</th>
-                            <th scope="col">Dosage</th>
-                            <th scope="col">Time</th>
-                            <th scope="col">Frequency</th>
-                            <th scope="col">Duration</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {prescription.medicines.map((med, index) => (
+                      <div class="table-responsive">
+                        <table className="table">
+                          <thead>
                             <tr>
-                              <th scope="row">{index + 1}</th>
-                              <td>{med.name}</td>
-                              <td>{med.dosage}</td>
-                              <td>{med.time}</td>
-                              <td>
-                                {med.frequency.map((freq, index) => (
-                                  <>
-                                    {index === med.frequency.length - 1
-                                      ? freq + " "
-                                      : freq + ", "}
-                                  </>
-                                ))}
-                              </td>
-                              <td>{med.duration} days</td>
+                              <th scope="col">#</th>
+                              <th scope="col">Medicine Name</th>
+                              <th scope="col">Dosage</th>
+                              <th scope="col">Time</th>
+                              <th scope="col">Frequency</th>
+                              <th scope="col">Duration</th>
                             </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                      <h6>
-                        <b>Starting Date: </b>
-                        {prescription.startDate}{" "}
-                      </h6>
-
+                          </thead>
+                          <tbody>
+                            {prescription.medicines.map((med, index) => (
+                              <tr>
+                                <th scope="row">{index + 1}</th>
+                                <td>{med.name}</td>
+                                <td>{med.dosage}</td>
+                                <td>{med.time}</td>
+                                <td>
+                                  {med.frequency.map((freq, index) => (
+                                    <>
+                                      {index === med.frequency.length - 1
+                                        ? freq + " "
+                                        : freq + ", "}
+                                    </>
+                                  ))}
+                                </td>
+                                <td>{med.duration} days</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                        <h6>
+                          <b>Starting Date: </b>
+                          {prescription.startDate}{" "}
+                        </h6>
+                      </div>
                       {prescription.note ? (
                         <>
                           <b className="d-block">Special Instruction</b>
@@ -696,7 +699,10 @@ export default function ViewProfilePatient(props) {
                     <div className="card-body">
                       <div className="row">
                         <div className="col-10">
-                          <h4>Course Assigned {activity.completed ? " - completed" : ""}</h4>
+                          <h4>
+                            Course Assigned{" "}
+                            {activity.completed ? " - completed" : ""}
+                          </h4>
                         </div>
                         <div className="col-2 float-end">
                           <button
@@ -709,34 +715,34 @@ export default function ViewProfilePatient(props) {
                           </button>
                         </div>
                       </div>
-
-                      <table className="table">
-                        <thead>
-                          <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Exercise Name</th>
-                            <th scope="col">Severity</th>
-                            <th scope="col">Per Activity Time</th>
-                            <th scope="col">Total Times</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {activity.excercises.map((activity, index) => (
+                      <div class="table-responsive">
+                        <table className="table">
+                          <thead>
                             <tr>
-                              <th scope="row">{index + 1}</th>
-                              <td>{activity.name}</td>
-                              <td>{activity.severity}</td>
-                              <td>{activity.perActivityTime} seconds</td>
-                              <td>{activity.total} days</td>
+                              <th scope="col">#</th>
+                              <th scope="col">Exercise Name</th>
+                              <th scope="col">Severity</th>
+                              <th scope="col">Per Activity Time</th>
+                              <th scope="col">Total Times</th>
                             </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                      <h6>
-                        <b>Starting Date: </b>
-                        {activity.startDate}
-                      </h6>
-
+                          </thead>
+                          <tbody>
+                            {activity.excercises.map((activity, index) => (
+                              <tr>
+                                <th scope="row">{index + 1}</th>
+                                <td>{activity.name}</td>
+                                <td>{activity.severity}</td>
+                                <td>{activity.perActivityTime} seconds</td>
+                                <td>{activity.total} </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                        <h6>
+                          <b>Starting Date: </b>
+                          {activity.startDate}
+                        </h6>
+                      </div>
                       {activity.note ? (
                         <>
                           <b className="d-block">Special Instruction</b>

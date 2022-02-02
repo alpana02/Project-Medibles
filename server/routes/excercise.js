@@ -59,18 +59,27 @@ router.delete("/deleteexcercise/:id", fetchUser, async (req, res) => {
   }
 });
 
+// ROUTE 4 : add report for patient portal : Login not required
 router.post("/report", async (req, res) => {
   try {
     // const user =  await User.findById(req.user.id);
     let find = false;
-    const { counter, timer, error, hand, userid, exercisename, activityid, exerciseid } =req.body;
+    const {
+      counter,
+      timer,
+      error,
+      hand,
+      userid,
+      exercisename,
+      activityid,
+      exerciseid,
+    } = req.body;
+    const patient = await Excercise.findById(activityid);
     console.log(req.body);
-    const patient = await Excercise.findById(activityid );
-    console.log(patient);
     if (!patient) {
       return res.status(404).send("Permission not granted");
     }
-    
+
     //if exercise already completed
     if (patient.completed === true) {
       return res.send(
@@ -89,7 +98,7 @@ router.post("/report", async (req, res) => {
           hand: hand,
           date: new Date().toDateString(),
         };
-        await patient.report.push(reportObject);
+        await activity.report.push(reportObject);
         await patient.save();
         break;
       }
@@ -103,6 +112,7 @@ router.post("/report", async (req, res) => {
     res.status(500).json("Oops internal server error occured");
   }
 });
+
 // ROUTE 5 : Fetch patient excercises from doctor site : Login required
 router.get("/fetchexercisedoctor/:id", fetchUser, async (req, res) => {
   try {
@@ -141,6 +151,26 @@ router.delete("/deleteexercise/:id", fetchUser, async (req, res) => {
 router.get("/fetchtExcercise", fetchUser, async (req, res) => {
   try {
     const activity = await Excercise.find({ patient: req.user.id });
+    // prescriptions.map((prescription, index) =>
+    //   prescription.medicines.map((med, index) => {
+    //     if (med.eatenTime && med.eatenTime != new Date().toDateString()) {
+    //       med.eatenTime = "";
+    //       med.state = "info";
+    //       prescription.save();
+    //     }
+    //   })
+    // );
+    res.json(activity);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send("Oops internal server error occured");
+  }
+});
+
+// ROUTE 5 : Fetch final report for doctor portal : Login required
+router.get("/fetchtExcerciseDoctor", fetchUser, async (req, res) => {
+  try {
+    const activity = await Excercise.find({ $and:[{ doctor: req.user.id },{completed:true}]});
     // prescriptions.map((prescription, index) =>
     //   prescription.medicines.map((med, index) => {
     //     if (med.eatenTime && med.eatenTime != new Date().toDateString()) {

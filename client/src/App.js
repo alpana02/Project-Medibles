@@ -25,6 +25,7 @@ import { ShopMedicine } from "./components/patient/ShopMedicine";
 import { HomePage } from "./components/HomePage";
 import { Excercise } from "./components/patient/Excercise";
 import { Report } from "./components/patient/Report";
+import { ReportDoctor } from "./components/doctor/ReportDoctor";
 
 function App() {
   const [alert, setAlert] = useState(null);
@@ -64,6 +65,7 @@ function App() {
             <Route exact path="/medicine" element={<Medicine showAlert={showAlert} />} />
             <Route exact path="/homepage" element={<HomePage />} />
             <Route exact path="/report" element={<Report showAlert={showAlert} />} />
+            <Route exact path="/reportDoctor" element={<ReportDoctor showAlert={showAlert} />} />
             <Route path="*" element={<Notfound />} />
             </Routes>
           </div>
