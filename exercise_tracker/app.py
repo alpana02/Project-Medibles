@@ -147,7 +147,7 @@ def score():
         }
         print(arr)
         headers = {"Content-Type": "application/json"}
-        dictToSend = json.dumps(arr)
+        dictToSend = json.dumps(obj)
         response = requests.post(
             "http://localhost:5000/api/excercise/report",
             data=dictToSend,
