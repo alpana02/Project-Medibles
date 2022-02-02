@@ -25,8 +25,8 @@ error = 0
 params = {"counter": counter, "timer": timer, "error": error}
 
 
-def generate_frames1(hand):
-    tol_angle = get_tolerance("mild")
+def generate_frames1(hand, severity, expertime):
+    tol_angle = get_tolerance(severity)
     stage = None
     starttime = time.time()
     lasttime = starttime
@@ -35,8 +35,7 @@ def generate_frames1(hand):
     timer = 0
     error = 0
     hand = hand.upper()
-    print(hand)
-
+    expertime = int(expertime)
     cap = cv2.VideoCapture(0)
     with mp_holistic.Holistic(
         min_detection_confidence=0.5, min_tracking_confidence=0.5
@@ -99,10 +98,10 @@ def generate_frames1(hand):
                         lapperup = time.time()
 
                     #          Error Analysis
-                    if angle > 120 and (time.time() - lapperup > 10):
+                    if angle > 120 and (time.time() - lapperup > expertime):
                         flag = "Raise your arms"
                         error = error + 1
-                    elif angle < 40 and (time.time() - lapperdown > 10):
+                    elif angle < 40 and (time.time() - lapperdown > expertime):
                         flag = "Lower your arms"
                         error = error + 1
                     else:

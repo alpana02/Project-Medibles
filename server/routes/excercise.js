@@ -29,7 +29,9 @@ router.post("/addExcercise/:id", fetchUser, async (req, res) => {
 // ROUTE 2 : Fetch patient excercise : Login required
 router.get("/fetchexcercisepatient", fetchUser, async (req, res) => {
   try {
-    const events = await Excercise.find({ patient: req.user.id });
+    const events = await Excercise.find({ patient: req.user.id }).sort({
+      startDate: -1,
+    });
     res.json(events);
   } catch (error) {
     console.log(error.message);
@@ -123,6 +125,29 @@ router.get("/fetchtExcercise", fetchUser, async (req, res) => {
     //   })
     // );
     res.json(activity);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send("Oops internal server error occured");
+  }
+});
+
+// ROUTE 5 : Conplete  excercise from patient site : Login required
+router.put("/completeExcercise/:id", fetchUser, async (req, res) => {
+  try {
+    const { completed } = req.body;
+    //find the activity to be deleted and then delete it
+    let activity = await Excercise.findById(req.params.id);
+    if (!activity) {
+      return res.status(404).send("Such activity not found");
+    }
+    //if selected activity is the login users activity
+    if (activity.patient.toString() !== req.user.id) {
+      return res.status(401).send("Permission not granted");
+    }
+    activity.completed = completed;
+    activity.save();
+    const retactivity= await Excercise.find({ patient: req.user.id });
+    res.json(retactivity);
   } catch (error) {
     console.log(error.message);
     res.status(500).send("Oops internal server error occured");

@@ -59,11 +59,12 @@
           >
             <div>
               <h1>Your Final Report </h1>
-              <h2>This is your achieved score for Excercise {{exercisename}} for {{hand}} hand</h2>
-              <h2>Your total count was {{res[0]}}</h2>
-              <h2>Your total time was {{res[1]}} seconds</h2>
-              <h2>Your total error was {{res[2]}}</h2>
-              <a href="http://localhost:3000/excercise" class="download-btn"><i class="fas fa-backward"></i>Back to Excercise</a>
+              <h2>This is your achieved score for Excercise {{obj.exercisename}} for {{obj.hand}} hand</h2>
+              <h2>Your total count was {{obj.counter}}</h2>
+              <h2>Your total time was {{obj.timer}} seconds</h2>
+              <h2>Your total error was {{obj.error}}</h2>
+              <h1>Your Final Report</h1>
+              <a href="http://localhost:3000/excercise" class="download-btn"><i class="fas fa-backward"></i>Back to Exercise</a>
             </div>
           </div>
           <div
