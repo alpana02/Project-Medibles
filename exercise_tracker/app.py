@@ -58,43 +58,51 @@ def video3():
 
 @app.route("/elbowflexsion/<url>")
 def exercise1(url):
-    arr = url.split(",", 4)
+    arr = url.split(",", 5)
     global hand
     global userid
     global exercisename
     global severity
     global expertime
+    global exerciseid
+
     global obj
     hand = arr[0]
     severity = arr[1]
     expertime = arr[2]
     userid = arr[3]
+    exerciseid = arr[4]
+
     exercisename = "elbowflexsion"
+
     obj = {
         "hand": hand,
         "severity": severity,
         "expertime": expertime,
         "userid": userid,
         "exercisename": exercisename,
+        "exerciseid": exerciseid,
     }
 
     return render_template("elbowflexsion.html", obj=obj, url=url)
 
 
-
 @app.route("/elboweccentric/<url>")
 def exercise2(url):
-    arr = url.split(",", 4)
+    arr = url.split(",", 5)
     global hand
     global userid
     global exercisename
     global severity
     global expertime
+    global exerciseid
+
     global obj
     hand = arr[0]
     severity = arr[1]
     expertime = arr[2]
     userid = arr[3]
+    exerciseid = arr[4]
     exercisename = "elboweccentric"
     obj = {
         "hand": hand,
@@ -102,6 +110,7 @@ def exercise2(url):
         "expertime": expertime,
         "userid": userid,
         "exercisename": exercisename,
+        "exerciseid": exerciseid,
     }
     return render_template("elboweccentric.html", obj=obj, url=url)
 
@@ -119,6 +128,8 @@ def score():
     global hand
     global userid
     global exercisename
+    global exerciseid
+
     if request.method == "GET":
         counter = request.args.get("counter")
         timer = request.args.get("timer")
@@ -132,6 +143,7 @@ def score():
             "hand": hand,
             "userid": userid,
             "exercisename": exercisename,
+            "exerciseid": exerciseid,
         }
         print(arr)
         headers = {"Content-Type": "application/json"}
