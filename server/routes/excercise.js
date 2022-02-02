@@ -62,18 +62,42 @@ router.delete("/deleteexcercise/:id", fetchUser, async (req, res) => {
 router.post("/report", async (req, res) => {
   try {
     // const user =  await User.findById(req.user.id);
-    // const { data } = req.body;
+    let find = false;
+    const { counter, timer, error, hand, userid, exercisename, exerciseid } =
+      req.body;
     console.log(req.body);
-    // const event = new Excercise({
-    //   doctor: req.user.id,
-    //   patient: req.params.id,
-    //   note: noteExcercise,
-    //   excercises: excercise,
-    //   doctorName: user.name,
-    // });
-    // const savedEvent = await event.save();
-    // res.json(savedEvent);
-    res.send("Hello Pari");
+    const patient = await Excercise.find({ patient: userid });
+    if (!patient) {
+      return res.status(404).send("Permission not granted");
+    }
+    
+    //if exercise already completed
+    if (patient.completed === true) {
+      return res.send(
+        "This discharge exercise is already completed by patient"
+      );
+    }
+
+    for (let index = 0; index < patient.excercises.length; index++) {
+      const activity = patient.excercises[index];
+      if (activity._id == exerciseid) {
+        find = true;
+        const reportObject = {
+          counter: counter,
+          timer: timer,
+          error: error,
+          hand: hand,
+          date: new Date().toDateString(),
+        };
+        await patient.report.push(reportObject);
+        await patient.save();
+        break;
+      }
+    }
+    if (!find) {
+      return res.status(404).send("Such exercise not found");
+    }
+    res.send("Report saved succesfully");
   } catch (error) {
     console.log(error.message);
     res.status(500).json("Oops internal server error occured");
@@ -83,7 +107,9 @@ router.post("/report", async (req, res) => {
 router.get("/fetchexercisedoctor/:id", fetchUser, async (req, res) => {
   try {
     //console.log(mongoose.Types.ObjectId(req.user.id) );
-    const events = await Excercise.find({$and:[{ patient: req.params.id },{ doctor: req.user.id }]}).sort({
+    const events = await Excercise.find({
+      $and: [{ patient: req.params.id }, { doctor: req.user.id }],
+    }).sort({
       startDate: -1,
     });
     res.json(events);
@@ -146,7 +172,7 @@ router.put("/completeExcercise/:id", fetchUser, async (req, res) => {
     }
     activity.completed = completed;
     activity.save();
-    const retactivity= await Excercise.find({ patient: req.user.id });
+    const retactivity = await Excercise.find({ patient: req.user.id });
     res.json(retactivity);
   } catch (error) {
     console.log(error.message);

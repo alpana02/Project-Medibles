@@ -27,16 +27,22 @@ const ExcerciseSchema = new Schema({
         name: String,
         severity: String,
         perActivityTime: String,
-        total: String
+        total: String,
+        report: [
+          {
+            counter: String,
+            timer: String,
+            error: String,
+            hand: String,
+            date: String,
+          },
+        ],
       },
     ],
-    required: true,
   },
   completed: {
     type: Boolean,
   },
 });
-
-
 
 module.exports = mongoose.model("excercise", ExcerciseSchema);
