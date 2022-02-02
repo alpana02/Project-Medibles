@@ -119,7 +119,7 @@ export default function ViewProfilePatient(props) {
   const handleMedChange = (i, e) => {
     let newMedicine = [...medicine];
     console.log(newMedicine);
-    newMedicine[i][e.target.name]  = e.target.value;
+    newMedicine[i][e.target.name] = e.target.value;
     setmedicine(newMedicine);
   };
   const handleFreqChange = (i, e) => {
@@ -347,24 +347,24 @@ export default function ViewProfilePatient(props) {
                       {excercise.map((element, index) => (
                         <div key={index}>
                           <div className="mb-1">
-                              <select
-                                className="form-select mt-3"
-                                name="name"
-                                value={excercise.name}
-                                onChange={(e) =>
-                                  handleExcerciseChange(index, e)
-                                }
-                                aria-label="Default select example"
-                                required
-                              >
-                                <option defaultValue="">Select Exercise To Assign</option>
-                                <option value="elbow flexsion">Elbow Flexsion</option>
-                                <option value="elbow busitis">Elbow Busitis</option>
-                                <option value="tennis elbow">Tennis Elbow</option>
-                                <option value="butt bridge">Butt Bridge</option>
-                                <option value="Stretches for lower back">Stretches for lower back</option>
-                              </select>
-                            </div>
+                            <select
+                              className="form-select mt-3"
+                              name="name"
+                              value={excercise.name}
+                              onChange={(e) =>
+                                handleExcerciseChange(index, e)
+                              }
+                              aria-label="Default select example"
+                              required
+                            >
+                              <option defaultValue="">Select Exercise To Assign</option>
+                              <option value="elbow flexsion">Elbow Flexsion</option>
+                              <option value="elbow busitis">Elbow Busitis</option>
+                              <option value="tennis elbow">Tennis Elbow</option>
+                              <option value="butt bridge">Butt Bridge</option>
+                              <option value="Stretches for lower back">Stretches for lower back</option>
+                            </select>
+                          </div>
                           <div className="w3-half mt-1">
                             <div className="mb-1">
                               <select
@@ -378,15 +378,15 @@ export default function ViewProfilePatient(props) {
                                 required
                               >
                                 <option defaultValue="">Select Severity</option>
-                                <option value="low">Severe patient</option>
-                                <option value="high">Mild patient</option>
+                                <option value="high">Severe patient</option>
+                                <option value="low">Mild patient</option>
                               </select>
                             </div>
                           </div>
-                          
+
                           <div className="w3-half mt-1">
                             <div className="mb-1 mx-2">
-                            <input
+                              <input
                                 type="number"
                                 className="form-control "
                                 placeholder="Per activity time in secs"

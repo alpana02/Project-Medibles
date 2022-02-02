@@ -1,4 +1,4 @@
-from flask import Flask, render_template, Response, request, jsonify
+from flask import Flask, render_template, Response, request, jsonify, url_for
 import json
 import requests
 import urllib.request
@@ -23,15 +23,6 @@ mp_drawing.DrawingSpec(color=(0, 0, 255), thickness=1, circle_radius=1)
 
 app = Flask(__name__)
 
-global counter, error, timer
-global hand
-global userid
-global exercisename
-
-counter = 0
-error = 0
-timer = 0
-
 switch = 1
 cap = cv2.VideoCapture(0)
 
@@ -44,50 +35,74 @@ def index11():
 @app.route("/video1/")
 def video1():
     return Response(
-        generate_frames1(hand), mimetype="multipart/x-mixed-replace; boundary=frame"
+        generate_frames1(hand, severity, expertime),
+        mimetype="multipart/x-mixed-replace; boundary=frame",
     )
 
 
 @app.route("/video2")
 def video2():
     return Response(
-        generate_frames2(hand), mimetype="multipart/x-mixed-replace; boundary=frame"
+        generate_frames2(hand, severity, expertime),
+        mimetype="multipart/x-mixed-replace; boundary=frame",
     )
 
 
 @app.route("/video3")
 def video3():
     return Response(
-        generate_frames3(hand), mimetype="multipart/x-mixed-replace; boundary=frame"
+        generate_frames3(hand, severity, expertime),
+        mimetype="multipart/x-mixed-replace; boundary=frame",
     )
 
 
 @app.route("/elbowflexsion/<url>")
 def exercise1(url):
-    arr = url.split(",", 2)
+    arr = url.split(",", 4)
     global hand
     global userid
     global exercisename
-
+    global severity
+    global expertime
+    global obj
     hand = arr[0]
-    userid = arr[1]
-    print(userid)
+    severity = arr[1]
+    expertime = arr[2]
+    userid = arr[3]
     exercisename = "elbowflexsion"
-    return render_template("elbowflexsion.html", hand=hand, url=url)
+    obj = {
+        "hand": hand,
+        "severity": severity,
+        "expertime": expertime,
+        "userid": userid,
+        "exercisename": exercisename,
+    }
+
+    return render_template("elbowflexsion.html", obj=obj, url=url)
 
 
 @app.route("/elboweccentric/<url>")
 def exercise2(url):
-    arr = url.split(",", 2)
+    arr = url.split(",", 4)
     global hand
     global userid
     global exercisename
-
+    global severity
+    global expertime
+    global obj
     hand = arr[0]
-    userid = arr[1]
-    print(userid)
+    severity = arr[1]
+    expertime = arr[2]
+    userid = arr[3]
     exercisename = "elboweccentric"
-    return render_template("elboweccentric.html", hand=hand, url=url)
+    obj = {
+        "hand": hand,
+        "severity": severity,
+        "expertime": expertime,
+        "userid": userid,
+        "exercisename": exercisename,
+    }
+    return render_template("elboweccentric.html", obj=obj, url=url)
 
 
 @app.route("/exercise3")
@@ -109,6 +124,14 @@ def score():
         error = request.args.get("error")
     else:
         arr = [counter, timer, error]
+        obj = {
+            "counter": counter,
+            "timer": timer,
+            "error": error,
+            "hand": hand,
+            "userid": userid,
+            "exercisename": exercisename,
+        }
         print(arr)
         headers = {"Content-Type": "application/json"}
         dictToSend = json.dumps(arr)
@@ -117,25 +140,10 @@ def score():
             data=dictToSend,
             headers=headers,
         )
-        return render_template(
-            "results.html", res=arr, hand=hand, userid=userid, exercisename=exercisename
-        )
+        return render_template("results.html", obj=obj)
         # return request("post", "http://localhost:5000/api/exercise/report", data=arr)
 
     return render_template("index11.html", res=counter)
-
-
-#  For reloading the pages
-
-
-@app.route("/reload1")
-def reload1():
-    return render_template("elbowflexsion.html")
-
-
-@app.route("/reload2")
-def reload2():
-    return render_template("elboweccentric.html")
 
 
 if __name__ == "__main__":

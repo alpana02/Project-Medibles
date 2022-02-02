@@ -4,7 +4,7 @@ class Tolerance:
         self.str = str
 
     def get_tolerance(self):
-        if str == "mild":
+        if str == "low":
             tol_angle = 5
         else:
             tol_angle = 15
@@ -12,7 +12,7 @@ class Tolerance:
 
 
 def get_tolerance(str):
-    if str == "mild":
+    if str == "low":
         tol_angle = 5
     else:
         tol_angle = 15

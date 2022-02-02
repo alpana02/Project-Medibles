@@ -25,8 +25,8 @@ error = 0
 params = {"counter": counter, "timer": timer, "error": error}
 
 
-def generate_frames2(hand):
-    tol_angle = get_tolerance("mild")
+def generate_frames2(hand, severity, expertime):
+    tol_angle = get_tolerance(severity)
     stage = None
     starttime = time.time()
     lasttime = starttime
