@@ -23,10 +23,7 @@ mp_drawing.DrawingSpec(color=(0, 0, 255), thickness=1, circle_radius=1)
 
 app = Flask(__name__)
 
-global counter, error, timer
-global hand
-global userid
-global exercisename
+
 
 counter = 0
 error = 0
@@ -74,6 +71,7 @@ def exercise1(url):
     print(userid)
     exercisename = "elbowflexsion"
     return render_template("elbowflexsion.html", hand=hand, url=url)
+
 
 
 @app.route("/elboweccentric/<url>")

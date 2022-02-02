@@ -117,7 +117,6 @@ export default function AboutPatient(props) {
       </>
      ): <a href={`http://127.0.0.1:8000/${exercisename}/${profile._id}`} type="button" className="btn btn-primary " target='_blank' rel="noreferrer"> Start </a>} */}
       <div className="container rounded bg-white">
-        <a href={`http://127.0.0.1:8000/${exercisename}/${url}`} type="button" className="btn btn-primary mx-2" target='_blank' rel="noreferrer"> Left  Start </a>
         <div className="row">
           <div
             className="w3-content w3-margin-top"

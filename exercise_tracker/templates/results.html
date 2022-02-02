@@ -58,14 +58,12 @@
             data-aos="fade-up"
           >
             <div>
-              <h1>Your Final Report</h1>
-              <h2>This is your achieved score is</h2>
-              <h3 class="mt-5">Your total count was {{res[0]}}</h3>
-              <h3 class="mt-5">Your total time was {{res[1]}} seconds</h3>
-              <h3 class="mt-5">Your total error was {{res[2]}}</h3>
-              <h3 class="mt-5">Your total hand was {{hand}}</h3>
-              <h3 class="mt-5">Your total hand was {{userid}}</h3>
-              <h3 class="mt-5">Your total hand was {{exercisename}}</h3>
+              <h1>Your Final Report </h1>
+              <h2>This is your achieved score for Excercise {{exercisename}} for {{hand}} hand</h2>
+              <h2>Your total count was {{res[0]}}</h2>
+              <h2>Your total time was {{res[1]}} seconds</h2>
+              <h2>Your total error was {{res[2]}}</h2>
+              <a href="http://localhost:3000/excercise" class="download-btn"><i class="fas fa-backward"></i>Back to Excercise</a>
             </div>
           </div>
           <div
@@ -81,13 +79,8 @@
         </div>
       </div>
     </section>
-    <!-- End Hero -->
-    <a
-      href="#"
-      class="back-to-top d-flex align-items-center justify-content-center"
-      ><i class="bi bi-arrow-up-short"></i
-    ></a>
+
     <!-- Template Main JS File -->
-    <script src="../assets/js/main.js"></script>
+    <script src="{{ url_for('static',filename='js/main.js') }}"></script>
   </body>
 </html>
