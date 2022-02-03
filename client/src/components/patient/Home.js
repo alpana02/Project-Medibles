@@ -159,7 +159,7 @@ export default function Home(props) {
                       alt={usercards.name}
                     />
                     <div className="card-body">
-                      <h4>{usercards.name}</h4>
+                      <h4>Dr. {usercards.name}</h4>
                       <p
                         className="card-text"
                         style={{ fontSize: "14px", marginBottom: "0.3rem" }}
@@ -240,7 +240,7 @@ export default function Home(props) {
         },
         {
           id: '8',
-          message: 'Awesome! Hope you are enjoying Project-Maestro',
+          message: 'Awesome! Hope you are enjoying Project-Medible',
           end: true,
         },
         {

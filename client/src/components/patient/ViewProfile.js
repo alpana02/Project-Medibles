@@ -181,7 +181,10 @@ export default function ViewProfile(props) {
                       <i className="fa fa-book-open fa-fw w3-margin-right w3-large w3-text-blue"></i>
                       Specialization - {profile.specialization}
                     </p>
-                    <br />
+                    <p>
+                      <i className="fa fa-money fa-fw w3-margin-right w3-large w3-text-blue"></i>
+                      ₹ 400 Consultation fee
+                    </p>
                     <br />
                   </div>
                 </div>
@@ -196,7 +199,7 @@ export default function ViewProfile(props) {
             </div>
             <div className="col-md-12 ">
               <div className="container mx-5">
-                <h5>Add  Post-Care Appointment Request</h5>
+                <h5>Add Appointment Request</h5>
                 <input
                   className="mt-2"
                   type="text"

@@ -261,6 +261,21 @@ export const Signup = (props) => {
                         </div>
                         <div className="mb-1">
                           <label
+                            htmlFor="Consultaion Fees"
+                            className="form-label"
+                            style={{ fontSize: "14px" }}
+                          >
+                            Consultaion Fees
+                          </label>
+                          <input
+                            type="number"
+                            className="form-control"
+                            name="money"
+                            id="money"
+                          />
+                        </div>
+                        <div className="mb-1">
+                          <label
                             htmlFor="img"
                             className="form-label"
                             style={{ fontSize: "14px" }}
@@ -309,6 +324,7 @@ export const Signup = (props) => {
                             Login
                           </Link>
                         </div>
+                        
                       </form>
                     </div>
                   </div>

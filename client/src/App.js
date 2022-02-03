@@ -38,14 +38,14 @@ function App() {
   };
   return (
     <>
-        <Router>
-          <Navbar showAlert={showAlert} />
-          <Alert alert={alert} />
-          <div>
-            <Routes>
+      <Router>
+        <Navbar showAlert={showAlert} />
+        <Alert alert={alert} />
+        <div>
+          <Routes>
             <Route exact path="/" element={<Home showAlert={showAlert} />} />
             <Route exact path="/homedoctor" element={<Homedoctor showAlert={showAlert} />} />
-            <Route exact path="/about" element={<About showAlert={showAlert}/>} />
+            <Route exact path="/about" element={<About showAlert={showAlert} />} />
             <Route exact path="/aboutpatient" element={<AboutPatient showAlert={showAlert} />} />
             <Route exact path="/chat" element={<DirectMessaging />} />
             <Route exact path="/discussion" element={<Discussion />} />
@@ -63,9 +63,21 @@ function App() {
             <Route exact path="/report" element={<Report showAlert={showAlert} />} />
             <Route exact path="/reportDoctor" element={<ReportDoctor showAlert={showAlert} />} />
             <Route path="*" element={<Notfound />} />
-            </Routes>
+          </Routes>
+        </div>
+        <footer className="footer py-2 text-muted">
+          <div className="container-fluid">
+            <div className="row align-items-center justify-content-center">
+              <div className="col-12 mb-lg-0 mb-4">
+                <div className="text-center text-sm">
+                  Made with ❤️ by
+                  <b> Team Nutella</b>
+                </div>
+              </div>
+            </div>
           </div>
-        </Router>
+        </footer>
+      </Router>
     </>
   );
 }

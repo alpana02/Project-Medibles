@@ -10,7 +10,7 @@ export default function Navbar(props) {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
     localStorage.removeItem("email");
-    navigate("/login");
+    navigate("/homedoctor");
     props.showAlert("Logged Out!!", "primary");
   };
   return (
@@ -30,7 +30,7 @@ export default function Navbar(props) {
               className="navbar-brand"
               to={userrole === "patient" ? "/" : "/homedoctor"}
             >
-              Maestro
+              Medibles
             </Link>
             <button
               className="navbar-toggler"
@@ -87,7 +87,7 @@ export default function Navbar(props) {
                       }`}
                       to="/shopmedicine"
                     >
-                      Shop-Medicine
+                      Online-Pharmacy
                     </Link>
                   </li>
                   <li className="nav-item">

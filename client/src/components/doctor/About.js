@@ -117,7 +117,10 @@ export default function About(props) {
                     <i className="fa fa-book-open fa-fw w3-margin-right w3-large w3-text-blue"></i>
                     Specialization - {profile.specialization}
                   </p>
-                  <br />
+                  <p>
+                      <i className="fa fa-money fa-fw w3-margin-right w3-large w3-text-blue"></i>
+                      ₹ 400 Consultation fee
+                    </p>
                   <br />
                 </div>
               </div>
