@@ -10,7 +10,7 @@ export default function Navbar(props) {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
     localStorage.removeItem("email");
-    navigate("/homedoctor");
+    navigate("/login");
     props.showAlert("Logged Out!!", "primary");
   };
   return (
