@@ -314,13 +314,12 @@ export const Signup = (props) => {
                   </div>
                   <div className="col-lg-6 d-flex align-items-center gradient-custom-2">
                     <div className="text-white px-3 py-4 p-md-5 mx-md-4">
-                      <h4 className="mb-4">We are more than just a hospital</h4>
+                    <h4 className="mb-4">Medibles Paltform</h4>
                       <p className="small mb-0">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit, sed do eiusmod tempor incididunt ut labore et
-                        dolore magna aliqua. Ut enim ad minim veniam, quis
-                        nostrud exercitation ullamco laboris nisi ut aliquip ex
-                        ea commodo consequat.
+                        Get digital prescriptions, monitoring your progress with
+                        advanced AI features, being a part of patients -
+                        community. Get personalized one-to-one attentions by
+                        health professionals till completely recovery .
                       </p>
                     </div>
                   </div>

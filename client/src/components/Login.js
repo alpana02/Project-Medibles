@@ -28,7 +28,7 @@ export const Login = (props) => {
       localStorage.setItem("role", json.user.role);
       localStorage.setItem("token", json.authToken);
       localStorage.setItem("email", json.user.email);
-      if (localStorage.getItem('role') === "mentor") {
+      if (localStorage.getItem("role") === "mentor") {
         navigate("/about");
       } else navigate("/");
     }
@@ -46,8 +46,8 @@ export const Login = (props) => {
                     <div className="card-body p-md-5 mx-md-4">
                       <div className="text-center">
                         <img
-                          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp"
-                          style={{ width: "185px" }}
+                          src="https://res.cloudinary.com/rapidhack/image/upload/v1643878114/Medibles-logo_wpyytn.png"
+                          style={{ width: "45px" }}
                           alt="logo"
                         />
                         <h4 className="mt-1 mb-5 pb-1">Project - Medibles</h4>
@@ -110,13 +110,12 @@ export const Login = (props) => {
                   </div>
                   <div className="col-lg-6 d-flex align-items-center gradient-custom-2">
                     <div className="text-white px-3 py-4 p-md-5 mx-md-4">
-                      <h4 className="mb-4">We are more than just a company</h4>
+                      <h4 className="mb-4">Medibles Paltform</h4>
                       <p className="small mb-0">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit, sed do eiusmod tempor incididunt ut labore et
-                        dolore magna aliqua. Ut enim ad minim veniam, quis
-                        nostrud exercitation ullamco laboris nisi ut aliquip ex
-                        ea commodo consequat.
+                        Get digital prescriptions, monitoring your progress with
+                        advanced AI features, being a part of patients -
+                        community. Get personalized one-to-one attentions by
+                        health professionals till completely recovery .
                       </p>
                     </div>
                   </div>

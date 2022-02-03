@@ -20,7 +20,16 @@ export default function Navbar(props) {
       ) : (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
           <div className="container-fluid">
-            <Link className="navbar-brand" to={userrole === "patient" ?"/":"/homedoctor"}>
+            <img
+              src="https://res.cloudinary.com/rapidhack/image/upload/v1643878114/Medibles-logo_wpyytn.png"
+              style={{ width: "32px" }}
+              alt="logo"
+              className="mx-2"
+            />
+            <Link
+              className="navbar-brand"
+              to={userrole === "patient" ? "/" : "/homedoctor"}
+            >
               Maestro
             </Link>
             <button
@@ -132,7 +141,7 @@ export default function Navbar(props) {
                 id="navbarSupportedContent"
               >
                 <ul className="navbar-nav me-auto mb-2 mb-lg-0 p-2">
-                <li className="nav-item">
+                  <li className="nav-item">
                     <Link
                       className={`nav-link ${
                         location.pathname === "/homedoctor" ? "active" : ""
