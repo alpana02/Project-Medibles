@@ -262,8 +262,30 @@ export default function Home(props) {
           id: '13',
           options: [
             { value: 1, label: 'BMI', trigger: '2' },
-            { value: 2, label: 'Medibles Features', trigger: '8' },
+            { value: 2, label: 'Medibles Features', trigger: '14' },
           ],
+        },
+        {
+          id: '14',
+          message: 'What do you want to know',
+          trigger: '15'
+        },
+        {
+          id: '15',
+          options: [
+            { value: 1, label: 'Book doctor', trigger: '17' },
+            { value: 2, label: 'Excercise Feature', trigger: '16' },
+          ],
+        },
+        {
+          id: '16',
+          message: 'Go to your excercise tab and all the excercises given to you are shown, Click on the given excercise to perform it and your report will be generated accordingly.',
+          trigger: '8'
+        },
+        {
+          id: '17',
+          message: 'In your Home Page, You can see all the doctors registered in our platform. If you want to book a doctor, click on their profile and the you can send them a request',
+          trigger: '8'
         },
       ]}
         floating={true} />
