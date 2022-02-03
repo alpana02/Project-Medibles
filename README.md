@@ -46,8 +46,6 @@ Contents
 <br/>
 <li>Node
 <br/>
-<li>
-<br/>
 <li>Firebase
 <br/>
 <li>Flask
