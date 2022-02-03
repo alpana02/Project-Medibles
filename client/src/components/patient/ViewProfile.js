@@ -70,11 +70,60 @@ export default function ViewProfile(props) {
     setAllEvents(events);
   }
 
+  //razorpay
+  function loadScript(src) {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.onload = () => {
+        resolve(true);
+      };
+      script.onerror = () => {
+        resolve(false);
+      };
+      document.body.appendChild(script);
+    });
+  }
+
   async function handleAddEvent() {
     try {
+      const res = await loadScript(
+        "https://checkout.razorpay.com/v1/checkout.js"
+      );
+
+      if (!res) {
+        alert("Razorpay SDK failed to load. Are you online?");
+        return;
+      }
+
+      const data = await fetch("http://localhost:5000/api/calendar/razorpay", {
+        method: "POST",
+      }).then((t) => t.json());
+
+      console.log(data);
+
+      const options = {
+        key: "rzp_test_DVBH252dUcCnLO",
+        currency: "INR",
+        amount: "40000",
+        order_id: data.id,
+        name: "Medibles",
+        description: "Pay the following amount to book doctor",
+        image: "https://res.cloudinary.com/rapidhack/image/upload/v1643878114/Medibles-logo_wpyytn.png",
+        handler: function(response) {
+          props.showAlert("Payment Success!! Event Request Has been Sent to the Doctor Succesfully", "success");
+          // alert(response.razorpay_payment_id);
+          // alert(response.razorpay_order_id);
+          // alert(response.razorpay_signature);
+        },
+      };
+      const paymentObject = new window.Razorpay(options);
+      paymentObject.open();
+
       const title = newEvent.title;
       const start = newEvent.start;
       const createdBy = localStorage.getItem("email");
+
       //call api for creating note
       const response = await fetch(
         `http://localhost:5000/api/calendar/addNotification/${id}`,
@@ -89,10 +138,6 @@ export default function ViewProfile(props) {
       );
       await response.json({ title, start, createdBy });
       setNewEvent({ title: "", start: "" });
-      props.showAlert(
-        "Event Request Has been Sent to the Doctor Succesfully",
-        "success"
-      );
     } catch (error) {
       return error;
     }
@@ -115,10 +160,6 @@ export default function ViewProfile(props) {
       console.log(res.reviews);
       setreview(res.reviews);
       setreviewmessage("");
-      props.showAlert(
-        "Event Request Has been Sent to the Mentor Succesfully",
-        "success"
-      );
     } catch (error) {
       return error;
     }
@@ -209,6 +250,7 @@ export default function ViewProfile(props) {
                   onChange={(e) =>
                     setNewEvent({ ...newEvent, title: e.target.value })
                   }
+                  required
                 />
 
                 <input
