@@ -92,7 +92,7 @@ export const SignupPatient = (props) => {
     }
   };
   return (
-    <div>
+    <div className="container">
       <section className="h-100 gradient-form">
         <div className="h-100">
           <div className="row d-flex justify-content-center align-items-center h-100">
