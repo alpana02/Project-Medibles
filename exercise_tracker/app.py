@@ -5,10 +5,8 @@ import urllib.request
 
 import cv2
 import datetime, time
-import os, sys
 import mediapipe as mp
 import numpy as np
-from IPython.display import display
 from PIL import Image
 import time
 

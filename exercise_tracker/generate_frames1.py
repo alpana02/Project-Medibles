@@ -169,7 +169,7 @@ def generate_frames1(hand, severity, expertime):
                 )
 
                 # Warning box
-                cv2.rectangle(image, (500, 0), (600, 73), (245, 117, 16), -1)
+                cv2.rectangle(image, (500, 0), (640, 73), (245, 117, 16), -1)
                 cv2.putText(
                     image,
                     "Error",
