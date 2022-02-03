@@ -105,11 +105,11 @@ def generate_frames1(hand, severity, expertime):
 
                     #          Error Analysis
 
-                    if angle > 120 and (time.time() - lapperup > 5):
+                    if angle > 120 and (time.time() - lapperup > expertime):
                         flag = "Raise your arms"
                         noerror = noerror + 1
 
-                    elif angle < 40 and (time.time() - lapperdown > 5):
+                    elif angle < 40 and (time.time() - lapperdown > expertime):
                         flag = "Lower your arms"
                         noerror = noerror + 1
                     else:
