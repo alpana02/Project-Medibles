@@ -8,7 +8,6 @@ import parse from "date-fns/parse";
 import startOfWeek from "date-fns/startOfWeek";
 // import stethescope from "./stethoscope-svgrepo-com.svg";
 
-
 export default function About(props) {
   let navigate = useNavigate();
   const [profile, setProfile] = useState([]);
@@ -127,7 +126,7 @@ export default function About(props) {
         </div>
         <div className="container card border py-4 mb-5">
           <div className="d-flex justify-content-between align-items-center mx-5">
-            <h3 className="text-right">Your Accepted Bookings</h3>
+            <h3 className="text-right">Your Accepted Post-Care Bookings</h3>
           </div>
           <Calendar
             localizer={localizer}
@@ -136,7 +135,7 @@ export default function About(props) {
             endAccessor="start"
             style={{ height: 500, margin: "50px" }}
           />
-                    <div className="row px-5">
+          <div className="row px-5">
             {allEvents.map((booking, index) => (
               <div className="col-4 mb-xl-5 mb-7 mb-sm-6 mb-md-6 mb-lg-6 d-flex">
                 <div className="card" style={{ width: "18rem" }}>
@@ -162,13 +161,19 @@ export default function About(props) {
         </div>
       </div>
       <div className="card card-body  mt-n7">
-        <div className="row gx-4 mb-2">
+        <div className="row gx-4">
           <h3 className="mb-0 text-2xl">Testimonial Section</h3>
-          <section style={{ paddingTop: "10px" }}>
-            <div className="container my-3">
-              <div className="row">
-                {profile.reviews !== undefined ? (
-                  profile.reviews.map((rev) => (
+
+          {profile.reviews && profile.reviews.length === 0 ? (
+            <h5 className="mt-3">No testimonials Yet </h5>
+          ) : (
+            ""
+          )}
+          {profile.reviews &&
+            profile.reviews.map((rev) => (
+              <section style={{ padding: "2px" }}>
+                <div className="container my-3">
+                  <div className="row">
                     <div className="col-lg-3 col-md-8 pt-3">
                       <div
                         className="card  text-white bg-gradient-primary"
@@ -194,13 +199,10 @@ export default function About(props) {
                         </div>
                       </div>
                     </div>
-                  ))
-                ) : (
-                  <h5>No testimonials</h5>
-                )}
-              </div>
-            </div>
-          </section>
+                  </div>
+                </div>
+              </section>
+            ))}
         </div>
       </div>
     </div>

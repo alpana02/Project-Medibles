@@ -196,7 +196,7 @@ export default function ViewProfile(props) {
             </div>
             <div className="col-md-12 ">
               <div className="container mx-5">
-                <h5>Add Appointment Request</h5>
+                <h5>Add  Post-Care Appointment Request</h5>
                 <input
                   className="mt-2"
                   type="text"
@@ -270,7 +270,7 @@ export default function ViewProfile(props) {
                     </div>
                   </div>
                 ))}
-                <div className="col-lg-3 mb-lg-0 mb-4 me-auto my-3">
+                <div className="col-lg-3 mb-lg-0 me-auto my-3">
                   <div className="card h-100">
                     <div className="card-body d-flex flex-column justify-content-center text-center">
                       <i className="fa fa-plus text-secondary mb-3"></i>

@@ -8,7 +8,7 @@ const User = require("../models/User");
 router.post("/addExcercise/:id", fetchUser, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    const { excercise, noteExcercise } = req.body;
+    const { excercise, noteExcercise, patientName } = req.body;
     const event = new Excercise({
       doctor: req.user.id,
       patient: req.params.id,
@@ -16,6 +16,7 @@ router.post("/addExcercise/:id", fetchUser, async (req, res) => {
       note: noteExcercise,
       excercises: excercise,
       doctorName: user.name,
+      patientName: patientName,
       completed: false,
     });
     const savedEvent = await event.save();
@@ -128,7 +129,7 @@ router.get("/fetchexercisedoctor/:id", fetchUser, async (req, res) => {
     res.status(500).send("Oops internal server error occured");
   }
 });
-// ROUTE 3 : Delete exercise from doctor site : Login required
+// ROUTE 6 : Delete exercise from doctor site : Login required
 router.delete("/deleteexercise/:id", fetchUser, async (req, res) => {
   try {
     //find the exercise to be deleted and then delete it
@@ -147,19 +148,10 @@ router.delete("/deleteexercise/:id", fetchUser, async (req, res) => {
     res.status(500).send("Oops internal server error occured");
   }
 });
-// ROUTE 4 : Fetch exercise for patient portal : Login required
+// ROUTE 7 : Fetch exercise for patient portal : Login required
 router.get("/fetchtExcercise", fetchUser, async (req, res) => {
   try {
     const activity = await Excercise.find({ patient: req.user.id });
-    // prescriptions.map((prescription, index) =>
-    //   prescription.medicines.map((med, index) => {
-    //     if (med.eatenTime && med.eatenTime != new Date().toDateString()) {
-    //       med.eatenTime = "";
-    //       med.state = "info";
-    //       prescription.save();
-    //     }
-    //   })
-    // );
     res.json(activity);
   } catch (error) {
     console.log(error.message);
@@ -167,19 +159,12 @@ router.get("/fetchtExcercise", fetchUser, async (req, res) => {
   }
 });
 
-// ROUTE 5 : Fetch final report for doctor portal : Login required
+// ROUTE 8 : Fetch final report for doctor portal : Login required
 router.get("/fetchtExcerciseDoctor", fetchUser, async (req, res) => {
   try {
-    const activity = await Excercise.find({ $and:[{ doctor: req.user.id },{completed:true}]});
-    // prescriptions.map((prescription, index) =>
-    //   prescription.medicines.map((med, index) => {
-    //     if (med.eatenTime && med.eatenTime != new Date().toDateString()) {
-    //       med.eatenTime = "";
-    //       med.state = "info";
-    //       prescription.save();
-    //     }
-    //   })
-    // );
+    const activity = await Excercise.find({
+      $and: [{ doctor: req.user.id }, { completed: true }],
+    });
     res.json(activity);
   } catch (error) {
     console.log(error.message);
@@ -187,7 +172,7 @@ router.get("/fetchtExcerciseDoctor", fetchUser, async (req, res) => {
   }
 });
 
-// ROUTE 5 : Conplete  excercise from patient site : Login required
+// ROUTE 9 : Complete  excercise from patient site : Login required
 router.put("/completeExcercise/:id", fetchUser, async (req, res) => {
   try {
     const { completed } = req.body;
