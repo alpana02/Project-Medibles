@@ -18,7 +18,7 @@ Contents
 
 1. Clone the repository
 2. Open with code editor
-3.Split the terminal into two.
+3. Split the terminal into two.
     On first run:
     + ` npm i concurrently -g`
     + ` cd client `
@@ -34,7 +34,6 @@ Contents
     + ` pip install -r requirements.txt `
     + ` python app.py `
     
-4. Open the localhost link.
 
 ### Tech-Stacks Used
 ---
