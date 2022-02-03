@@ -6,8 +6,8 @@ export const HomePage = () => {
         <>
             <section id="hero" className="d-flex align-items-center">
                 <div className="container">
-                    <h1>Welcome to Medilab</h1>
-                    <h2>We are team of talented designers making websites with Bootstrap</h2>
+                    <h1>Welcome to MEDIBLES</h1>
+                    <h2>Say Hello to India's top doctors via "Project MEDIBLES"</h2>
                     <a href="/login" className="btn-get-started scrollto">Get Started</a>
                 </div>
             </section>
@@ -20,13 +20,17 @@ export const HomePage = () => {
                         <div className="row">
                             <div className="col-lg-4 d-flex align-items-stretch">
                                 <div className="content">
-                                    <h3>Why Choose Medilab?</h3>
+                                    <h3>Why Choose MEDIBLES?</h3>
                                     <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit
-                                        Asperiores dolores sed et. Tenetur quia eos. Autem tempore quibusdam vel necessitatibus optio ad corporis.
+                                        Get digital
+                                        prescriptions, monitoring your progress
+                                        with advanced AI features, being a part of
+                                        patients - community. Get personalized
+                                        one-to-one attentions by health
+                                        professionals till completely recovery .
                                     </p>
                                     <div className="text-center">
-                                        <a href="#" className="more-btn">Learn More <i className="bx bx-chevron-right"></i></a>
+                                        <a href="/login" className="more-btn">Learn More <i className="bx bx-chevron-right"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -61,47 +65,12 @@ export const HomePage = () => {
 
                     </div>
                 </section>
-                <section id="about" className="about section-bg">
-                    <div className="container-fluid">
 
-                        <div className="row">
-                            <div className="col-xl-5 col-lg-6 video-box d-flex justify-content-center align-items-stretch position-relative">
-                                <a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" className="glightbox play-btn mb-4"></a>
-                            </div>
-
-                            <div className="col-xl-7 col-lg-6 icon-boxes d-flex flex-column align-items-stretch justify-content-center py-5 px-lg-5">
-                                <h3>Enim quis est voluptatibus aliquid consequatur fugiat</h3>
-                                <p>Esse voluptas cumque vel exercitationem. Reiciendis est hic accusamus. Non ipsam et sed minima temporibus laudantium. Soluta voluptate sed facere corporis dolores excepturi. Libero laboriosam sint et id nulla tenetur. Suscipit aut voluptate.</p>
-
-                                <div className="icon-box">
-                                    <div className="icon"><i className="bx bx-fingerprint"></i></div>
-                                    <h4 className="title"><a href="/">Lorem Ipsum</a></h4>
-                                    <p className="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
-                                </div>
-
-                                <div className="icon-box">
-                                    <div className="icon"><i className="bx bx-gift"></i></div>
-                                    <h4 className="title"><a href="/">Nemo Enim</a></h4>
-                                    <p className="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque</p>
-                                </div>
-
-                                <div className="icon-box">
-                                    <div className="icon"><i className="bx bx-atom"></i></div>
-                                    <h4 className="title"><a href="/">Dine Pad</a></h4>
-                                    <p className="description">Explicabo est voluptatum asperiores consequatur magnam. Et veritatis odit. Sunt aut deserunt minus aut eligendi omnis</p>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-                </section>
-
-                <section id="services" className="services">
+                <section id="services" className="services section-bg">
                     <div className="container">
 
                         <div className="section-title">
-                            <h2>Services</h2>
+                            <h2>Features</h2>
                             <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
                         </div>
 
@@ -109,48 +78,87 @@ export const HomePage = () => {
                             <div className="col-lg-4 col-md-6 d-flex align-items-stretch">
                                 <div className="icon-box">
                                     <div className="icon"><i className="fas fa-heartbeat"></i></div>
-                                    <h4><a href="/">Lorem Ipsum</a></h4>
-                                    <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
+                                    <h4><a href="/">Activity Create (Assign)</a></h4>
+                                    <p>Doctors can assign different post recovery
+                                        workouts to patients according to their
+                                        requirements for complete recovery which will be
+                                        monitored by deep learning algorithms. They can
+                                        also track daily progress.</p>
                                 </div>
                             </div>
 
                             <div className="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
                                 <div className="icon-box">
                                     <div className="icon"><i className="fas fa-pills"></i></div>
-                                    <h4><a href="/">Sed ut perspiciatis</a></h4>
-                                    <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
+                                    <h4><a href="/">Assign Digital Prescription</a></h4>
+                                    <p>It allows medical practitioners to write and send
+                                        prescriptions electronically which will enhance patient
+                                        safety, increase access to patient prescription records,
+                                        and improve pharmacy workflow.</p>
                                 </div>
                             </div>
 
                             <div className="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0">
                                 <div className="icon-box">
                                     <div className="icon"><i className="fas fa-hospital-user"></i></div>
-                                    <h4><a href="/">Magni Dolores</a></h4>
-                                    <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
+                                    <h4><a href="/">Activity Tracker</a></h4>
+                                    <p>Analyzing patient’s performed activity using MediaPipe
+                                        Pose. It is a ML solution for high-fidelity body pose
+                                        tracking, inferring 3D landmarks and background
+                                        segmentation mask on the whole body from input
+                                        video frames .</p>
                                 </div>
                             </div>
 
                             <div className="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
                                 <div className="icon-box">
                                     <div className="icon"><i className="fas fa-dna"></i></div>
-                                    <h4><a href="/">Nemo Enim</a></h4>
-                                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
+                                    <h4><a href="/">Patient Community</a></h4>
+                                    <p>Patients connect with others who have the same disease or
+                                        condition and track and share their own experiences. Users can
+                                        get information and update the diseases, conditions, and related
+                                        symptoms every day on the platform</p>
                                 </div>
                             </div>
 
                             <div className="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
                                 <div className="icon-box">
                                     <div className="icon"><i className="fas fa-wheelchair"></i></div>
-                                    <h4><a href="/">Dele cardo</a></h4>
-                                    <p>Quis consequatur saepe eligendi voluptatem consequatur dolor consequuntur</p>
+                                    <h4><a href="/">Remainder Prescription</a></h4>
+                                    <p>Reminding users for taking medicines ad per the given time schedule by
+                                        doctor.
+                                    </p>
                                 </div>
                             </div>
 
                             <div className="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
                                 <div className="icon-box">
                                     <div className="icon"><i className="fas fa-notes-medical"></i></div>
-                                    <h4><a href="/">Divera don</a></h4>
-                                    <p>Modi nostrum vel laborum. Porro fugit error sit minus sapiente sit aspernatur</p>
+                                    <h4><a href="/">Medicine Shopping</a></h4>
+                                    <p>There are times when the Patient are unable
+                                        to obtain the medicine they reqire, so we have designed an inbuilt
+                                        function that allows them to browse any
+                                        medicine of their choice and provide them link to the online site so that they can buy easily.</p>
+                                </div>
+                            </div>
+                            <div className="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
+                                <div className="icon-box">
+                                    <div className="icon"><i className="fas fa-notes-medical"></i></div>
+                                    <h4><a href="/">Medicine Shopping</a></h4>
+                                    <p>There are times when the Patient are unable
+                                        to obtain the medicine they reqire, so we have designed an inbuilt
+                                        function that allows them to browse any
+                                        medicine of their choice and provide them link to the online site so that they can buy easily.</p>
+                                </div>
+                            </div>
+                            <div className="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
+                                <div className="icon-box">
+                                    <div className="icon"><i className="fas fa-notes-medical"></i></div>
+                                    <h4><a href="/">Medicine Shopping</a></h4>
+                                    <p>There are times when the Patient are unable
+                                        to obtain the medicine they reqire, so we have designed an inbuilt
+                                        function that allows them to browse any
+                                        medicine of their choice and provide them link to the online site so that they can buy easily.</p>
                                 </div>
                             </div>
 
@@ -158,7 +166,7 @@ export const HomePage = () => {
 
                     </div>
                 </section>
-                <section id="departments" className="departments section-bg">
+                <section id="departments" className="departments">
                     <div className="container">
 
                         <div className="section-title">
@@ -254,67 +262,7 @@ export const HomePage = () => {
 
                     </div>
                 </section>
-                
-                <section id="faq" className="faq">
-                    <div className="container">
 
-                        <div className="section-title">
-                            <h2>Frequently Asked Questions</h2>
-                            <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
-                        </div>
-
-                        <div className="faq-list">
-                            <ul>
-                                <li data-aos="fade-up">
-                                    <i className="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" className="collapse" data-bs-target="#faq-list-1">Non consectetur a erat nam at lectus urna duis? <i className="bx bx-chevron-down icon-show"></i><i className="bx bx-chevron-up icon-close"></i></a>
-                                    <div id="faq-list-1" className="collapse show" data-bs-parent=".faq-list">
-                                        <p>
-                                            Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet non curabitur gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non.
-                                        </p>
-                                    </div>
-                                </li>
-
-                                <li data-aos="fade-up" data-aos-delay="100">
-                                    <i className="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-2" className="collapsed">Feugiat scelerisque varius morbi enim nunc? <i className="bx bx-chevron-down icon-show"></i><i className="bx bx-chevron-up icon-close"></i></a>
-                                    <div id="faq-list-2" className="collapse" data-bs-parent=".faq-list">
-                                        <p>
-                                            Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.
-                                        </p>
-                                    </div>
-                                </li>
-
-                                <li data-aos="fade-up" data-aos-delay="200">
-                                    <i className="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-3" className="collapsed">Dolor sit amet consectetur adipiscing elit? <i className="bx bx-chevron-down icon-show"></i><i className="bx bx-chevron-up icon-close"></i></a>
-                                    <div id="faq-list-3" className="collapse" data-bs-parent=".faq-list">
-                                        <p>
-                                            Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus pulvinar elementum integer enim. Sem nulla pharetra diam sit amet nisl suscipit. Rutrum tellus pellentesque eu tincidunt. Lectus urna duis convallis convallis tellus. Urna molestie at elementum eu facilisis sed odio morbi quis
-                                        </p>
-                                    </div>
-                                </li>
-
-                                <li data-aos="fade-up" data-aos-delay="300">
-                                    <i className="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-4" className="collapsed">Tempus quam pellentesque nec nam aliquam sem et tortor consequat? <i className="bx bx-chevron-down icon-show"></i><i className="bx bx-chevron-up icon-close"></i></a>
-                                    <div id="faq-list-4" className="collapse" data-bs-parent=".faq-list">
-                                        <p>
-                                            Molestie a iaculis at erat pellentesque adipiscing commodo. Dignissim suspendisse in est ante in. Nunc vel risus commodo viverra maecenas accumsan. Sit amet nisl suscipit adipiscing bibendum est. Purus gravida quis blandit turpis cursus in.
-                                        </p>
-                                    </div>
-                                </li>
-
-                                <li data-aos="fade-up" data-aos-delay="400">
-                                    <i className="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-5" className="collapsed">Tortor vitae purus faucibus ornare. Varius vel pharetra vel turpis nunc eget lorem dolor? <i className="bx bx-chevron-down icon-show"></i><i className="bx bx-chevron-up icon-close"></i></a>
-                                    <div id="faq-list-5" className="collapse" data-bs-parent=".faq-list">
-                                        <p>
-                                            Laoreet sit amet cursus sit amet dictum sit amet justo. Mauris vitae ultricies leo integer malesuada nunc vel. Tincidunt eget nullam non nisi est sit amet. Turpis nunc eget lorem dolor sed. Ut venenatis tellus in metus vulputate eu scelerisque.
-                                        </p>
-                                    </div>
-                                </li>
-
-                            </ul>
-                        </div>
-
-                    </div>
-                </section>
                 <section id="team" className="team section-bg">
                     <div className="container" data-aos="fade-up">
 
@@ -332,7 +280,7 @@ export const HomePage = () => {
                                         <h4>Parwin Akhtari </h4>
 
                                         <p>An Aspiring developer and tech enthusiast. Interested in Problem Solving. </p>
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -345,7 +293,7 @@ export const HomePage = () => {
                                         <h4>Siddharth Sharma</h4>
 
                                         <p>I'm a passionate Learner and tech enthusiast, currently learning Machine Learning</p>
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -357,7 +305,7 @@ export const HomePage = () => {
                                         <h4>Alpana Nanda</h4>
 
                                         <p>I seek new challenges and try to think out-of-the-box while solving a problem.</p>
-                                        
+
                                     </div>
                                 </div>
                             </div>
