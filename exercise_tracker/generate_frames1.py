@@ -89,20 +89,26 @@ def generate_frames1(hand, severity, expertime):
                     )
 
                     #         Angles measurement
-                    if angle > 160 - (tol_angle):
-                        stage = "down"
-                        lapperdown = time.time()
-
                     if angle < 30 + (tol_angle) and stage == "down":
                         stage = "up"
                         counter += 1
                         lapperup = time.time()
+
+                    # Crossing mid
+                    if angle > 80 and angle < 120:
+                        lapperup = time.time()
+                        lapperdown = time.time()
+
+                    if angle > 160 - (tol_angle):
+                        stage = "down"
+                        lapperdown = time.time()
 
                     #          Error Analysis
 
                     if angle > 120 and (time.time() - lapperup > expertime):
                         flag = "Raise your arms"
                         noerror = noerror + 1
+
                     elif angle < 40 and (time.time() - lapperdown > expertime):
                         flag = "Lower your arms"
                         noerror = noerror + 1
