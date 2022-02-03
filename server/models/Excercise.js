@@ -21,6 +21,10 @@ const ExcerciseSchema = new Schema({
     type: String,
     required: true,
   },
+  patientName:{
+    type: String,
+    required: true,
+  },
   excercises: {
     type: [
       {
@@ -28,6 +32,7 @@ const ExcerciseSchema = new Schema({
         severity: String,
         perActivityTime: String,
         total: String,
+        duration:String,
         report: [
           {
             counter: String,

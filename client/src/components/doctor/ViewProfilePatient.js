@@ -59,6 +59,7 @@ export default function ViewProfilePatient(props) {
       severity: "",
       perActivityTime: "",
       total: "",
+      duration: "",
     },
   ]);
 
@@ -156,6 +157,7 @@ export default function ViewProfilePatient(props) {
         severity: "",
         perActivityTime: "",
         total: "",
+        duration: "",
       },
     ]);
   };
@@ -204,6 +206,7 @@ export default function ViewProfilePatient(props) {
 
   async function handleExcerciseSubmit(event) {
     //event.preventDefault();
+    let patientName=profile.name
     props.showAlert("Excercise Added Succesfully", "success");
     const response = await fetch(
       `http://localhost:5000/api/excercise/addExcercise/${id}`,
@@ -213,7 +216,7 @@ export default function ViewProfilePatient(props) {
           "Content-Type": "application/json",
           "auth-token": localStorage.getItem("token"),
         },
-        body: JSON.stringify({ excercise, noteExcercise }),
+        body: JSON.stringify({ excercise, noteExcercise,patientName }),
       }
     );
     const data = await response.json();
@@ -224,6 +227,7 @@ export default function ViewProfilePatient(props) {
         severity: "",
         perActivityTime: "",
         total: "",
+        duration: "",
       },
     ]);
     setnoteExcercise("");
@@ -390,6 +394,22 @@ export default function ViewProfilePatient(props) {
                                 type="number"
                                 className="form-control "
                                 placeholder="Per activity time in secs"
+                                name="perActivityTime"
+                                value={excercise.perActivityTime}
+                                onChange={(e) =>
+                                  handleExcerciseChange(index, e)
+                                }
+                                required
+                              />
+                            </div>
+                          </div>
+                         
+                          <div className="w3-half mt-1 ">
+                            <div className="mb-1  ">
+                              <input
+                                type="number"
+                                className="form-control "
+                                placeholder="Number of times to be done"
                                 name="total"
                                 value={excercise.total}
                                 onChange={(e) =>
@@ -399,18 +419,17 @@ export default function ViewProfilePatient(props) {
                               />
                             </div>
                           </div>
-                          <div className="mt-1">
-                            <div className="mb-1 ">
+                          <div className="w3-half mt-1">
+                            <div className="mb-1 mx-2">
                               <input
                                 type="number"
                                 className="form-control "
-                                placeholder="Total Number of times to be done"
-                                name="perActivityTime"
-                                value={excercise.perActivityTime}
-                                onChange={(e) =>
-                                  handleExcerciseChange(index, e)
-                                }
+                                placeholder="Type duration in days"
+                                name="duration"
+                                value={excercise.duration}
+                                onChange={(e) => handleExcerciseChange(index, e)}
                                 required
+                                minLength={1}
                               />
                             </div>
                           </div>
@@ -623,7 +642,7 @@ export default function ViewProfilePatient(props) {
                           </button>
                         </div>
                       </div>
-                      <div class="table-responsive">
+                      <div className="table-responsive">
                         <table className="table">
                           <thead>
                             <tr>
@@ -715,7 +734,7 @@ export default function ViewProfilePatient(props) {
                           </button>
                         </div>
                       </div>
-                      <div class="table-responsive">
+                      <div className="table-responsive">
                         <table className="table">
                           <thead>
                             <tr>
@@ -724,6 +743,7 @@ export default function ViewProfilePatient(props) {
                               <th scope="col">Severity</th>
                               <th scope="col">Per Activity Time</th>
                               <th scope="col">Total Times</th>
+                              <th scope="col">Duration</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -734,6 +754,7 @@ export default function ViewProfilePatient(props) {
                                 <td>{activity.severity}</td>
                                 <td>{activity.perActivityTime} seconds</td>
                                 <td>{activity.total} </td>
+                                <td>{activity.duration} days </td>
                               </tr>
                             ))}
                           </tbody>

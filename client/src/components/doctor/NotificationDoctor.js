@@ -116,7 +116,7 @@ export default function NotificationDoctor(props) {
   return (
     <div className="container">
       <div className="col-12 mt-5 ">
-        <h2>Appointment Requests to you</h2>
+        <h2>Post-care Appointment Requests</h2>
         <div className="row">
           <h5 >
             {profile.length === 0 && "No Appointment Requests Yet"}
@@ -169,7 +169,7 @@ export default function NotificationDoctor(props) {
       </div>
 
       <div className="col-12 mt-5 ">
-        <h2>Precription Refill Requests to you</h2>
+        <h2>Precription Refill Requests</h2>
         <div className="row">
           <h5 className="mt-3">
             {prescription.length === 0 && "No Refill Requests Yet"}

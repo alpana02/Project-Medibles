@@ -48,14 +48,26 @@ export const ReportDoctor = (props) => {
     // ); */}
         {excerciseList.map((activity, index) => (
           <>
-            {activity.excercises.map((excercise, index) => (
-              <>
-                {excercise.report.length !== 0 ? (
-                  <>
-                    <div className="w3-container w3-card w3-white w3-margin-bottom">
+            <div className="w3-container w3-card w3-white w3-margin-bottom">
+              {activity.excercises.map((excercise, index) => (
+                <>
+                  {excercise.report.length !== 0 ? (
+                    <>
                       <div className="row">
                         <div key={index} className="w3-container">
                           <div className="card-body">
+                            <h3>
+                              Final report of: <b style={{fontSize:'18px'}}>{activity.patientName}</b>
+                              <Link
+                                type="button"
+                                className="btn btn-primary btn-sm mx-2"
+                                to={`/viewProfilePatient/${activity.patient}`}
+                              >
+                                View Profile &nbsp;
+                                <i className="fas fa-greater-than"></i>
+                              </Link>
+                            </h3>
+
                             {/* <div className="row">
                                     <div className="col-8">
                                       <h4>Activity by {excercise.doctorName}</h4>
@@ -82,9 +94,6 @@ export const ReportDoctor = (props) => {
                                     <th scope="col" className="text-center">
                                       Error
                                     </th>
-                                    <th scope="col" className="text-center">
-                                      View Patient Profile
-                                    </th>
                                   </tr>
                                 </thead>
                                 {excercise.report.map((reportObj, index) => (
@@ -102,7 +111,6 @@ export const ReportDoctor = (props) => {
                                           {reportObj.counter} times
                                         </td>
                                         <td className="text-center">
-                                         
                                           {Math.round(
                                             (reportObj.counter /
                                               reportObj.timer) *
@@ -113,17 +121,6 @@ export const ReportDoctor = (props) => {
                                         <td className="text-center">
                                           {reportObj.error}
                                         </td>
-                                        <td className="text-center">
-                                         
-                                          <Link
-                                            type="button"
-                                            className="btn btn-primary btn-sm mx-2"
-                                            to={`/viewProfilePatient/${activity.patient}`}
-                                          >
-                                            View Profile &nbsp;
-                                            <i className="fas fa-greater-than"></i>
-                                          </Link>
-                                        </td>
                                       </tr>
                                     </tbody>
                                   </>
@@ -133,13 +130,13 @@ export const ReportDoctor = (props) => {
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </>
-                ) : (
-                  <></>
-                )}
-              </>
-            ))}
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </>
+              ))}
+            </div>
           </>
         ))}
       </div>

@@ -8,7 +8,7 @@ const User = require("../models/User");
 router.post("/addExcercise/:id", fetchUser, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    const { excercise, noteExcercise } = req.body;
+    const { excercise, noteExcercise, patientName } = req.body;
     const event = new Excercise({
       doctor: req.user.id,
       patient: req.params.id,
@@ -16,6 +16,7 @@ router.post("/addExcercise/:id", fetchUser, async (req, res) => {
       note: noteExcercise,
       excercises: excercise,
       doctorName: user.name,
+      patientName: patientName,
       completed: false,
     });
     const savedEvent = await event.save();
@@ -170,7 +171,9 @@ router.get("/fetchtExcercise", fetchUser, async (req, res) => {
 // ROUTE 5 : Fetch final report for doctor portal : Login required
 router.get("/fetchtExcerciseDoctor", fetchUser, async (req, res) => {
   try {
-    const activity = await Excercise.find({ $and:[{ doctor: req.user.id },{completed:true}]});
+    const activity = await Excercise.find({
+      $and: [{ doctor: req.user.id }, { completed: true }],
+    });
     // prescriptions.map((prescription, index) =>
     //   prescription.medicines.map((med, index) => {
     //     if (med.eatenTime && med.eatenTime != new Date().toDateString()) {
